@@ -1,0 +1,13 @@
+.elementor-panel .bea-widget-badge::after{
+    content: 'BEA' !important;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 10px;
+    letter-spacing: 0.8px;
+    display: inline-block;
+    background-image: linear-gradient(100deg, #524cff 0%, #FC00FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+

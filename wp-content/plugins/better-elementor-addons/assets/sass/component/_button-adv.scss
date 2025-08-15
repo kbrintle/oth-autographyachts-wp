@@ -1,0 +1,385 @@
+/*------------------------------------- Creative Button Style  -----------------------------------------*/
+
+.bea-adv-button {
+    position: relative;
+    display: block;
+    padding: 12px 30px;
+    background-color: #272727;
+    overflow: hidden;
+    line-height: 1;
+    transition: all 0.3s ease;
+    
+    .bea-adv-button-text {
+        position: relative;
+        z-index: 2;
+        color: #FF783E;
+        
+    }
+    .bea-adv-button-content-wrapper{
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .bea-adv-button-icon {
+        display: inline-block;
+        z-index: 1;
+        transition: all 0.3s ease;
+    } 
+    &:hover{
+        .corners-in, .sequance{
+            .bea-adv-border-top{
+                transform: scaleX(0) !important;
+            }
+            .bea-adv-border-bottom{
+                transform: scaleX(0)!important;
+            }
+            .bea-adv-border-left{
+                transform: scaleY(0)!important;
+            }
+            .bea-adv-border-right{
+                transform: scaleY(0)!important;
+            }
+        }
+        .corners-out {
+            .bea-adv-border-top{
+                transform: scaleX(1) !important;
+            }
+            .bea-adv-border-bottom{
+                transform: scaleX(1)!important;
+            }
+            .bea-adv-border-left{
+                transform: scaleY(1)!important;
+            }
+            .bea-adv-border-right{
+                transform: scaleY(1)!important;
+            }
+        }
+        &::before {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        &::after{
+            width: 100%;
+            right: 0;
+        }
+        
+    }
+   
+    
+    .bea-adv-button-circle{
+        background-color: #272727;
+        border-radius: 100px;
+        position: absolute;
+        left:0;
+        top:0;
+        width: 0px;
+        height: 0px;
+        margin-left: 0px;
+        margin-top: 0px;
+        pointer-events: none;
+    }
+    
+    .explode-circle {
+        animation: explode 1s forwards;
+    }
+    
+    .desplode-circle{
+    animation: desplode 0.5s forwards;
+    }
+
+    .bea-second-text{
+        position: relative;
+        display: inline-block;
+        transition: all 0.3s ease;
+        &::after {
+            content: attr(data-text);
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            opacity: 0;
+            transform: translate(-50%, 100%);
+            transition: opacity .2s, transform .2s;
+            transition-timing-function: cubic-bezier(.455,.03,.515,.955);
+            white-space: nowrap;
+        }
+        span {
+            display: inline-block;
+            transform: translateY(0%);
+            opacity:1;
+            transition: opacity .2s, transform .2s;
+            transition-timing-function: cubic-bezier(.455,.03,.515,.955);
+        }
+    }
+    &:hover {
+        .bea-second-text {
+            span {
+                transform: translateY(-150%);
+                opacity: 0;
+            }
+            &::after {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+    }
+     
+}
+.bea-animated-icon-bg::after{
+    content: '';
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background: rgba(0, 0, 0, 0.05);
+    transition: all .4s;
+   
+}
+.bea-animated-border-corners-in{
+    .bea-border-lines{
+        display: block;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 0;
+        pointer-events: none;
+        .bea-adv-border-top{
+            width: 100%;
+            height: 2px;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .bea-adv-border-bottom{
+            width: 100%;
+            height: 2px;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleX(1);
+            transform-origin: right;
+        }
+        .bea-adv-border-left{
+            width: 2px;
+            height: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleY(1);
+            transform-origin: top;
+        }
+        .bea-adv-border-right{
+            width: 2px;
+            height: 100%;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleY(1);
+            transform-origin: bottom;
+        }
+    }
+}
+.bea-animated-border-sequance{
+    .bea-border-lines{
+        display: block;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 0;
+        pointer-events: none;
+        .bea-adv-border-top{
+            width: 100%;
+            height: 2px;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .bea-adv-border-bottom{
+            width: 100%;
+            height: 2px;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleX(1);
+            transform-origin: right;
+        }
+        .bea-adv-border-left{
+            width: 2px;
+            height: 100%;
+            left: 0;
+            bottom: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleY(1);
+            transform-origin: bottom;
+        }
+        .bea-adv-border-right{
+            width: 2px;
+            height: 100%;
+            right: 0;
+            top: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleY(1);
+            transform-origin: top;
+        }
+    }
+}
+.bea-animated-border-corners-out{
+    .bea-border-lines{
+        display: block;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 0;
+        pointer-events: none;
+        .bea-adv-border-top{
+            width: 100%;
+            height: 2px;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        .bea-adv-border-bottom{
+            width: 100%;
+            height: 2px;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+        .bea-adv-border-left{
+            width: 2px;
+            height: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleY(0);
+            transform-origin: top;
+        }
+        .bea-adv-border-right{
+            width: 2px;
+            height: 100%;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            background-color: #101010;
+            transition: transform .3s;
+            transform: scaleY(0);
+            transform-origin: bottom;
+        }
+    }
+}
+.bea-animated-bg-slide-left::before{
+    position: absolute;
+    content: "";
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background-color: #002C47;
+    transition: all .3s ease;
+    border-radius: inherit;
+}
+.bea-animated-bg-slide-right::before{
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background-color: #002C47;
+    transition: all .3s ease;
+    border-radius: inherit;
+}
+.bea-animated-bg-slide-top::before{
+    position: absolute;
+    content: "";
+    right: 0;
+    bottom: 0;
+    height: 0%;
+    width: 100%;
+    background-color: #002C47;
+    transition: all .3s ease;
+    border-radius: inherit;
+}
+.bea-animated-bg-slide-bottom::before{
+    position: absolute;
+    content: "";
+    right: 0;
+    top: 0;
+    height: 0%;
+    width: 100%;
+    background-color: #002C47;
+    transition: all .3s ease;
+    border-radius: inherit;
+}
+
+ 
+ 
+@keyframes explode {
+    0% {
+        width: 0px;
+        height: 0px;
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+    100% {
+        width: 1000px;
+        height: 1000px;
+        margin-left: -500px;
+        margin-top: -500px;
+    }
+}
+@keyframes desplode {
+    0% {
+        width: 1000px;
+        height: 1000px;
+        margin-left: -500px;
+        margin-top: -500px;
+    }
+    100% {
+        width: 0px;
+        height: 0px;
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+}
+ 

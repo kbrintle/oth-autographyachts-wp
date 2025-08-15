@@ -1,0 +1,655 @@
+0000.000 (0) Opened log file at time: Mon, 04 Aug 2025 17:49:46 +0000 on https://autographyachts.com
+0000.011 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.25.6 WP: 6.8.2 PHP: 8.3.22 (apache2handler, Linux ip-172-31-11-109 6.8.0-1027-aws #29-Ubuntu SMP Thu Mar 27 17:28:55 UTC 2025 x86_64) MySQL: 8.0.40 (max packet size=67108864) WPLANG: en_US Server: Apache/2.4.58 (Ubuntu) safe_mode: 0 max_execution_time: 900 memory_limit: 512M (used: 19M | 38M) multisite: N openssl: OpenSSL 3.0.13 30 Jan 2024 mcrypt: N LANG: C WP Proxy: disabled ZipArchive::addFile: Y
+0000.021 (0) Free space on disk containing Updraft's temporary directory: 484540.9 MB
+0000.033 (0) Tasks: Backup files: 1 (schedule: manual) Backup DB: 1 (schedule: manual)
+0000.045 (0) Semaphore (fd, wp_options) being initialised
+0000.086 (0) Requesting semaphore lock (fd) (apparently not via scheduler)
+0000.125 (0) Set semaphore last lock (fd) time to 2025-08-04 17:49:46
+0000.136 (0) Semaphore lock (fd) complete
+0000.170 (0) Backup run: resumption=0, nonce=29720f6cd074, file_nonce=29720f6cd074 begun at=1754329786 (0s ago), job type=backup
+0000.194 (0) Scheduling a resumption (1) after 300 seconds (1754330086) in case this run gets aborted
+0000.221 (0) Checking if we have a zip executable available
+0000.242 (0) Creation of backups of directories: beginning
+0000.276 (0) Beginning creation of dump of plugins (split every: 400 MB)
+0000.443 (0) Total entities for the zip file: 2616 directories, 14231 files (0 skipped as non-modified), 214.1 MB
+0000.458 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 100 files added (on-disk size: 0 KB)
+0000.470 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 200 files added (on-disk size: 0 KB)
+0000.481 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 300 files added (on-disk size: 0 KB)
+0000.492 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 400 files added (on-disk size: 0 KB)
+0000.504 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 500 files added (on-disk size: 0 KB)
+0000.515 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 600 files added (on-disk size: 0 KB)
+0000.528 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 700 files added (on-disk size: 0 KB)
+0000.542 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 800 files added (on-disk size: 0 KB)
+0000.555 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 900 files added (on-disk size: 0 KB)
+0000.567 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1000 files added (on-disk size: 0 KB)
+0000.579 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (7.1 MB, 14231 files batched, 1001 (1001) added so far); re-opening (prior size: 0 KB)
+0000.989 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1100 files added (on-disk size: 3483.1 KB)
+0001.000 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1200 files added (on-disk size: 3483.1 KB)
+0001.014 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1300 files added (on-disk size: 3483.1 KB)
+0001.025 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1400 files added (on-disk size: 3483.1 KB)
+0001.037 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1500 files added (on-disk size: 3483.1 KB)
+0001.048 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1600 files added (on-disk size: 3483.1 KB)
+0001.060 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1700 files added (on-disk size: 3483.1 KB)
+0001.070 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1800 files added (on-disk size: 3483.1 KB)
+0001.083 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 1900 files added (on-disk size: 3483.1 KB)
+0001.095 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2000 files added (on-disk size: 3483.1 KB)
+0001.105 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (16.5 MB, 14231 files batched, 1001 (2002) added so far); re-opening (prior size: 3483.1 KB)
+0002.241 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2100 files added (on-disk size: 9842.1 KB)
+0002.254 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2200 files added (on-disk size: 9842.1 KB)
+0002.265 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2300 files added (on-disk size: 9842.1 KB)
+0002.277 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2400 files added (on-disk size: 9842.1 KB)
+0002.289 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2500 files added (on-disk size: 9842.1 KB)
+0002.300 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2600 files added (on-disk size: 9842.1 KB)
+0002.312 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2700 files added (on-disk size: 9842.1 KB)
+0002.327 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2800 files added (on-disk size: 9842.1 KB)
+0002.338 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 2900 files added (on-disk size: 9842.1 KB)
+0002.351 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3000 files added (on-disk size: 9842.1 KB)
+0002.363 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (4.3 MB, 14231 files batched, 1001 (3003) added so far); re-opening (prior size: 9842.1 KB)
+0002.586 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3100 files added (on-disk size: 11564.1 KB)
+0002.599 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3200 files added (on-disk size: 11564.1 KB)
+0002.613 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3300 files added (on-disk size: 11564.1 KB)
+0002.625 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3400 files added (on-disk size: 11564.1 KB)
+0002.636 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3500 files added (on-disk size: 11564.1 KB)
+0002.648 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3600 files added (on-disk size: 11564.1 KB)
+0002.659 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3700 files added (on-disk size: 11564.1 KB)
+0002.671 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3800 files added (on-disk size: 11564.1 KB)
+0002.683 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 3900 files added (on-disk size: 11564.1 KB)
+0002.694 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4000 files added (on-disk size: 11564.1 KB)
+0002.704 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (2.7 MB, 14231 files batched, 1001 (4004) added so far); re-opening (prior size: 11564.1 KB)
+0002.890 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4100 files added (on-disk size: 12626.7 KB)
+0002.904 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4200 files added (on-disk size: 12626.7 KB)
+0002.915 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4300 files added (on-disk size: 12626.7 KB)
+0002.928 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4400 files added (on-disk size: 12626.7 KB)
+0002.940 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4500 files added (on-disk size: 12626.7 KB)
+0002.952 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4600 files added (on-disk size: 12626.7 KB)
+0002.964 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4700 files added (on-disk size: 12626.7 KB)
+0002.975 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4800 files added (on-disk size: 12626.7 KB)
+0002.987 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 4900 files added (on-disk size: 12626.7 KB)
+0002.998 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5000 files added (on-disk size: 12626.7 KB)
+0003.008 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (3.7 MB, 14231 files batched, 1001 (5005) added so far); re-opening (prior size: 12626.7 KB)
+0003.259 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5100 files added (on-disk size: 13775.6 KB)
+0003.271 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5200 files added (on-disk size: 13775.6 KB)
+0003.285 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5300 files added (on-disk size: 13775.6 KB)
+0003.296 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5400 files added (on-disk size: 13775.6 KB)
+0003.308 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5500 files added (on-disk size: 13775.6 KB)
+0003.319 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5600 files added (on-disk size: 13775.6 KB)
+0003.331 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5700 files added (on-disk size: 13775.6 KB)
+0003.343 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5800 files added (on-disk size: 13775.6 KB)
+0003.355 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 5900 files added (on-disk size: 13775.6 KB)
+0003.367 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6000 files added (on-disk size: 13775.6 KB)
+0003.377 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (5.2 MB, 14231 files batched, 1001 (6006) added so far); re-opening (prior size: 13775.6 KB)
+0003.754 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6100 files added (on-disk size: 15256.5 KB)
+0003.766 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6200 files added (on-disk size: 15256.5 KB)
+0003.777 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6300 files added (on-disk size: 15256.5 KB)
+0003.789 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6400 files added (on-disk size: 15256.5 KB)
+0003.801 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6500 files added (on-disk size: 15256.5 KB)
+0003.813 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6600 files added (on-disk size: 15256.5 KB)
+0003.824 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6700 files added (on-disk size: 15256.5 KB)
+0003.835 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6800 files added (on-disk size: 15256.5 KB)
+0003.847 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 6900 files added (on-disk size: 15256.5 KB)
+0003.858 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7000 files added (on-disk size: 15256.5 KB)
+0003.870 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (18.7 MB, 14231 files batched, 1001 (7007) added so far); re-opening (prior size: 15256.5 KB)
+0005.479 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7100 files added (on-disk size: 23681.8 KB)
+0005.493 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7200 files added (on-disk size: 23681.8 KB)
+0005.505 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7300 files added (on-disk size: 23681.8 KB)
+0005.519 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7400 files added (on-disk size: 23681.8 KB)
+0005.532 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7500 files added (on-disk size: 23681.8 KB)
+0005.547 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7600 files added (on-disk size: 23681.8 KB)
+0005.559 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7700 files added (on-disk size: 23681.8 KB)
+0005.574 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7800 files added (on-disk size: 23681.8 KB)
+0005.587 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 7900 files added (on-disk size: 23681.8 KB)
+0005.604 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8000 files added (on-disk size: 23681.8 KB)
+0005.614 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (5.8 MB, 14231 files batched, 1001 (8008) added so far); re-opening (prior size: 23681.8 KB)
+0006.021 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8100 files added (on-disk size: 25358.6 KB)
+0006.037 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8200 files added (on-disk size: 25358.6 KB)
+0006.052 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8300 files added (on-disk size: 25358.6 KB)
+0006.071 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8400 files added (on-disk size: 25358.6 KB)
+0006.087 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8500 files added (on-disk size: 25358.6 KB)
+0006.105 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8600 files added (on-disk size: 25358.6 KB)
+0006.121 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8700 files added (on-disk size: 25358.6 KB)
+0006.140 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8800 files added (on-disk size: 25358.6 KB)
+0006.155 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 8900 files added (on-disk size: 25358.6 KB)
+0006.170 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9000 files added (on-disk size: 25358.6 KB)
+0006.179 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (18.2 MB, 14231 files batched, 1001 (9009) added so far); re-opening (prior size: 25358.6 KB)
+0007.530 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9100 files added (on-disk size: 29192.5 KB)
+0007.542 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9200 files added (on-disk size: 29192.5 KB)
+0007.553 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9300 files added (on-disk size: 29192.5 KB)
+0007.565 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9400 files added (on-disk size: 29192.5 KB)
+0007.576 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9500 files added (on-disk size: 29192.5 KB)
+0007.589 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9600 files added (on-disk size: 29192.5 KB)
+0007.600 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9700 files added (on-disk size: 29192.5 KB)
+0007.612 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9800 files added (on-disk size: 29192.5 KB)
+0007.624 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 9900 files added (on-disk size: 29192.5 KB)
+0007.635 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10000 files added (on-disk size: 29192.5 KB)
+0007.646 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (4.7 MB, 14231 files batched, 1001 (10010) added so far); re-opening (prior size: 29192.5 KB)
+0008.077 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10100 files added (on-disk size: 30617.3 KB)
+0008.089 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10200 files added (on-disk size: 30617.3 KB)
+0008.100 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10300 files added (on-disk size: 30617.3 KB)
+0008.112 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10400 files added (on-disk size: 30617.3 KB)
+0008.123 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 25 MB added on this batch (26.7 MB, 14231 files batched, 425 (10435) added so far); re-opening (prior size: 30617.3 KB)
+0009.929 (0) A useful amount of data was added after this amount of zip processing: 2.5 s (normalised: 2.4 s, rate: 10762.3 KB/s)
+0009.953 (0) Performance is good - will increase the amount of data we attempt to batch (time=2.5412418842316, normalised_time=2.3786747322519, max_time=9.9418380260468, data points known=1, old_max_bytes=26214400, new_max_bytes=66123542)
+0010.013 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10500 files added (on-disk size: 37576 KB)
+0010.026 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10600 files added (on-disk size: 37576 KB)
+0010.038 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10700 files added (on-disk size: 37576 KB)
+0010.049 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10800 files added (on-disk size: 37576 KB)
+0010.061 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 10900 files added (on-disk size: 37576 KB)
+0010.072 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11000 files added (on-disk size: 37576 KB)
+0010.086 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11100 files added (on-disk size: 37576 KB)
+0010.098 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11200 files added (on-disk size: 37576 KB)
+0010.109 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11300 files added (on-disk size: 37576 KB)
+0010.121 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11400 files added (on-disk size: 37576 KB)
+0010.133 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (31.2 MB, 14231 files batched, 1001 (11436) added so far); re-opening (prior size: 37576 KB)
+0012.182 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11500 files added (on-disk size: 46528.5 KB)
+0012.194 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11600 files added (on-disk size: 46528.5 KB)
+0012.206 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11700 files added (on-disk size: 46528.5 KB)
+0012.218 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11800 files added (on-disk size: 46528.5 KB)
+0012.230 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 11900 files added (on-disk size: 46528.5 KB)
+0012.242 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12000 files added (on-disk size: 46528.5 KB)
+0012.254 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12100 files added (on-disk size: 46528.5 KB)
+0012.265 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12200 files added (on-disk size: 46528.5 KB)
+0012.277 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12300 files added (on-disk size: 46528.5 KB)
+0012.289 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12400 files added (on-disk size: 46528.5 KB)
+0012.299 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (24.3 MB, 14231 files batched, 1001 (12437) added so far); re-opening (prior size: 46528.5 KB)
+0014.220 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12500 files added (on-disk size: 55297.6 KB)
+0014.232 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12600 files added (on-disk size: 55297.6 KB)
+0014.245 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12700 files added (on-disk size: 55297.6 KB)
+0014.259 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12800 files added (on-disk size: 55297.6 KB)
+0014.271 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 12900 files added (on-disk size: 55297.6 KB)
+0014.283 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13000 files added (on-disk size: 55297.6 KB)
+0014.294 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13100 files added (on-disk size: 55297.6 KB)
+0014.307 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13200 files added (on-disk size: 55297.6 KB)
+0014.320 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13300 files added (on-disk size: 55297.6 KB)
+0014.331 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13400 files added (on-disk size: 55297.6 KB)
+0014.342 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (25.1 MB, 14231 files batched, 1001 (13438) added so far); re-opening (prior size: 55297.6 KB)
+0015.200 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13500 files added (on-disk size: 76268.2 KB)
+0015.217 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13600 files added (on-disk size: 76268.2 KB)
+0015.231 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13700 files added (on-disk size: 76268.2 KB)
+0015.256 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13800 files added (on-disk size: 76268.2 KB)
+0015.275 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 13900 files added (on-disk size: 76268.2 KB)
+0015.289 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 14000 files added (on-disk size: 76268.2 KB)
+0015.303 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 14100 files added (on-disk size: 76268.2 KB)
+0015.320 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.tmp: 14200 files added (on-disk size: 76268.2 KB)
+0021.357 (0) Creating zip file manifest (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.list-temp.tmp)
+0021.388 (0) Successfully created zip file manifest (size: 1289189)
+0022.164 (0) Created plugins zip (0) - 85100.9 KB in 21.9 s (3892 KB/s) (sha1: 6ab8168308b1a8272b742f2af2eec5c87ac57fcb, sha256: 461f9e267d59ec829a35b472f15acc2dac5c98f4ecd64e6f96080ddff68d3949)
+0022.204 (0) Cloud backup selection (1/1): googledrive with instance (1/1) (last)
+0022.226 (0) Beginning dispatch of backup to remote (googledrive) (instance identifier s-933a229f32366460db4a4beb1757746a)
+0023.052 (0) Google Drive: creating path: /UpdraftPlus
+0024.278 (0) Google Drive: quota usage: used=6176.3 MB, total=283115520 MB, available=283109343.7 MB
+0024.288 (0) Google Drive: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip: Attempting to upload to Google Drive (into folder id: 1GOfcH7ekMMU736Yqgms5EBuyZPmUJRO9)
+0025.005 (0) Googledrive chunked upload: 1.2 % uploaded (1048576 - increasing chunk size to 2048 KB - memory usage: 23.6 / 38)
+0025.267 (0) Googledrive chunked upload: 3.6 % uploaded (3145728 - increasing chunk size to 4096 KB - memory usage: 23.6 / 38)
+0025.560 (0) Googledrive chunked upload: 8.4 % uploaded (7340032 - increasing chunk size to 8192 KB - memory usage: 23.6 / 38)
+0025.896 (0) Googledrive chunked upload: 18 % uploaded (15728640 - increasing chunk size to 16384 KB - memory usage: 23.6 / 38)
+0026.327 (0) Googledrive chunked upload: 37.3 % uploaded (32505856 - increasing chunk size to 32768 KB - memory usage: 23.6 / 38)
+0027.023 (0) Googledrive chunked upload: 75.8 % uploaded (66060288 - increasing chunk size to 65536 KB - memory usage: 23.6 / 38)
+0028.626 (0) Googledrive chunked upload: 100 % uploaded (66060288)
+0028.659 (0) Google Drive: OK: Archive backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip uploaded in 4.36 seconds
+0028.670 (0) Recording as successfully uploaded: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip
+0028.704 (0) Deleting local file: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip: OK
+0028.749 (0) Beginning creation of dump of themes (split every: 400 MB)
+0028.783 (0) Total entities for the zip file: 377 directories, 1099 files (0 skipped as non-modified), 36 MB
+0028.795 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 100 files added (on-disk size: 0 KB)
+0028.806 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 200 files added (on-disk size: 0 KB)
+0028.817 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 300 files added (on-disk size: 0 KB)
+0028.828 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 400 files added (on-disk size: 0 KB)
+0028.839 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 500 files added (on-disk size: 0 KB)
+0028.853 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 600 files added (on-disk size: 0 KB)
+0028.864 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 700 files added (on-disk size: 0 KB)
+0028.876 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 800 files added (on-disk size: 0 KB)
+0028.889 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 900 files added (on-disk size: 0 KB)
+0028.900 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.tmp: 1000 files added (on-disk size: 0 KB)
+0028.909 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (33 MB, 1099 files batched, 1001 (1001) added so far); re-opening (prior size: 0 KB)
+0030.655 (0) Creating zip file manifest (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.list-temp.tmp)
+0030.667 (0) Successfully created zip file manifest (size: 88014)
+0030.881 (0) Created themes zip (0) - 19517 KB in 2.1 s (9252.2 KB/s) (sha1: 5b38b5df5dc323123ebc5ab9d2dd7a55f9c56b15, sha256: e3bf59e4edaf99ce43d5fd7aa1d06a49e16ba24e2f77499970b68e8188aea177)
+0030.914 (0) Cloud backup selection (1/1): googledrive with instance (1/1) (last)
+0030.925 (0) Beginning dispatch of backup to remote (googledrive) (instance identifier s-933a229f32366460db4a4beb1757746a)
+0031.190 (0) Google Drive: quota usage: used=6259.4 MB, total=283115520 MB, available=283109260.6 MB
+0031.200 (0) Google Drive: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip: Attempting to upload to Google Drive (into folder id: 1GOfcH7ekMMU736Yqgms5EBuyZPmUJRO9)
+0031.957 (0) Googledrive chunked upload: 5.2 % uploaded (1048576 - increasing chunk size to 2048 KB - memory usage: 21.6 / 38)
+0032.189 (0) Googledrive chunked upload: 15.7 % uploaded (3145728 - increasing chunk size to 4096 KB - memory usage: 21.7 / 38)
+0032.455 (0) Googledrive chunked upload: 36.7 % uploaded (7340032 - increasing chunk size to 8192 KB - memory usage: 21.7 / 38)
+0032.757 (0) Googledrive chunked upload: 78.7 % uploaded (15728640 - increasing chunk size to 16384 KB - memory usage: 21.7 / 38)
+0034.243 (0) Googledrive chunked upload: 100 % uploaded (15728640)
+0034.278 (0) Google Drive: OK: Archive backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip uploaded in 3.07 seconds
+0034.290 (0) Recording as successfully uploaded: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip
+0034.314 (0) Deleting local file: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip: OK
+0034.348 (0) Exclusion option setting (uploads): backup*,*backups,backwpup*,wp-clone,snapshots
+0034.357 (0) Looking for candidates to backup in: /var/www/autographyachts.com/html/wp-content/uploads
+0034.367 (0) finding files: elementor: adding to list (1)
+0034.378 (0) finding files: template-kits: adding to list (2)
+0034.388 (0) finding files: astra-docs: adding to list (3)
+0034.402 (0) finding files: wpforms: adding to list (4)
+0034.411 (0) finding files: 2025: adding to list (5)
+0034.421 (0) Beginning creation of dump of uploads (split every: 400 MB)
+0034.456 (0) Total entities for the zip file: 23 directories, 1227 files (0 skipped as non-modified), 71.4 MB
+0034.467 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 100 files added (on-disk size: 0 KB)
+0034.479 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 200 files added (on-disk size: 0 KB)
+0034.490 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 300 files added (on-disk size: 0 KB)
+0034.503 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 400 files added (on-disk size: 0 KB)
+0034.514 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 500 files added (on-disk size: 0 KB)
+0034.525 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 600 files added (on-disk size: 0 KB)
+0034.536 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 700 files added (on-disk size: 0 KB)
+0034.547 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 800 files added (on-disk size: 0 KB)
+0034.559 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 900 files added (on-disk size: 0 KB)
+0034.570 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 1000 files added (on-disk size: 0 KB)
+0034.580 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (54.1 MB, 1227 files batched, 1001 (1001) added so far); re-opening (prior size: 0 KB)
+0036.549 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 1100 files added (on-disk size: 51379.6 KB)
+0036.560 (0) Zip: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.tmp: 1200 files added (on-disk size: 51379.6 KB)
+0037.129 (0) Creating zip file manifest (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.list-temp.tmp)
+0037.141 (0) Successfully created zip file manifest (size: 84351)
+0037.775 (0) Created uploads zip (0) - 69178.1 KB in 3.3 s (20767.9 KB/s) (sha1: f9c234cd540e8f099b21d7f3a20ad6f46bd9d877, sha256: 31fde28f22df93ccc9cff54cdcc2b83ff48c6696d5981359ab27de344a4c0152)
+0037.813 (0) Cloud backup selection (1/1): googledrive with instance (1/1) (last)
+0037.823 (0) Beginning dispatch of backup to remote (googledrive) (instance identifier s-933a229f32366460db4a4beb1757746a)
+0038.107 (0) Google Drive: quota usage: used=6278.5 MB, total=283115520 MB, available=283109241.5 MB
+0038.116 (0) Google Drive: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip: Attempting to upload to Google Drive (into folder id: 1GOfcH7ekMMU736Yqgms5EBuyZPmUJRO9)
+0038.760 (0) Googledrive chunked upload: 1.5 % uploaded (1048576 - increasing chunk size to 2048 KB - memory usage: 21.6 / 38)
+0038.998 (0) Googledrive chunked upload: 4.4 % uploaded (3145728 - increasing chunk size to 4096 KB - memory usage: 21.7 / 38)
+0039.283 (0) Googledrive chunked upload: 10.4 % uploaded (7340032 - increasing chunk size to 8192 KB - memory usage: 21.7 / 38)
+0039.581 (0) Googledrive chunked upload: 22.2 % uploaded (15728640 - increasing chunk size to 16384 KB - memory usage: 21.7 / 38)
+0039.981 (0) Googledrive chunked upload: 45.9 % uploaded (32505856 - increasing chunk size to 32768 KB - memory usage: 21.7 / 38)
+0040.612 (0) Googledrive chunked upload: 93.3 % uploaded (66060288 - increasing chunk size to 65536 KB - memory usage: 21.7 / 38)
+0041.910 (0) Googledrive chunked upload: 100 % uploaded (66060288)
+0041.944 (0) Google Drive: OK: Archive backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip uploaded in 3.81 seconds
+0041.956 (0) Recording as successfully uploaded: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip
+0041.987 (0) Deleting local file: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip: OK
+0042.010 (0) No backup of mu-plugins: excluded by user's options
+0042.034 (0) Beginning backup of other directories found in the content directory (index: 0)
+0042.044 (0) Exclusion option setting (others): upgrade,cache,updraft,backup*,*backups,mysql.sql,debug.log
+0042.054 (0) Looking for candidates to backup in: /var/www/autographyachts.com/html/wp-content
+0042.066 (0) finding files: wflogs: adding to list (1)
+0042.075 (0) finding files: upgrade-temp-backup: adding to list (2)
+0042.087 (0) finding files: upgrade: skipping: excluded by options
+0042.097 (0) finding files: uploads: skipping: this is the uploads directory
+0042.108 (0) finding files: themes: skipping: this is the themes directory
+0042.118 (0) finding files: updraft: skipping: this is the updraft directory
+0042.127 (0) finding files: index.php: adding to list (3)
+0042.136 (0) finding files: cache: skipping: excluded by options
+0042.146 (0) finding files: plugins: skipping: this is the plugins directory
+0042.171 (0) Total entities for the zip file: 3 directories, 11 files (0 skipped as non-modified), 9.9 MB
+0047.184 (0) Creating zip file manifest (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-others.zip.list-temp.tmp)
+0047.194 (0) Successfully created zip file manifest (size: 365)
+0047.279 (0) Created others zip (0) - 4789.4 KB in 5.1 s (937.4 KB/s) (sha1: 47a90b8836184c9874c9be7618e9f0a467923745, sha256: dcc600fe4889107cb0c3d85c3d19e7b1b62527efc0c7468ffe092421e6d4ef09)
+0047.311 (0) Cloud backup selection (1/1): googledrive with instance (1/1) (last)
+0047.322 (0) Beginning dispatch of backup to remote (googledrive) (instance identifier s-933a229f32366460db4a4beb1757746a)
+0047.623 (0) Google Drive: quota usage: used=6346.1 MB, total=283115520 MB, available=283109173.9 MB
+0047.634 (0) Google Drive: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-others.zip: Attempting to upload to Google Drive (into folder id: 1GOfcH7ekMMU736Yqgms5EBuyZPmUJRO9)
+0048.336 (0) Googledrive chunked upload: 21.4 % uploaded (1048576 - increasing chunk size to 2048 KB - memory usage: 21.5 / 38)
+0048.609 (0) Googledrive chunked upload: 64.1 % uploaded (3145728 - increasing chunk size to 4096 KB - memory usage: 21.5 / 38)
+0049.923 (0) Googledrive chunked upload: 100 % uploaded (3145728)
+0049.954 (0) Google Drive: OK: Archive backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-others.zip uploaded in 2.31 seconds
+0049.966 (0) Recording as successfully uploaded: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-others.zip
+0049.990 (0) Deleting local file: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-others.zip: OK
+0050.047 (0) Saving backup status to database (elements: 8)
+0050.073 (0) Beginning creation of database dump (WordPress DB)
+0050.085 (0) SQL compatibility mode is: NO_ENGINE_SUBSTITUTION
+0050.107 (0) Testing potential mysqldump binary: /usr/bin/mysqldump
+0050.225 (0) Output: /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\n/*!40103 SET TIME_ZONE='+00:00' */;\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\n/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\n/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\n/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\nSET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;\nSET @@SESSION.SQL_LOG_BIN= 0;\nSET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '';\nDROP TABLE IF EXIST (truncated - 1722 bytes total)
+0050.236 (0) Working binary mysqldump found: /usr/bin/mysqldump
+0050.294 (0) Table wp_options: Total expected rows (via COUNT): 436
+0050.304 (0) Table is relatively small; fetch_rows will thus be: 500 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0050.389 (0) Table wp_options: Rows added in this batch (next record: 22223): 432 (uncompressed bytes in this segment=1273998) in 0.11 seconds
+0050.434 (0) Table wp_options: finishing file(s) (2, 311.2 KB)
+0050.462 (0) Table wp_users: Total expected rows (via COUNT): 4
+0050.474 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0050.500 (0) Table wp_users: Rows added in this batch (next record: 4): 4 (uncompressed bytes in this segment=1995) in 0.04 seconds
+0050.534 (0) Table wp_users: finishing file(s) (2, 0.9 KB)
+0050.575 (0) Table wp_usermeta: Total expected rows (via COUNT): 88
+0050.587 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0050.613 (0) Table wp_usermeta: Rows added in this batch (next record: 91): 88 (uncompressed bytes in this segment=7506) in 0.05 seconds
+0050.657 (0) Table wp_usermeta: finishing file(s) (2, 3.1 KB)
+0050.705 (0) Table wp_actionscheduler_actions: Total expected rows (via COUNT): 124
+0050.717 (0) Table is relatively small; fetch_rows will thus be: 200 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0050.745 (0) Table wp_actionscheduler_actions: Rows added in this batch (next record: 212): 124 (uncompressed bytes in this segment=59738) in 0.06 seconds
+0050.792 (0) Table wp_actionscheduler_actions: finishing file(s) (2, 4.4 KB)
+0050.826 (0) Table wp_actionscheduler_claims: Total expected rows (via COUNT): 0
+0050.848 (0) Table wp_actionscheduler_claims: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=623) in 0.03 seconds
+0050.884 (0) Table wp_actionscheduler_claims: finishing file(s) (2, 0.4 KB)
+0050.914 (0) Table wp_actionscheduler_groups: Total expected rows (via COUNT): 4
+0050.923 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0050.952 (0) Table wp_actionscheduler_groups: Rows added in this batch (next record: 4): 4 (uncompressed bytes in this segment=749) in 0.04 seconds
+0050.986 (0) Table wp_actionscheduler_groups: finishing file(s) (2, 0.4 KB)
+0051.016 (0) Table wp_actionscheduler_logs: Total expected rows (via COUNT): 360
+0051.026 (0) Table is relatively small; fetch_rows will thus be: 500 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0051.052 (0) Table wp_actionscheduler_logs: Rows added in this batch (next record: 605): 360 (uncompressed bytes in this segment=31491) in 0.04 seconds
+0051.086 (0) Table wp_actionscheduler_logs: finishing file(s) (2, 3.3 KB)
+0051.125 (0) Table wp_commentmeta: Total expected rows (via COUNT): 0
+0051.147 (0) Table wp_commentmeta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=677) in 0.03 seconds
+0051.197 (0) Table wp_commentmeta: finishing file(s) (2, 0.4 KB)
+0051.226 (0) Table wp_comments: Total expected rows (via COUNT): 1
+0051.236 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0051.263 (0) Table wp_comments: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=2118) in 0.04 seconds
+0051.296 (0) Table wp_comments: finishing file(s) (2, 0.7 KB)
+0051.338 (0) Table wp_e_notes: Total expected rows (via COUNT): 0
+0051.362 (0) Table wp_e_notes: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=2049) in 0.04 seconds
+0051.412 (0) Table wp_e_notes: finishing file(s) (2, 0.8 KB)
+0051.448 (0) Table wp_e_notes_users_relations: Total expected rows (via COUNT): 0
+0051.459 (0) Table wp_e_notes_users_relations: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=871) in 0.01 seconds
+0051.495 (0) Table wp_e_notes_users_relations: finishing file(s) (2, 0.4 KB)
+0051.526 (0) Table wp_links: Total expected rows (via COUNT): 0
+0051.539 (0) Table wp_links: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1298) in 0.02 seconds
+0051.575 (0) Table wp_links: finishing file(s) (2, 0.5 KB)
+0051.629 (0) Table wp_postmeta: Total expected rows (approximate): 4359
+0052.041 (0) Table wp_postmeta: Rows added in this batch (next record: 7111): 4387 (uncompressed bytes in this segment=11903625) in 0.43 seconds
+0052.085 (0) Table wp_postmeta: finishing file(s) (2, 1187.6 KB)
+0052.126 (0) Table wp_posts: Total expected rows (via COUNT): 794
+0052.208 (0) Table wp_posts: Rows added in this batch (next record: 856): 794 (uncompressed bytes in this segment=2226901) in 0.10 seconds
+0052.257 (0) Table wp_posts: finishing file(s) (2, 153 KB)
+0052.289 (0) Table wp_term_relationships: Total expected rows (approximate): 73
+0052.310 (0) Table wp_term_relationships: Rows added in this batch (next record: 100000): 73 (uncompressed bytes in this segment=1670) in 0.02 seconds
+0052.342 (0) Table wp_term_relationships: finishing file(s) (2, 0.6 KB)
+0052.386 (0) Table wp_term_taxonomy: Total expected rows (via COUNT): 9
+0052.398 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0052.421 (0) Table wp_term_taxonomy: Rows added in this batch (next record: 9): 9 (uncompressed bytes in this segment=1217) in 0.05 seconds
+0052.470 (0) Table wp_term_taxonomy: finishing file(s) (2, 0.5 KB)
+0052.512 (0) Table wp_termmeta: Total expected rows (via COUNT): 0
+0052.535 (0) Table wp_termmeta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=650) in 0.04 seconds
+0052.581 (0) Table wp_termmeta: finishing file(s) (2, 0.4 KB)
+0052.607 (0) Table wp_terms: Total expected rows (via COUNT): 9
+0052.618 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0052.643 (0) Table wp_terms: Rows added in this batch (next record: 9): 9 (uncompressed bytes in this segment=985) in 0.04 seconds
+0052.678 (0) Table wp_terms: finishing file(s) (2, 0.5 KB)
+0052.707 (0) Table wp_e_events: Total expected rows (via COUNT): 9
+0052.717 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0052.730 (0) Table wp_e_events: Rows added in this batch (next record: 9): 9 (uncompressed bytes in this segment=2821) in 0.03 seconds
+0052.765 (0) Table wp_e_events: finishing file(s) (2, 0.8 KB)
+0052.798 (0) Table wp_e_submissions: Total expected rows (via COUNT): 0
+0052.822 (0) Table wp_e_submissions: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=2254) in 0.03 seconds
+0052.856 (0) Table wp_e_submissions: finishing file(s) (2, 0.7 KB)
+0052.889 (0) Table wp_e_submissions_actions_log: Total expected rows (via COUNT): 0
+0052.899 (0) Table wp_e_submissions_actions_log: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1243) in 0.01 seconds
+0052.932 (0) Table wp_e_submissions_actions_log: finishing file(s) (2, 0.5 KB)
+0052.977 (0) Table wp_e_submissions_values: Total expected rows (via COUNT): 0
+0052.987 (0) Table wp_e_submissions_values: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=716) in 0.03 seconds
+0053.036 (0) Table wp_e_submissions_values: finishing file(s) (2, 0.4 KB)
+0053.081 (0) Table wp_ea11y_page_scanned: Total expected rows (via COUNT): 0
+0053.096 (0) Table wp_ea11y_page_scanned: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1209) in 0.03 seconds
+0053.141 (0) Table wp_ea11y_page_scanned: finishing file(s) (2, 0.5 KB)
+0053.176 (0) Table wp_ea11y_pages_remediation: Total expected rows (via COUNT): 0
+0053.191 (0) Table wp_ea11y_pages_remediation: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1025) in 0.02 seconds
+0053.231 (0) Table wp_ea11y_pages_remediation: finishing file(s) (2, 0.5 KB)
+0053.263 (0) Table wp_ea11y_scanner_results: Total expected rows (via COUNT): 0
+0053.273 (0) Table wp_ea11y_scanner_results: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=828) in 0.01 seconds
+0053.307 (0) Table wp_ea11y_scanner_results: finishing file(s) (2, 0.4 KB)
+0053.337 (0) Table wp_wfauditevents: Total expected rows (via COUNT): 0
+0053.350 (0) Table wp_wfauditevents: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=700) in 0.02 seconds
+0053.384 (0) Table wp_wfauditevents: finishing file(s) (2, 0.4 KB)
+0053.442 (0) Table wp_wfblockediplog: Total expected rows (approximate): 766
+0053.459 (0) Table wp_wfblockediplog: Rows added in this batch (next record: 1000): 766 (uncompressed bytes in this segment=49635) in 0.03 seconds
+0053.496 (0) Table wp_wfblockediplog: finishing file(s) (2, 6 KB)
+0053.534 (0) Table wp_wfblocks7: Total expected rows (via COUNT): 5
+0053.546 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0053.575 (0) Table wp_wfblocks7: Rows added in this batch (next record: 1090): 5 (uncompressed bytes in this segment=1606) in 0.05 seconds
+0053.609 (0) Table wp_wfblocks7: finishing file(s) (2, 0.7 KB)
+0053.639 (0) Table wp_wfconfig: Total expected rows (approximate): 279
+0053.708 (0) Table wp_wfconfig: Rows added in this batch (next record: 1000): 282 (uncompressed bytes in this segment=886787) in 0.07 seconds
+0053.742 (0) Table wp_wfconfig: finishing file(s) (2, 448.5 KB)
+0053.773 (0) Table wp_wfcrawlers: Total expected rows (approximate): 1
+0053.784 (0) Table wp_wfcrawlers: Rows added in this batch (next record: 1000): 1 (uncompressed bytes in this segment=721) in 0.01 seconds
+0053.818 (0) Table wp_wfcrawlers: finishing file(s) (2, 0.4 KB)
+0053.850 (0) Table wp_wffilechanges: Total expected rows (approximate): 0
+0053.861 (0) Table wp_wffilechanges: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=455) in 0.01 seconds
+0053.895 (0) Table wp_wffilechanges: finishing file(s) (2, 0.3 KB)
+0053.922 (0) Table wp_wffilemods: Total expected rows (approximate): 14567
+0054.249 (0) Table wp_wffilemods: binary mysqldump finished (writes: 44, bytes 5982057, return code 0) in 0.32 seconds
+0054.271 (0) Table wp_wffilemods: finishing file(s) (1, 1707.4 KB)
+0054.300 (0) Table wp_wfhits: Total expected rows (approximate): 1751
+0054.336 (0) Table wp_wfhits: Rows added in this batch (next record: 4685): 1843 (uncompressed bytes in this segment=714875) in 0.04 seconds
+0054.369 (0) Table wp_wfhits: finishing file(s) (2, 46.4 KB)
+0054.397 (0) Table wp_wfhoover: Total expected rows (via COUNT): 0
+0054.408 (0) Table wp_wfhoover: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=475) in 0.01 seconds
+0054.442 (0) Table wp_wfhoover: finishing file(s) (2, 0.3 KB)
+0054.471 (0) Table wp_wfissues: Total expected rows (via COUNT): 4
+0054.482 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0054.504 (0) Table wp_wfissues: Rows added in this batch (next record: 408): 4 (uncompressed bytes in this segment=4624) in 0.04 seconds
+0054.537 (0) Table wp_wfissues: finishing file(s) (2, 1.9 KB)
+0054.564 (0) Table wp_wfknownfilelist: Total expected rows (approximate): 15753
+0054.735 (0) Table wp_wfknownfilelist: binary mysqldump finished (writes: 35, bytes 3362022, return code 0) in 0.16 seconds
+0054.756 (0) Table wp_wfknownfilelist: finishing file(s) (1, 233.2 KB)
+0054.786 (0) Table wp_wflivetraffichuman: Total expected rows (approximate): 0
+0054.808 (0) Table wp_wflivetraffichuman: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=647) in 0.02 seconds
+0054.843 (0) Table wp_wflivetraffichuman: finishing file(s) (2, 0.3 KB)
+0054.872 (0) Table wp_wflocs: Total expected rows (approximate): 2
+0054.883 (0) Table wp_wflocs: Rows added in this batch (next record: 1000): 2 (uncompressed bytes in this segment=934) in 0.01 seconds
+0054.915 (0) Table wp_wflocs: finishing file(s) (2, 0.5 KB)
+0054.949 (0) Table wp_wflogins: Total expected rows (via COUNT): 728
+0054.966 (0) Table wp_wflogins: Rows added in this batch (next record: 728): 728 (uncompressed bytes in this segment=160261) in 0.02 seconds
+0055.001 (0) Table wp_wflogins: finishing file(s) (2, 15.9 KB)
+0055.035 (0) Table wp_wfls_2fa_secrets: Total expected rows (via COUNT): 0
+0055.046 (0) Table wp_wfls_2fa_secrets: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=668) in 0.01 seconds
+0055.078 (0) Table wp_wfls_2fa_secrets: finishing file(s) (2, 0.4 KB)
+0055.106 (0) Table wp_wfls_role_counts: Total expected rows (approximate): 0
+0055.116 (0) Table wp_wfls_role_counts: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=574) in 0.01 seconds
+0055.148 (0) Table wp_wfls_role_counts: finishing file(s) (2, 0.4 KB)
+0055.180 (0) Table wp_wfls_settings: Total expected rows (approximate): 30
+0055.191 (0) Table wp_wfls_settings: Rows added in this batch (next record: 1000): 30 (uncompressed bytes in this segment=2054) in 0.01 seconds
+0055.225 (0) Table wp_wfls_settings: finishing file(s) (2, 0.9 KB)
+0055.259 (0) Table wp_wfnotifications: Total expected rows (approximate): 2
+0055.271 (0) Table wp_wfnotifications: Rows added in this batch (next record: 1000): 2 (uncompressed bytes in this segment=1012) in 0.01 seconds
+0055.304 (0) Table wp_wfnotifications: finishing file(s) (2, 0.6 KB)
+0055.335 (0) Table wp_wfpendingissues: Total expected rows (via COUNT): 1
+0055.345 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0055.371 (0) Table wp_wfpendingissues: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=1453) in 0.04 seconds
+0055.405 (0) Table wp_wfpendingissues: finishing file(s) (2, 0.7 KB)
+0055.437 (0) Table wp_wfreversecache: Total expected rows (approximate): 3
+0055.461 (0) Table wp_wfreversecache: Rows added in this batch (next record: 1000): 3 (uncompressed bytes in this segment=759) in 0.03 seconds
+0055.495 (0) Table wp_wfreversecache: finishing file(s) (2, 0.4 KB)
+0055.528 (0) Table wp_wfsecurityevents: Total expected rows (via COUNT): 0
+0055.539 (0) Table wp_wfsecurityevents: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=677) in 0.01 seconds
+0055.575 (0) Table wp_wfsecurityevents: finishing file(s) (2, 0.4 KB)
+0055.610 (0) Table wp_wfsnipcache: Total expected rows (via COUNT): 0
+0055.626 (0) Table wp_wfsnipcache: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=712) in 0.02 seconds
+0055.665 (0) Table wp_wfsnipcache: finishing file(s) (2, 0.4 KB)
+0055.694 (0) Table wp_wfstatus: Total expected rows (approximate): 1312
+0055.714 (0) Table wp_wfstatus: Rows added in this batch (next record: 6179): 1312 (uncompressed bytes in this segment=128494) in 0.02 seconds
+0055.747 (0) Table wp_wfstatus: finishing file(s) (2, 22.5 KB)
+0055.775 (0) Table wp_wftrafficrates: Total expected rows (approximate): 0
+0055.788 (0) Table wp_wftrafficrates: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=561) in 0.01 seconds
+0055.824 (0) Table wp_wftrafficrates: finishing file(s) (2, 0.3 KB)
+0055.854 (0) Table wp_wfwaffailures: Total expected rows (via COUNT): 0
+0055.864 (0) Table wp_wfwaffailures: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=522) in 0.01 seconds
+0055.898 (0) Table wp_wfwaffailures: finishing file(s) (2, 0.3 KB)
+0055.949 (0) Table wp_wpforms_logs: Total expected rows (via COUNT): 1
+0055.959 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0055.983 (0) Table wp_wpforms_logs: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=890) in 0.06 seconds
+0056.029 (0) Table wp_wpforms_logs: finishing file(s) (2, 0.5 KB)
+0056.069 (0) Table wp_wpforms_payment_meta: Total expected rows (via COUNT): 0
+0056.091 (0) Table wp_wpforms_payment_meta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=731) in 0.04 seconds
+0056.136 (0) Table wp_wpforms_payment_meta: finishing file(s) (2, 0.4 KB)
+0056.171 (0) Table wp_wpforms_payments: Total expected rows (via COUNT): 0
+0056.194 (0) Table wp_wpforms_payments: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1958) in 0.03 seconds
+0056.227 (0) Table wp_wpforms_payments: finishing file(s) (2, 0.6 KB)
+0056.279 (0) Table wp_wpforms_tasks_meta: Total expected rows (via COUNT): 3
+0056.289 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0056.314 (0) Table wp_wpforms_tasks_meta: Rows added in this batch (next record: 8): 3 (uncompressed bytes in this segment=879) in 0.06 seconds
+0056.358 (0) Table wp_wpforms_tasks_meta: finishing file(s) (2, 0.5 KB)
+0056.402 (0) Table wp_wpmailsmtp_debug_events: Total expected rows (via COUNT): 4
+0056.412 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0056.426 (0) Table wp_wpmailsmtp_debug_events: Rows added in this batch (next record: 4): 4 (uncompressed bytes in this segment=2467) in 0.04 seconds
+0056.460 (0) Table wp_wpmailsmtp_debug_events: finishing file(s) (2, 0.8 KB)
+0056.518 (0) Table wp_wpmailsmtp_tasks_meta: Total expected rows (via COUNT): 1
+0056.528 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0056.542 (0) Table wp_wpmailsmtp_tasks_meta: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=762) in 0.05 seconds
+0056.588 (0) Table wp_wpmailsmtp_tasks_meta: finishing file(s) (2, 0.4 KB)
+0056.631 (0) Table wp_yoast_indexable: Total expected rows (via COUNT): 24
+0056.642 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0056.657 (0) Table wp_yoast_indexable: Rows added in this batch (next record: 24): 24 (uncompressed bytes in this segment=17003) in 0.04 seconds
+0056.704 (0) Table wp_yoast_indexable: finishing file(s) (2, 3.6 KB)
+0056.736 (0) Table wp_yoast_indexable_hierarchy: Total expected rows (approximate): 20
+0056.759 (0) Table wp_yoast_indexable_hierarchy: Rows added in this batch (next record: 1000): 20 (uncompressed bytes in this segment=1098) in 0.03 seconds
+0056.798 (0) Table wp_yoast_indexable_hierarchy: finishing file(s) (2, 0.4 KB)
+0056.829 (0) Table wp_yoast_migrations: Total expected rows (via COUNT): 24
+0056.838 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0056.864 (0) Table wp_yoast_migrations: Rows added in this batch (next record: 24): 24 (uncompressed bytes in this segment=1261) in 0.04 seconds
+0056.897 (0) Table wp_yoast_migrations: finishing file(s) (2, 0.6 KB)
+0056.927 (0) Table wp_yoast_primary_term: Total expected rows (via COUNT): 0
+0056.952 (0) Table wp_yoast_primary_term: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=842) in 0.03 seconds
+0056.985 (0) Table wp_yoast_primary_term: finishing file(s) (2, 0.4 KB)
+0057.021 (0) Table wp_yoast_seo_links: Total expected rows (via COUNT): 76
+0057.031 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0057.065 (0) Table wp_yoast_seo_links: Rows added in this batch (next record: 136): 76 (uncompressed bytes in this segment=10485) in 0.05 seconds
+0057.099 (0) Table wp_yoast_seo_links: finishing file(s) (2, 1.7 KB)
+0057.111 (0) PHP event: code E_WARNING: filemtime(): stat failed for /var/www/autographyachts.com/html/wp-content/updraft/backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db.gz (line 1923, wp-content/plugins/updraftplus/backup.php)
+0057.122 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_options.table.tmpr22224.gz (1/61/fopen): adding to final database dump
+0057.134 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_options.table.gz (2/61/fopen): adding to final database dump
+0057.145 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_users.table.tmpr5.gz (3/61/fopen): adding to final database dump
+0057.157 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_users.table.gz (4/61/fopen): adding to final database dump
+0057.169 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_usermeta.table.tmpr92.gz (5/61/fopen): adding to final database dump
+0057.178 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_usermeta.table.gz (6/61/fopen): adding to final database dump
+0057.189 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_actionscheduler_actions.table.tmpr213.gz (7/61/fopen): adding to final database dump
+0057.199 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_actionscheduler_actions.table.gz (8/61/fopen): adding to final database dump
+0057.211 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_actionscheduler_claims.table.tmpr0.gz (9/61/fopen): adding to final database dump
+0057.221 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_actionscheduler_claims.table.gz (10/61/fopen): adding to final database dump
+0057.233 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_actionscheduler_groups.table.tmpr5.gz (11/61/fopen): adding to final database dump
+0057.244 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_actionscheduler_groups.table.gz (12/61/fopen): adding to final database dump
+0057.254 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_actionscheduler_logs.table.tmpr606.gz (13/61/fopen): adding to final database dump
+0057.267 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_actionscheduler_logs.table.gz (14/61/fopen): adding to final database dump
+0057.278 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_commentmeta.table.tmpr0.gz (15/61/fopen): adding to final database dump
+0057.290 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_commentmeta.table.gz (16/61/fopen): adding to final database dump
+0057.301 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_comments.table.tmpr2.gz (17/61/fopen): adding to final database dump
+0057.311 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_comments.table.gz (18/61/fopen): adding to final database dump
+0057.322 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_notes.table.tmpr0.gz (19/61/fopen): adding to final database dump
+0057.332 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_notes.table.gz (20/61/fopen): adding to final database dump
+0057.345 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_notes_users_relations.table.tmpr0.gz (21/61/fopen): adding to final database dump
+0057.355 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_notes_users_relations.table.gz (22/61/fopen): adding to final database dump
+0057.365 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_links.table.tmpr0.gz (23/61/fopen): adding to final database dump
+0057.375 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_links.table.gz (24/61/fopen): adding to final database dump
+0057.387 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_postmeta.table.tmpr7112.gz (25/61/fopen): adding to final database dump
+0057.407 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_postmeta.table.gz (26/61/fopen): adding to final database dump
+0057.416 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_posts.table.tmpr857.gz (27/61/fopen): adding to final database dump
+0057.429 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_posts.table.gz (28/61/fopen): adding to final database dump
+0057.440 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_term_relationships.table.tmpr100001.gz (29/61/fopen): adding to final database dump
+0057.451 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_term_relationships.table.gz (30/61/fopen): adding to final database dump
+0057.463 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_term_taxonomy.table.tmpr10.gz (31/61/fopen): adding to final database dump
+0057.474 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_term_taxonomy.table.gz (32/61/fopen): adding to final database dump
+0057.484 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_termmeta.table.tmpr0.gz (33/61/fopen): adding to final database dump
+0057.497 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_termmeta.table.gz (34/61/fopen): adding to final database dump
+0057.507 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_terms.table.tmpr10.gz (35/61/fopen): adding to final database dump
+0057.520 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_terms.table.gz (36/61/fopen): adding to final database dump
+0057.530 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_events.table.tmpr10.gz (37/61/fopen): adding to final database dump
+0057.541 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_events.table.gz (38/61/fopen): adding to final database dump
+0057.550 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_submissions.table.tmpr0.gz (39/61/fopen): adding to final database dump
+0057.560 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_submissions.table.gz (40/61/fopen): adding to final database dump
+0057.570 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_submissions_actions_log.table.tmpr0.gz (41/61/fopen): adding to final database dump
+0057.582 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_submissions_actions_log.table.gz (42/61/fopen): adding to final database dump
+0057.593 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_submissions_values.table.tmpr0.gz (43/61/fopen): adding to final database dump
+0057.602 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_e_submissions_values.table.gz (44/61/fopen): adding to final database dump
+0057.612 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_ea11y_page_scanned.table.tmpr0.gz (45/61/fopen): adding to final database dump
+0057.626 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_ea11y_page_scanned.table.gz (46/61/fopen): adding to final database dump
+0057.636 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_ea11y_pages_remediation.table.tmpr0.gz (47/61/fopen): adding to final database dump
+0057.647 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_ea11y_pages_remediation.table.gz (48/61/fopen): adding to final database dump
+0057.657 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_ea11y_scanner_results.table.tmpr0.gz (49/61/fopen): adding to final database dump
+0057.669 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_ea11y_scanner_results.table.gz (50/61/fopen): adding to final database dump
+0057.679 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfauditevents.table.tmpr0.gz (51/61/fopen): adding to final database dump
+0057.689 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfauditevents.table.gz (52/61/fopen): adding to final database dump
+0057.700 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfblockediplog.table.tmpr1001.gz (53/61/fopen): adding to final database dump
+0057.709 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfblockediplog.table.gz (54/61/fopen): adding to final database dump
+0057.722 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfblocks7.table.tmpr1091.gz (55/61/fopen): adding to final database dump
+0057.735 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfblocks7.table.gz (56/61/fopen): adding to final database dump
+0057.745 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfconfig.table.tmpr1001.gz (57/61/fopen): adding to final database dump
+0057.761 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfconfig.table.gz (58/61/fopen): adding to final database dump
+0057.771 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfcrawlers.table.tmpr1001.gz (59/61/fopen): adding to final database dump
+0057.784 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfcrawlers.table.gz (60/61/fopen): adding to final database dump
+0057.794 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wffilechanges.table.tmpr1.gz (61/61/fopen): adding to final database dump
+0057.806 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wffilechanges.table.gz (62/61/fopen): adding to final database dump
+0057.815 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wffilemods.table.gz (63/61/fopen): adding to final database dump
+0057.835 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfhits.table.tmpr4686.gz (64/61/fopen): adding to final database dump
+0057.845 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfhits.table.gz (65/61/fopen): adding to final database dump
+0057.855 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfhoover.table.tmpr0.gz (66/61/fopen): adding to final database dump
+0057.867 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfhoover.table.gz (67/61/fopen): adding to final database dump
+0057.876 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfissues.table.tmpr409.gz (68/61/fopen): adding to final database dump
+0057.885 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfissues.table.gz (69/61/fopen): adding to final database dump
+0057.895 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfknownfilelist.table.gz (70/61/fopen): adding to final database dump
+0057.906 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wflivetraffichuman.table.tmpr1.gz (71/61/fopen): adding to final database dump
+0057.916 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wflivetraffichuman.table.gz (72/61/fopen): adding to final database dump
+0057.927 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wflocs.table.tmpr1001.gz (73/61/fopen): adding to final database dump
+0057.937 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wflocs.table.gz (74/61/fopen): adding to final database dump
+0057.948 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wflogins.table.tmpr729.gz (75/61/fopen): adding to final database dump
+0057.959 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wflogins.table.gz (76/61/fopen): adding to final database dump
+0057.969 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfls_2fa_secrets.table.tmpr0.gz (77/61/fopen): adding to final database dump
+0057.980 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfls_2fa_secrets.table.gz (78/61/fopen): adding to final database dump
+0057.990 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfls_role_counts.table.tmpr1.gz (79/61/fopen): adding to final database dump
+0058.001 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfls_role_counts.table.gz (80/61/fopen): adding to final database dump
+0058.011 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfls_settings.table.tmpr1001.gz (81/61/fopen): adding to final database dump
+0058.020 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfls_settings.table.gz (82/61/fopen): adding to final database dump
+0058.030 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfnotifications.table.tmpr1001.gz (83/61/fopen): adding to final database dump
+0058.041 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfnotifications.table.gz (84/61/fopen): adding to final database dump
+0058.050 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfpendingissues.table.tmpr2.gz (85/61/fopen): adding to final database dump
+0058.062 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfpendingissues.table.gz (86/61/fopen): adding to final database dump
+0058.071 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfreversecache.table.tmpr1001.gz (87/61/fopen): adding to final database dump
+0058.081 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfreversecache.table.gz (88/61/fopen): adding to final database dump
+0058.092 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfsecurityevents.table.tmpr0.gz (89/61/fopen): adding to final database dump
+0058.102 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfsecurityevents.table.gz (90/61/fopen): adding to final database dump
+0058.111 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfsnipcache.table.tmpr0.gz (91/61/fopen): adding to final database dump
+0058.122 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfsnipcache.table.gz (92/61/fopen): adding to final database dump
+0058.133 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfstatus.table.tmpr6180.gz (93/61/fopen): adding to final database dump
+0058.145 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfstatus.table.gz (94/61/fopen): adding to final database dump
+0058.156 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wftrafficrates.table.tmpr1.gz (95/61/fopen): adding to final database dump
+0058.166 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wftrafficrates.table.gz (96/61/fopen): adding to final database dump
+0058.177 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfwaffailures.table.tmpr0.gz (97/61/fopen): adding to final database dump
+0058.189 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wfwaffailures.table.gz (98/61/fopen): adding to final database dump
+0058.199 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpforms_logs.table.tmpr2.gz (99/61/fopen): adding to final database dump
+0058.222 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpforms_logs.table.gz (100/61/fopen): adding to final database dump
+0058.233 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpforms_payment_meta.table.tmpr0.gz (101/61/fopen): adding to final database dump
+0058.244 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpforms_payment_meta.table.gz (102/61/fopen): adding to final database dump
+0058.254 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpforms_payments.table.tmpr0.gz (103/61/fopen): adding to final database dump
+0058.265 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpforms_payments.table.gz (104/61/fopen): adding to final database dump
+0058.275 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpforms_tasks_meta.table.tmpr9.gz (105/61/fopen): adding to final database dump
+0058.286 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpforms_tasks_meta.table.gz (106/61/fopen): adding to final database dump
+0058.298 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpmailsmtp_debug_events.table.tmpr5.gz (107/61/fopen): adding to final database dump
+0058.308 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpmailsmtp_debug_events.table.gz (108/61/fopen): adding to final database dump
+0058.319 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpmailsmtp_tasks_meta.table.tmpr2.gz (109/61/fopen): adding to final database dump
+0058.330 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_wpmailsmtp_tasks_meta.table.gz (110/61/fopen): adding to final database dump
+0058.342 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_indexable.table.tmpr25.gz (111/61/fopen): adding to final database dump
+0058.354 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_indexable.table.gz (112/61/fopen): adding to final database dump
+0058.366 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_indexable_hierarchy.table.tmpr1001.gz (113/61/fopen): adding to final database dump
+0058.378 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_indexable_hierarchy.table.gz (114/61/fopen): adding to final database dump
+0058.389 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_migrations.table.tmpr25.gz (115/61/fopen): adding to final database dump
+0058.410 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_migrations.table.gz (116/61/fopen): adding to final database dump
+0058.423 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_primary_term.table.tmpr0.gz (117/61/fopen): adding to final database dump
+0058.437 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_primary_term.table.gz (118/61/fopen): adding to final database dump
+0058.447 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_seo_links.table.tmpr137.gz (119/61/fopen): adding to final database dump
+0058.458 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db-table-wp_yoast_seo_links.table.gz (120/61/fopen): adding to final database dump
+0058.473 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db.gz: finished writing out complete database file (4171.9 KB)
+0058.560 (0) Total database tables backed up: 61 (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db.gz, size: 4272127, sha1: b251689a1e1fb7dfbddc422b0791f7c718b5083a, sha256: 692222be72f07f0eec3a90b498c033d1c1966c6e876442fe42f02e631826065d)
+0058.606 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip: plugins: This file has already been successfully uploaded
+0058.617 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip: themes: This file has already been successfully uploaded
+0058.626 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip: uploads: This file has already been successfully uploaded
+0058.637 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-others.zip: others: This file has already been successfully uploaded
+0058.649 (0) backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db.gz: db: This file has not yet been successfully uploaded: will queue
+0058.660 (0) Saving backup history. Total backup size: 178.5 MB
+0058.688 (0) Requesting upload of the files that have not yet been successfully uploaded (1)
+0058.723 (0) Cloud backup selection (1/1): googledrive with instance (1/1) (last)
+0058.735 (0) Beginning dispatch of backup to remote (googledrive) (instance identifier s-933a229f32366460db4a4beb1757746a)
+0058.972 (0) Google Drive: quota usage: used=6350.7 MB, total=283115520 MB, available=283109169.3 MB
+0058.982 (0) Google Drive: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db.gz: Attempting to upload to Google Drive (into folder id: 1GOfcH7ekMMU736Yqgms5EBuyZPmUJRO9)
+0059.675 (0) Googledrive chunked upload: 24.5 % uploaded (1048576 - increasing chunk size to 2048 KB - memory usage: 21.6 / 48)
+0059.941 (0) Googledrive chunked upload: 73.6 % uploaded (3145728 - increasing chunk size to 4096 KB - memory usage: 21.6 / 48)
+0061.222 (0) Googledrive chunked upload: 100 % uploaded (3145728)
+0061.255 (0) Google Drive: OK: Archive backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db.gz uploaded in 2.26 seconds
+0061.266 (0) Recording as successfully uploaded: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db.gz
+0061.291 (0) Deleting local file: backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-db.gz: OK
+0061.312 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0061.324 (0) Number of backup sets in history: 1; groups (db): 1
+0061.336 (0) Examining (for databases) backup set with group_id=0, nonce=29720f6cd074, datestamp=1754329786 (Aug 04 2025 17:49:46)
+0061.345 (0) This backup set is the backup set just made, so will not be deleted.
+0061.345 (0) Number of backup sets in history: 1; groups (files): 1
+0061.357 (0) Examining (for files) backup set with nonce=29720f6cd074, datestamp=1754329786 (Aug 04 2025 17:49:46)
+0061.357 (0) This backup set is the backup set just made, so will not be deleted.
+0061.369 (0) This backup set is the backup set just made, so will not be deleted.
+0061.369 (0) This backup set is the backup set just made, so will not be deleted.
+0061.369 (0) This backup set is the backup set just made, so will not be deleted.
+0061.369 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0061.380 (0) Retain: saving new backup history (sets now: 1) and finishing retain operation
+0061.405 (0) Resume backup (29720f6cd074, 0): finish run
+0061.438 (0) Decremented the semaphore (fd) by 1
+0061.462 (0) Semaphore (fd) unlocked
+0061.472 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
+0061.504 (0) Deleting zip manifest (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-plugins.zip.list.tmp)
+0061.516 (0) Deleting zip manifest (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-themes.zip.list.tmp)
+0061.531 (0) Deleting zip manifest (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-uploads.zip.list.tmp)
+0061.542 (0) Deleting zip manifest (backup_2025-08-04-1749_Autograph_Yacht_Group_29720f6cd074-others.zip.list.tmp)
+0061.552 (0) No email will/can be sent - the user has not configured an email address.
+0061.564 (0) The backup succeeded and is now complete
