@@ -57,59 +57,6 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
     <meta name="robots" content="noindex">
 <?php }, 1);
 ?>
-
-<style>
-    /* Gallery & layout */
-    #mainCarousel .f-carousel__slide { max-height: 573px; overflow: hidden; }
-    body .main > .container { padding-top: 40px; }
-    @media (min-width:1200px) { .container { max-width: 1360px !important; } }
-    @media (max-width:767.98px) {
-        body .main > .container { padding-top: 0; }
-        #mainCarousel .f-carousel__slide { max-height: 250px !important; }
-    }
-    .product-slider-wrap { box-shadow: none !important; }
-    .product-detail .vessel-meta .title,
-    .product-detail .vessel-meta .location,
-    .product-detail .vessel-meta .price { margin: 0 !important; }
-    .product-detail .vessel-meta { padding: 0 !important; }
-    #mainCarousel { margin-top: 20px !important; }
-    #mainCarousel .f-carousel__slide img { display: block; width: 100%; height: auto; object-fit: contain; object-position: center; }
-    #mainCarousel .f-carousel__slide { height: auto !important; }
-    #mainCarousel, #thumbCarousel { width: 100%; max-width: 100%; }
-    .f-carousel__viewport { overflow: hidden; }
-    .f-carousel__track { display: flex !important; flex-direction: row !important; align-items: flex-start !important; transition: transform .3s ease; }
-    .f-carousel__slide { flex: 0 0 auto !important; width: 100% !important; }
-    #thumbCarousel .f-carousel__track { gap: 10px; }
-    #thumbCarousel .f-carousel__slide { width: 120px !important; flex: 0 0 120px !important; }
-    #thumbCarousel .f-carousel__slide img { width: 100%; height: 80px; object-fit: cover; cursor: pointer; border-radius: 4px; transition: opacity .2s ease; }
-    #thumbCarousel .f-carousel__slide img:hover { opacity: .8; }
-    #thumbCarousel .f-carousel__slide.is-active img { border: 2px solid rgba(53,149,209,1); opacity: 1; }
-    #thumbCarousel .f-carousel__slide:not(.is-active) img { opacity: .7; }
-
-    /* Lightweight lightbox shell (if used later) */
-    .boat-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.95); z-index: 9999; display: flex; align-items: center; justify-content: center; animation: fadeIn .3s ease; }
-    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-    .lightbox-container { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-    .lightbox-track { max-width: 90vw; max-height: 90vh; }
-    .lightbox-slide { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-    .lightbox-slide img { max-width: 90vw; max-height: 90vh; object-fit: contain; user-select: none; }
-    .lightbox-close { position: absolute; top: 20px; right: 30px; background: none; border: none; color: #fff; font-size: 40px; cursor: pointer; z-index: 10001; opacity: .8; transition: opacity .2s; line-height: 1; padding: 0; width: 40px; height: 40px; }
-    .lightbox-close:hover { opacity: 1; }
-    .lightbox-prev, .lightbox-next {
-        position: absolute; top: 50%; transform: translateY(-50%);
-        background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.3);
-        color: #fff; font-size: 30px; width: 50px; height: 50px; border-radius: 50%;
-        cursor: pointer; z-index: 10001; opacity: .7; transition: all .2s; display: flex; align-items: center; justify-content: center; line-height: 1;
-    }
-    .lightbox-prev:hover, .lightbox-next:hover { opacity: 1; background: rgba(255,255,255,.2); }
-    .lightbox-prev { left: 20px; } .lightbox-next { right: 20px; }
-    .lightbox-counter { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 16px; background: rgba(0,0,0,.5); padding: 8px 16px; border-radius: 20px; z-index: 10001; }
-    @media (max-width:768px) {
-        .lightbox-prev, .lightbox-next { width: 40px; height: 40px; font-size: 24px; }
-        .lightbox-close { font-size: 30px; top: 10px; right: 15px; }
-    }
-</style>
-
 <div class="main">
     <div class="container" id="boat-detail" style="margin-top:20px;">
         <div class="product-detail">
@@ -135,7 +82,7 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
                                                 <path d="M-4.437,4.054A5.115,5.115,0,0,0-9.548,9.165a5.754,5.754,0,0,0,.779,2.508,21.5,21.5,0,0,0,1.644,2.622C-5.936,15.949-4.75,17.27-4.75,17.27a.417.417,0,0,0,.59.033l.033-.033s1.186-1.322,2.375-2.976A21.35,21.35,0,0,0-.1,11.673,5.775,5.775,0,0,0,.676,9.165,5.118,5.118,0,0,0-4.437,4.054Zm0,2.2a2.105,2.105,0,0,1,2.1,2.1,2.105,2.105,0,0,1-2.1,2.1,2.1,2.1,0,0,1-2.095-2.1A2.1,2.1,0,0,1-4.437,6.254Z" fill="#007ac0"/>
                                             </g>
                                         </svg>
-                                        <h2 class="location h6 mb-0"><?php echo esc_html($location); ?></h2>
+                                        <h3 class="location h6 mb-0"><?php echo esc_html($location); ?></h3>
                                     </div>
                                 <?php endif; ?>
                             </div>

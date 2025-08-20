@@ -5,8 +5,10 @@
  * - Clear / Apply buttons
  * - URL sync + API calls preserved
  */
+
 (function ($) {
     'use strict';
+    return;
     if (!$) throw new Error('jQuery is required');
  // return;
     // ============================================================================

@@ -65,6 +65,11 @@ add_filter('body_class', function ($classes) {
 /** =========================
  * Frontend Assets
  * ========================= */
+
+add_action('wp_footer', function () {
+    if (!current_user_can('manage_options')) return;
+    echo '<script>console.log("inv_boat:", ' . json_encode(get_query_var('inventory_boat')) . ');</script>';
+});
 add_action('wp_enqueue_scripts', function () {
     $is_list   = (bool) get_query_var('inventory_page');
     $is_detail = (bool) get_query_var('inventory_boat');
@@ -112,6 +117,12 @@ add_action('wp_enqueue_scripts', function () {
 
     /* ---------- JS: DETAIL (/inventory/{slug}) ---------- */
     if ($is_detail) {
+        wp_enqueue_style('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css', [], '5.0');
+        wp_enqueue_style('fancybox-carousel', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.css', [], '5.0');
+
+        wp_register_script('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js', [], '5.0', true);
+        wp_register_script('fancybox-carousel', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.umd.js', [], '5.0', true);
+
         $rel  = 'assets/js/boat.js';
         $abs  = BOATS_INV_PLUGIN_PATH . $rel;
         if (file_exists($abs)) {

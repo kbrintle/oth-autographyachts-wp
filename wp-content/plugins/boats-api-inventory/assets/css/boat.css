@@ -1,421 +1,219 @@
+/* ==========================================================================
+   BOAT DETAIL — GALLERY & META
+   ========================================================================== */
 
-#boat-detail .product-list li,body[data-template=boat] .product-list li,body[data-template=inventory] .product-list li {
-    float: left;
-    margin: 0 0 25px 2%;
-    background: none;
-    width: 32%;
-    -webkit-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: -webkit-transform .3s ease-out,opacity .3s ease-out;
-    -o-transition: all .3s ease-out;
-    -webkit-transition: opacity .3s ease-out,-webkit-transform .3s ease-out;
-    transition: opacity .3s ease-out,-webkit-transform .3s ease-out;
-    -o-transition: opacity .3s ease-out,-o-transform .3s ease-out;
-    transition: transform .3s ease-out,opacity .3s ease-out;
-    transition: transform .3s ease-out,opacity .3s ease-out,-webkit-transform .3s ease-out,-o-transform .3s ease-out;
-    box-shadow: 0 8px 22px #58585833;
-    padding: 0 0 30px
+/* ---- Main container spacing ---- */
+body .main > .container { padding-top: 40px; }
+@media (max-width: 767.98px) {
+    body .main > .container { padding-top: 0; }
 }
 
-#boat-detail .product-list li:nth-child(3n+1),body[data-template=boat] .product-list li:nth-child(3n+1),body[data-template=inventory] .product-list li:nth-child(3n+1) {
-    margin-left: 0
+/* ---- Gallery sizing ---- */
+#mainCarousel { margin-top: 20px; }
+#mainCarousel, #thumbCarousel { width: 100%; max-width: 100%; }
+
+#mainCarousel .f-carousel__slide { max-height: 573px; height: auto !important; overflow: hidden; }
+@media (max-width: 767.98px) {
+    #mainCarousel .f-carousel__slide { max-height: 250px !important; }
+}
+#mainCarousel .f-carousel__slide img {
+    display: block; width: 100%; height: auto; object-fit: contain; object-position: center;
 }
 
-#boat-detail .product-list li.hidden-listing,body[data-template=boat] .product-list li.hidden-listing,body[data-template=inventory] .product-list li.hidden-listing {
-    opacity: 0;
-    -webkit-transform: scale(.8);
-    -o-transform: scale(.8);
-    transform: scale(.8)
-}
+/* Improve touch behavior (manual fallback swipe) */
+#mainCarousel .f-carousel__viewport { overflow: hidden; touch-action: pan-y; }
 
-#boat-detail .product-list li.no-transition,body[data-template=boat] .product-list li.no-transition,body[data-template=inventory] .product-list li.no-transition {
-    -webkit-transition: none;
-    -o-transition: none;
-    transition: none
+/* ---- Thumbnails ---- */
+#thumbCarousel { margin-top: 20px; }
+#thumbCarousel .f-carousel__track { gap: 10px; }
+#thumbCarousel .f-carousel__slide { width: 120px !important; flex: 0 0 120px !important; }
+#thumbCarousel .f-carousel__slide img {
+    width: 100%; height: 80px; object-fit: cover; cursor: pointer; border-radius: 4px; transition: opacity .2s ease;
 }
+#thumbCarousel .f-carousel__slide img:hover { opacity: .8; }
+/* Active thumb (support both class names) */
+#thumbCarousel .f-carousel__slide.is-active img,
+#thumbCarousel .f-carousel__slide.is-nav-selected img { border: 2px solid rgba(53,149,209,1); opacity: 1; }
+#thumbCarousel .f-carousel__slide:not(.is-active):not(.is-nav-selected) img { opacity: .7; }
 
-#boat-detail .product .thumb img,body[data-template=boat] .product .thumb img,body[data-template=inventory] .product .thumb img {
-    display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
-    margin: auto;
-    width: 100%;
-    height: 250px
-}
+/* ---- Desktop-only nav arrows: bigger + reveal on hover ---- */
+/* ---- Desktop-only nav arrows: bigger + reveal on hover (fixed) ---- */
+@media (min-width: 992px) {
+    /* Reset any theme button styles inside the carousel */
+    #mainCarousel .f-carousel__nav,
+    #mainCarousel .f-carousel__nav button,
+    #mainCarousel .f-button,
+    #mainCarousel .is-prev,
+    #mainCarousel .is-next {
+        appearance: none;
+        -webkit-appearance: none;
+        box-shadow: none !important;
+        outline: none !important;
+        border: 0;                 /* will be overridden below */
+        background: transparent;   /* will be overridden below */
+        padding: 0;
+    }
 
-#boat-detail .list-view .product .thumb img,body[data-template=boat] .list-view .product .thumb img,body[data-template=inventory] .list-view .product .thumb img {
-    display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
-    margin: auto;
-    height: 333px;
-    width: 100%
-}
+    /* Actual arrow style */
+    #mainCarousel .f-carousel__nav,
+    #mainCarousel .is-prev,
+    #mainCarousel .is-next {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 64px; height: 64px; border-radius: 999px !important;
+        border: 2px solid rgba(255,255,255,.55) !important;
+        background: rgba(0,0,0,.35) !important;
+        color: #fff !important;
+        font-size: 34px; line-height: 1;
+        display: flex; align-items: center; justify-content: center;
+        z-index: 10; opacity: 0; pointer-events: none;
+        transition: opacity .2s ease, background .2s ease, transform .2s ease;
+    }
 
-#boat-detail .product .meta,body[data-template=boat] .product .meta,body[data-template=inventory] .product .meta {
-    padding: 15px;
-    font-weight: 300
-}
+    #mainCarousel .f-carousel__nav--prev, #mainCarousel .is-prev { left: 12px; }
+    #mainCarousel .f-carousel__nav--next, #mainCarousel .is-next { right: 12px; }
 
-#boat-detail .product .meta .boattitle,body[data-template=boat] .product .meta .boattitle,body[data-template=inventory] .product .meta .boattitle {
-    font-weight: 500;
-    font-size: 18px;
-    margin-bottom: 6px
-}
+    /* Reveal on hover/focus */
+    #mainCarousel:hover .f-carousel__nav,
+    #mainCarousel:hover .is-prev,
+    #mainCarousel:hover .is-next,
+    #mainCarousel .f-carousel__nav:focus-visible,
+    #mainCarousel .is-prev:focus-visible,
+    #mainCarousel .is-next:focus-visible {
+        opacity: 1; pointer-events: auto;
+    }
 
-#boat-detail .product .meta .boattitle2,body[data-template=boat] .product .meta .boattitle2,body[data-template=inventory] .product .meta .boattitle2 {
-    font-weight: 300;
-    font-size: 15px
-}
+    #mainCarousel .f-carousel__nav:hover,
+    #mainCarousel .is-prev:hover,
+    #mainCarousel .is-next:hover,
+    #mainCarousel .f-carousel__nav:focus-visible,
+    #mainCarousel .is-prev:focus-visible,
+    #mainCarousel .is-next:focus-visible {
+        background: rgba(0,0,0,.55) !important;
+        transform: translateY(-50%) scale(1.06);
+    }
 
-#boat-detail .product .meta .boatprice,body[data-template=boat] .product .meta .boatprice,body[data-template=inventory] .product .meta .boatprice {
-    color: #006eb8;
-    font-weight: 300;
-    font-size: 18px;
-    margin-bottom: 10px
-}
-
-#boat-detail .product .meta .price,body[data-template=boat] .product .meta .price,body[data-template=inventory] .product .meta .price {
-    padding-top: 8px
-}
-
-#boat-detail .product .meta .price dd,body[data-template=boat] .product .meta .price dd,body[data-template=inventory] .product .meta .price dd {
-    color: #16134a;
-    font-weight: 300
-}
-
-#boat-detail .product dl,body[data-template=boat] .product dl,body[data-template=inventory] .product dl {
-    padding: 0;
-    margin: 0;
-    float: left;
-    width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden
-}
-
-#boat-detail .product dt,body[data-template=boat] .product dt,body[data-template=inventory] .product dt {
-    padding: 0;
-    margin: 0;
-    float: left;
-    width: 26.08%
-}
-
-#boat-detail .product dd,body[data-template=boat] .product dd,body[data-template=inventory] .product dd {
-    padding: 0;
-    margin: 0;
-    float: right;
-    width: 66%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden
-}
-
-#boat-detail .product dd.options,body[data-template=boat] .product dd.options,body[data-template=inventory] .product dd.options {
-    text-align: center;
-    width: 100%;
-    padding: 10px 0 0;
-    margin: 10px 0 0;
-    border-top: 1px solid #c3c3c3
-}
-
-#boat-detail .product dd.options span,body[data-template=boat] .product dd.options span,body[data-template=inventory] .product dd.options span {
-    margin-left: 12px
-}
-
-#boat-detail .product dd.options span:first-child,body[data-template=boat] .product dd.options span:first-child,body[data-template=inventory] .product dd.options span:first-child {
-    margin-left: 0
-}
-
-#boat-detail .product .meta .button,body[data-template=boat] .product .meta .button,body[data-template=inventory] .product .meta .button {
-    color: #fff;
-    background: #3595d1;
-    border-color: #3595d1;
-    margin-top: 30px
-}
-
-#boat-detail .product .meta .button:hover,body[data-template=boat] .product .meta .button:hover,body[data-template=inventory] .product .meta .button:hover {
-    background: #fff;
-    border: 1px solid #fff;
-    color: #3595d1
-}
-
-#boat-detail .stylish-select .newListSelected2,body[data-template=boat] .stylish-select .newListSelected2,body[data-template=inventory] .stylish-select .newListSelected2 {
-    height: 38px!important
-}
-
-#boat-detail .inline-fields input,body[data-template=boat] .inline-fields input,body[data-template=inventory] .inline-fields input {
-    width: 50%;
-    float: left
-}
-
-#boat-detail .product .custom_label_div .sold,body[data-template=boat] .product .custom_label_div .sold,body[data-template=inventory] .product .custom_label_div .sold {
-    background: #0879dc;
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: #fff;
-    padding: 6px
-}
-
-#boat-detail .product-detail ul,body[data-template=boat] .product-detail ul,body[data-template=inventory] .product-detail ul {
-    list-style: none
-}
-
-#boat-detail .product-detail .vessel-meta,body[data-template=boat] .product-detail .vessel-meta,body[data-template=inventory] .product-detail .vessel-meta {
-    padding: 30px
-}
-
-#boat-detail .product-detail .vessel-meta .title,body[data-template=boat] .product-detail .vessel-meta .title,body[data-template=inventory] .product-detail .vessel-meta .title {
-    font-weight: 500;
-    font-size: 1.5em;
-    padding: 4px 0;
-    margin-bottom: 10px;
-    color: var(--e-global-color-primary);
-    font-family: "Open Sans", Sans-serif;
-}
-
-#boat-detail .product-detail .vessel-meta .location,body[data-template=boat] .product-detail .vessel-meta .location,body[data-template=inventory] .product-detail .vessel-meta .location {
-    font-weight: 400;
-    font-size: 1em;
-    padding: 4px 0;
-    color: #878e91;
-    color: var(--e-global-color-primary);
-    font-family: "Open Sans", Sans-serif;
-}
-#boat-detail .product-detail .vessel-meta svg{ margin-right:5px;}
-#boat-detail .product-detail .vessel-meta .price,body[data-template=boat] .product-detail .vessel-meta .price,body[data-template=inventory] .product-detail .vessel-meta .price {
-    font-weight: 400;
-    font-size: 1.25em;
-    color: #3595d1;
-    padding: 4px 0;
-    color: var(--e-global-color-secondary);
-    font-family: "Open Sans", Sans-serif;
-}
-
-#boat-detail .product-description-wrap,body[data-template=boat] .product-description-wrap,body[data-template=inventory] .product-description-wrap {
-    margin-top: 60px
-}
-
-#boat-detail .product-description-wrap h3,body[data-template=boat] .product-description-wrap h3,body[data-template=inventory] .product-description-wrap h3 {
-    font-weight: 300;
-    margin: 15px 0;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #333
-}
-
-#boat-detail .product-specifications,body[data-template=boat] .product-specifications,body[data-template=inventory] .product-specifications {
-    margin-top: 60px
-}
-
-#boat-detail .product-specifications dl,body[data-template=boat] .product-specifications dl,body[data-template=inventory] .product-specifications dl {
-    border-bottom: 1px solid #eaeaea
-}
-
-#boat-detail .product-specifications dt,body[data-template=boat] .product-specifications dt,body[data-template=inventory] .product-specifications dt {
-    font-size: 16px;
-    font-weight: 300
-}
-
-#boat-detail .product-specifications dd,body[data-template=boat] .product-specifications dd,body[data-template=inventory] .product-specifications dd {
-    font-weight: 100;
-    margin-bottom: .5rem;
-    font-size: 13px;
-    margin-left: 0;
-    min-height: 20px
-}
-
-#boat-detail .product-slider-wrap,body[data-template=boat] .product-slider-wrap,body[data-template=inventory] .product-slider-wrap {
-    box-shadow: 0 8px 22px #58585833
-}
-
-#boat-detail .boat-slider,body[data-template=boat] .boat-slider,body[data-template=inventory] .boat-slider {
-    margin: 0;
-    padding: 0
-}
-
-#boat-detail .boat-slider a,body[data-template=boat] .boat-slider a,body[data-template=inventory] .boat-slider a {
-    position: relative;
-    padding: 0;
-    margin: 0!important;
-    background: none
-}
-
-#boat-detail .boat-slider a img,body[data-template=boat] .boat-slider a img,body[data-template=inventory] .boat-slider a img {
-    width: 100%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    height: auto;
-    max-height: 557px
-}
-
-#boat-detail .contact-box,body[data-template=boat] .contact-box,body[data-template=inventory] .contact-box {
-    background-color: #f1f3f7;
-    border: 1px solid #f1f3f7;
-    padding: 20px;
-    margin-bottom: 20px
-}
-
-#boat-detail .contact-box h6,body[data-template=boat] .contact-box h6,body[data-template=inventory] .contact-box h6 {
-    font-size: 1.25em;
-    color: #333
-}
-
-#boat-detail .contact-box img,body[data-template=boat] .contact-box img,body[data-template=inventory] .contact-box img {
-    width: 125px
-}
-
-#boat-detail .contact-box .contact-info,body[data-template=boat] .contact-box .contact-info,body[data-template=inventory] .contact-box .contact-info {
-    padding-top: 25px
-}
-
-#boat-detail .listing-meta .button:first-of-type,body[data-template=boat] .listing-meta .button:first-of-type,body[data-template=inventory] .listing-meta .button:first-of-type {
-    margin-bottom: 6px;
-    display: inline-block;
-    color: #fff;
-    width: 100%;
-    text-align: center;
-    border-radius: 0;
-}
-
-#boat-detail .listing-meta .inner-table li span{
-    color: var(--e-global-color-primary);
-    font-size: 14px;
-    font-weight: 600;
-}
-#boat-detail .contact-box span,#boat-detail contact-box a,body[data-template=boat] .contact-box span,body[data-template=boat] contact-box a,body[data-template=inventory] .contact-box span,body[data-template=inventory] contact-box a {
-    font-size: 12px;
-    color: #333;
-    outline: none
-}
-
-#boat-detail .inner-table,body[data-template=boat] .inner-table,body[data-template=inventory] .inner-table {
-    width: 100%;
-    display: block;
-    background: #fff
-}
-
-#boat-detail .inner-table strong,body[data-template=boat] .inner-table strong,body[data-template=inventory] .inner-table strong {
-    font-weight: 300;
-    font-size: 14px
-}
-
-#boat-detail .inner-table ul,body[data-template=boat] .inner-table ul,body[data-template=inventory] .inner-table ul {
-    width: 100%;
-    display: block;
-    padding: 0;
-    margin: 0;
-}
-
-#boat-detail .inner-table ul li,body[data-template=boat] .inner-table ul li,body[data-template=inventory] .inner-table ul li {
-    width: 100%;
-    display: inline-block;
-    background: #fff;
-    padding: 15px 30px ;
-}
-
-#boat-detail .inner-table ul li:nth-child(odd),body[data-template=boat] .inner-table ul li:nth-child(odd),body[data-template=inventory] .inner-table ul li:nth-child(odd) {
-    background: #f1f3f7
-}
-
-#boat-detail .inner-table ul li span,body[data-template=boat] .inner-table ul li span,body[data-template=inventory] .inner-table ul li span {
-    width: 50%;
-    float: left;
-    color: #288dc1;
-}
-
-#boat-detail #mainCarousel,body[data-template=boat] #mainCarousel,body[data-template=inventory] #mainCarousel {
-    width: 100%;
-    margin: 0 auto 1rem;
-    --carousel-button-color: #170724;
-    --carousel-button-bg: #fff;
-    --carousel-button-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
-    --carousel-button-svg-width: 20px;
-    --carousel-button-svg-height: 20px;
-    --carousel-button-svg-stroke-width: 2.5
-}
-
-#boat-detail #mainCarousel .carousel__slide,body[data-template=boat] #mainCarousel .carousel__slide,body[data-template=inventory] #mainCarousel .carousel__slide {
-    width: 100%;
-    padding: 0;
-    max-height: 600px
-}
-
-#boat-detail #mainCarousel .carousel__slide img,body[data-template=boat] #mainCarousel .carousel__slide img,body[data-template=inventory] #mainCarousel .carousel__slide img {
-    width: 100%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    -o-object-position: center;
-    object-position: center
-}
-
-#boat-detail #mainCarousel .carousel__button.is-prev,body[data-template=boat] #mainCarousel .carousel__button.is-prev,body[data-template=inventory] #mainCarousel .carousel__button.is-prev {
-    left: -1.5rem
-}
-
-#boat-detail #mainCarousel .carousel__button.is-next,body[data-template=boat] #mainCarousel .carousel__button.is-next,body[data-template=inventory] #mainCarousel .carousel__button.is-next {
-    right: -1.5rem
-}
-
-#boat-detail #mainCarousel .carousel__button:focus,body[data-template=boat] #mainCarousel .carousel__button:focus,body[data-template=inventory] #mainCarousel .carousel__button:focus {
-    outline: none
-}
-
-#boat-detail #thumbCarousel .carousel__slide,body[data-template=boat] #thumbCarousel .carousel__slide,body[data-template=inventory] #thumbCarousel .carousel__slide {
-    opacity: .5;
-    padding: 0;
-    margin: .25rem;
-    width: 96px;
-    height: 64px
-}
-
-#boat-detail #thumbCarousel .carousel__slide img,body[data-template=boat] #thumbCarousel .carousel__slide img,body[data-template=inventory] #thumbCarousel .carousel__slide img {
-    -o-object-fit: cover;
-    -o-object-position: center;
-    object-position: center;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px
-}
-
-#boat-detail #thumbCarousel .carousel__slide.is-nav-selected,body[data-template=boat] #thumbCarousel .carousel__slide.is-nav-selected,body[data-template=inventory] #thumbCarousel .carousel__slide.is-nav-selected {
-    opacity: 1
-}
-
-#boat-detail a.button.blue{
-    background-color: var(--e-global-color-primary);
-    color: #fff;
-    border: 1px solid #fff;
-    text-transform: uppercase;
-}
-
-#boat-detail a.button.blue:hover{
-    background-color: #fff;
-    border: 1px solid var(--e-global-color-primary);
-    color: var(--e-global-color-primary);
-}
-
-@media (max-width: 544px) {
-    #boat-detail a.button.blue{
-        padding: 17px 30px;
+    /* If Fancyapps injects SVG icons, make them nice and big */
+    #mainCarousel .f-carousel__nav svg,
+    #mainCarousel .f-button svg {
+        width: 28px; height: 28px; stroke-width: 2.5;
     }
 }
-#boat-detail #emailBrokerBtn{
-    background-color: var(--e-global-color-secondary);
-    font-family: "Open Sans", Sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    text-transform: uppercase;
-    line-height: 1.4em;
-    border-style: solid;
 
-    border-color: var(--e-global-color-secondary);
-    border-radius: 2px 2px 2px 2px;
-    padding: 12px 30px;
+/* Hide nav on mobile */
+@media (max-width: 991.98px) {
+    #mainCarousel .f-carousel__nav,
+    #mainCarousel .is-prev,
+    #mainCarousel .is-next { display: none !important; }
 }
-#boat-detail #emailBrokerBtn:hover{
-    opacity: 0.8;
+
+/* ---- Product header/meta ---- */
+.product-slider-wrap { box-shadow: none !important; }
+.product-detail .vessel-meta { padding: 0 !important; }
+.product-detail .vessel-meta .title,
+.product-detail .vessel-meta .location,
+.product-detail .vessel-meta .price { margin: 0 !important;  font-family: "Poppins", Sans-serif; }
+.product-detail .vessel-meta .location{ font-size: 16px; }
+#boat-detail .product-detail .vessel-meta svg { margin-right: 5px; }
+
+/* ==========================================================================
+   FALLBACK LIGHTBOX (used by manual JS when Fancybox not present)
+   ========================================================================== */
+.boat-lightbox {
+    position: fixed; inset: 0; background: rgba(0,0,0,.95);
+    z-index: 9999; display: flex; align-items: center; justify-content: center;
+    animation: fadeIn .3s ease;
+}
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+.lightbox-container {
+    position: relative; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+}
+.lightbox-track { max-width: 90vw; max-height: 90vh; }
+.lightbox-slide { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.lightbox-slide img { max-width: 90vw; max-height: 90vh; object-fit: contain; user-select: none; }
+
+.lightbox-close {
+    position: absolute; top: 20px; right: 30px;
+    background: none; border: none; color: #fff; font-size: 40px;
+    cursor: pointer; z-index: 10001; opacity: .8; transition: opacity .2s;
+    line-height: 1; padding: 0; width: 40px; height: 40px;
+}
+.lightbox-close:hover { opacity: 1; }
+
+.lightbox-prev, .lightbox-next {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.3);
+    color: #fff; font-size: 30px; width: 50px; height: 50px; border-radius: 50%;
+    cursor: pointer; z-index: 10001; opacity: .7; transition: all .2s;
+    display: flex; align-items: center; justify-content: center; line-height: 1;
+}
+.lightbox-prev:hover, .lightbox-next:hover { opacity: 1; background: rgba(255,255,255,.2); }
+.lightbox-prev { left: 20px; } .lightbox-next { right: 20px; }
+.lightbox-counter {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    color: #fff; font-size: 16px; background: rgba(0,0,0,.5); padding: 8px 16px; border-radius: 20px; z-index: 10001;
+}
+@media (max-width: 768px) {
+    .lightbox-prev, .lightbox-next { width: 40px; height: 40px; font-size: 24px; }
+    .lightbox-close { font-size: 30px; top: 10px; right: 15px; }
+}
+
+/* ==========================================================================
+   SIDEBAR / INFO BOXES / BUTTONS / SPECS
+   ========================================================================== */
+#boat-detail .inner-table { width: 100%; display: block; background: #fff; }
+#boat-detail .inner-table ul { width: 100%; display: block; padding: 0; margin: 0; }
+#boat-detail .inner-table ul li {
+    width: 100%; display: inline-block; background: #fff; padding: 15px 30px;
+}
+#boat-detail .inner-table ul li:nth-child(odd) { background: #f1f3f7; }
+#boat-detail .inner-table ul li span { width: 50%; float: left; color: #288dc1; }
+#boat-detail .inner-table strong { font-weight: 300; font-size: 14px; }
+#boat-detail .listing-meta .button:first-of-type {
+    margin-bottom: 6px; display: inline-block; color: #fff; width: 100%; text-align: center; border-radius: 0;
+}
+
+#boat-detail .contact-box {
+    background-color: #f1f3f7; border: 1px solid #f1f3f7; padding: 20px; margin-bottom: 20px;
+}
+#boat-detail .contact-box h6 { font-size: 1.25em; color: #333; }
+#boat-detail .contact-box img { width: 125px; }
+#boat-detail .contact-box .contact-info { padding-top: 25px; }
+#boat-detail .listing-meta .inner-table li span {
+    color: var(--e-global-color-primary); font-size: 14px; font-weight: 600;
+}
+
+/* “Sold” label */
+#boat-detail .product .custom_label_div .sold {
+    background: #0879dc; position: absolute; left: 0; top: 0; color: #fff; padding: 6px;
+}
+
+/* Product description & specs */
+#boat-detail .product-description-wrap { margin-top: 60px; }
+#boat-detail .product-description-wrap h3 {
+    font-weight: 300; margin: 15px 0; padding-bottom: 8px; border-bottom: 1px solid #333;
+}
+#boat-detail .product-specifications { margin-top: 60px; }
+#boat-detail .product-specifications dl { border-bottom: 1px solid #eaeaea; }
+#boat-detail .product-specifications dt { font-size: 16px; font-weight: 300; }
+#boat-detail .product-specifications dd {
+    font-weight: 100; margin-bottom: .5rem; font-size: 13px; margin-left: 0; min-height: 20px;
+}
+
+/* Buttons */
+#boat-detail a.button.blue {
     background-color: var(--e-global-color-primary);
+    color: #fff; border: 1px solid #fff; text-transform: uppercase;
 }
+#boat-detail a.button.blue:hover {
+    background-color: #fff; border: 1px solid var(--e-global-color-primary); color: var(--e-global-color-primary);
+}
+@media (max-width: 544px) {
+    #boat-detail a.button.blue { padding: 17px 30px; }
+}
+#boat-detail #emailBrokerBtn {
+    background-color: var(--e-global-color-secondary);
+    font-family: "Open Sans", Sans-serif; font-size: 15px; font-weight: 400; text-transform: uppercase; line-height: 1.4em;
+    border-style: solid; border-color: var(--e-global-color-secondary); border-radius: 2px; padding: 12px 30px;
+}
+#boat-detail #emailBrokerBtn:hover { opacity: 0.8; background-color: var(--e-global-color-primary); }
