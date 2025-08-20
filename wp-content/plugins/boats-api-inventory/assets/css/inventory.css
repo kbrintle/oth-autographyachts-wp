@@ -1,0 +1,230 @@
+/* Uniform card images */
+.product-list li{
+    margin-bottom: 1.5rem;
+}
+.product-list .card-img-top,
+#listingholder .card-img-top {
+    height: 260px !important;   /* try 240–300px if you prefer */
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Equal height cards + button pinned to bottom */
+.product-list .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+.product-list .card-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+.product-list .card-body .btn {
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Light inputs, scoped to inventory page */
+#boats-inventory .form-control,
+#boats-inventory .form-select,
+#boats-inventory input,
+#boats-inventory select,
+#boats-inventory textarea {
+    background-color: #fff !important;
+    color: #212529 !important;
+    border-color: #d1d5db !important; /* gray-300 */
+    border-radius: .75rem;             /* rounded-xl vibe */
+}
+
+#boats-inventory ::placeholder { color: #6c757d !important; }
+
+/* Make multi-select */
+#boats-inventory .make-control { cursor: text; }
+#boats-inventory .selected-chips .chip {
+    background:#f3f4f6; /* gray-100 */
+    border-radius:.5rem;
+    padding:.25rem .5rem;
+    font-size:.775rem;
+    display:inline-flex;
+    align-items:center;
+    gap:.35rem;
+}
+#boats-inventory .selected-chips .chip button {
+    border:0; background:transparent; line-height:1; padding:0; cursor:pointer;
+}
+#boats-inventory .dropdown-panel .item-btn {
+    width:100%; text-align:left; padding:.5rem .75rem; border:0; background:#fff;
+    display:flex; gap:.6rem; align-items:center; cursor:pointer;
+}
+#boats-inventory .dropdown-panel .item-btn:hover,
+#boats-inventory .dropdown-panel .item-btn.active { background:#f8fafc; } /* gray-50 */
+
+#boats-inventory input[type="search"] {
+    background:#fff !important;
+    color:#212529 !important;
+    caret-color:#212529 !important;
+}
+#boats-inventory ::placeholder { color:#6c757d !important; }
+
+/* INPUT LOOK for the Make control */
+#boats-inventory .make-toggle,
+#boats-inventory #mfcname.btn {
+    background:#fff !important;
+    color:#212529 !important;
+    border:1px solid #d1d5db !important;        /* gray-300 */
+    border-radius:.5rem !important;              /* match rounded inputs */
+    padding:.375rem .75rem !important;           /* match form-control */
+    line-height:1.5 !important;
+    height:auto !important;
+    box-shadow:none !important;
+    display:flex;                                /* left text + caret */
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    text-align:left;
+    font-weight:400 !important;
+}
+#boats-inventory #mfcname.btn:hover,
+#boats-inventory .make-toggle:hover {
+    background:#fff !important;
+}
+
+/* Add a small caret to the right so it reads like a select */
+#boats-inventory .make-toggle::after,
+#boats-inventory #mfcname.btn::after {
+    content:"";
+    width:0; height:0;
+    border-left:4px solid transparent;
+    border-right:4px solid transparent;
+    border-top:6px solid #6c757d;               /* gray-600 */
+    margin-left:.5rem;
+}
+
+/* Focus ring to match Bootstrap inputs */
+#boats-inventory .make-toggle:focus,
+#boats-inventory #mfcname.btn:focus {
+    outline:0 !important;
+    border-color:#86b7fe !important;
+    box-shadow:0 0 0 .25rem rgba(13,110,253,.25) !important;
+}
+
+/* Dropdown panel to match form controls */
+#boats-inventory .dropdown-panel,
+#boats-inventory .custom-dropdown-menu {
+    background:#fff;
+    border:1px solid #d1d5db;
+    border-radius:.5rem;
+    margin-top:.25rem;
+    box-shadow:0 6px 24px rgba(0,0,0,.07);
+}
+
+/* Make the search inside the dropdown look like the other inputs */
+#boats-inventory .dropdown-panel .make-search {
+    background:#fff; color:#212529; border-color:#d1d5db;
+}
+
+/* Dropdown toolbar layout */
+#boats-inventory .facet-toolbar {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+#boats-inventory .facet-toolbar .facet-search {
+    flex: 1;
+    height: 32px;                    /* compact */
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    background: #fff;
+    color: #212529;
+    border: 1px solid #d1d5db;
+    border-radius: .5rem;
+}
+
+/* Compact buttons (xs) */
+#boats-inventory .btn-xs {
+    padding: .2rem .5rem;
+    font-size: .75rem;
+    line-height: 1.2;
+    border-radius: .375rem;
+}
+
+/* Button styles for Clear/Apply */
+#boats-inventory .dropdown-panel .make-clear {
+    background: #fff;
+    color: #1f2937;
+    border: 1px solid #d1d5db;
+}
+#boats-inventory .dropdown-panel .make-clear:hover {
+    background: #f8fafc;
+}
+
+#boats-inventory .dropdown-panel .make-apply {
+    background: #0d2a45;             /* navy to match your theme */
+    border: 1px solid #0d2a45;
+}
+#boats-inventory .dropdown-panel .make-apply:hover {
+    filter: brightness(1.08);
+}
+
+/* Tighter list items */
+#boats-inventory .dropdown-panel li[data-value],
+#boats-inventory .dropdown-panel li .d-flex.align-items-center {
+    padding-top: .35rem !important;
+    padding-bottom: .35rem !important;
+}
+
+.product-detail .vessel-meta .title{
+    color: #333;
+    font-family: "Poppins", Sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    text-transform: none;
+    font-style: normal;
+    text-decoration: none;
+    line-height: 1.4em;
+    letter-spacing: 1px;
+}
+.product .meta dl{
+    color: #151515;
+    font-family: "Poppins", Sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: none;
+    font-style: normal;
+    text-decoration: none;
+    line-height: 1.4em;
+    letter-spacing: 1px;
+}
+.product .meta a.btn {
+    background-color: var(--e-global-color-primary);
+    font-family: "Poppins", Sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: capitalize;
+    font-style: normal;
+    text-decoration: none;
+    line-height: 1em;
+    letter-spacing: 1px;
+    color: #FFFFFF;
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    border-color: var(--e-global-color-primary);
+    border-radius: 0px 0px 0px 0px;
+    padding: 16px 36px 16px 36px;
+}
+
+
+#boat-detail,
+.container.text_area {
+    background: #fff !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+.boat-detail-page .site-content .ast-container { display:block !important; }
+.boat-detail-page #primary.content-area        { width:100% !important; margin:0 !important; }
+.boat-detail-page #secondary,
+.boat-detail-page .ast-sidebar
