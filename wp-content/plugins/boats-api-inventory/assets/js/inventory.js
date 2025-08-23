@@ -8,7 +8,7 @@
 
 (function ($) {
     'use strict';
-    return;
+   return;
     if (!$) throw new Error('jQuery is required');
  // return;
     // ============================================================================

@@ -190,8 +190,8 @@ add_action('rest_api_init', function () {
  * Cache Sync
  * ========================= */
 function cache_boat_inventory() {
-    $key = "36255e00e286495aba57478a0a9e3e";
-    $url = "https://api.boats.com/inventory/search?key={$key}&rows=500&status=Active,On-Order";
+    $key = "T7lQ9dZmElyotsARW4hmv8fqnLoVY2";
+    $url = "https://api.boats.com/inventory/search?key={$key}&rows=500&status=Active";
 
     $response = @file_get_contents($url);
     if ($response === false) { error_log("[Boats Inventory] fetch failed"); return; }
