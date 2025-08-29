@@ -56,6 +56,9 @@ define( 'ASTRA_PRO_CUSTOMIZER_UPGRADE_URL', ASTRA_THEME_ORG_VERSION ? astra_get_
 require_once ASTRA_THEME_DIR . 'inc/theme-update/astra-update-functions.php';
 require_once ASTRA_THEME_DIR . 'inc/theme-update/class-astra-theme-background-updater.php';
 
+
+
+
 /**
  * Fonts Files
  */
@@ -209,3 +212,6 @@ require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-functions.php';
  * Load OTH CRM API functions
  */
 require_once ASTRA_THEME_DIR .  'inc/CRMApi.php';
+$fn = new CRMApi();
+add_action('wp_ajax_nopriv_email_broker_post_complete', [$fn, 'email_broker_post_complete']);
+add_action('wp_ajax_email_broker_post_complete',       [$fn, 'email_broker_post_complete']);

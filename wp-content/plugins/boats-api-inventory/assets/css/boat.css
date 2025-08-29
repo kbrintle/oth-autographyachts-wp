@@ -7,6 +7,13 @@ body .main > .container { padding-top: 40px; }
 @media (max-width: 767.98px) {
     body .main > .container { padding-top: 0; }
 }
+/* Only the boat detail page */
+@media (min-width: 1400px){
+    #boat-detail.container{ max-width: 1360px; }   /* try 1360–1440 */
+}
+@media (min-width: 1200px){
+    #boat-detail .row{ --bs-gutter-x: 2rem; }      /* a touch more breathing room */
+}
 
 /* ---- Gallery sizing ---- */
 #mainCarousel { margin-top: 20px; }
@@ -59,11 +66,9 @@ body .main > .container { padding-top: 40px; }
     #mainCarousel .is-prev,
     #mainCarousel .is-next {
         position: absolute; top: 50%; transform: translateY(-50%);
-        width: 64px; height: 64px; border-radius: 999px !important;
-        border: 2px solid rgba(255,255,255,.55) !important;
-        background: rgba(0,0,0,.35) !important;
+        width: 64px; height: 64px;
         color: #fff !important;
-        font-size: 34px; line-height: 1;
+        font-size: 64px; line-height: 1;
         display: flex; align-items: center; justify-content: center;
         z-index: 10; opacity: 0; pointer-events: none;
         transition: opacity .2s ease, background .2s ease, transform .2s ease;
@@ -142,7 +147,7 @@ body .main > .container { padding-top: 40px; }
 
 .lightbox-prev, .lightbox-next {
     position: absolute; top: 50%; transform: translateY(-50%);
-    background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.3);
+    /*background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.3);*/
     color: #fff; font-size: 30px; width: 50px; height: 50px; border-radius: 50%;
     cursor: pointer; z-index: 10001; opacity: .7; transition: all .2s;
     display: flex; align-items: center; justify-content: center; line-height: 1;
@@ -178,7 +183,7 @@ body .main > .container { padding-top: 40px; }
 }
 #boat-detail .contact-box h6 { font-size: 1.25em; color: #333; }
 #boat-detail .contact-box img { width: 125px; }
-#boat-detail .contact-box .contact-info { padding-top: 25px; }
+#boat-detail .contact-box .contact-info { padding: 12px; }
 #boat-detail .listing-meta .inner-table li span {
     color: var(--e-global-color-primary); font-size: 14px; font-weight: 600;
 }
@@ -211,9 +216,104 @@ body .main > .container { padding-top: 40px; }
 @media (max-width: 544px) {
     #boat-detail a.button.blue { padding: 17px 30px; }
 }
+.gold-btn,
 #boat-detail #emailBrokerBtn {
     background-color: var(--e-global-color-secondary);
     font-family: "Open Sans", Sans-serif; font-size: 15px; font-weight: 400; text-transform: uppercase; line-height: 1.4em;
     border-style: solid; border-color: var(--e-global-color-secondary); border-radius: 2px; padding: 12px 30px;
 }
 #boat-detail #emailBrokerBtn:hover { opacity: 0.8; background-color: var(--e-global-color-primary); }
+
+/* Make the toolbar look like the “classic” row */
+.fancybox__toolbar {
+    background: rgba(0,0,0,.35);
+    padding: 8px 12px;
+}
+
+/* Bigger, softer nav buttons */
+.fancybox__nav .f-button {
+    width: 44px; height: 44px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.35);
+}
+
+/* Keep the counter visible and readable */
+.fancybox__counter {
+    font-weight: 600;
+}
+
+/* Fancybox overlay — bigger arrows, show on hover (desktop only) */
+@media (min-width: 992px) {
+    .fancybox__container .fancybox__nav .f-button {
+        width: 64px; height: 64px;
+        border-radius: 999px;
+        background: rgba(0,0,0,.35);
+        color: #fff;
+        opacity: 0;
+        transition: opacity .2s, background .2s, transform .2s;
+    }
+    .fancybox__container:hover .fancybox__nav .f-button { opacity: 1; }
+    .fancybox__nav .is-prev { left: 16px; }
+    .fancybox__nav .is-next { right: 16px; }
+    .fancybox__nav .f-button svg { width: 28px; height: 28px; }
+    .fancybox__nav .f-button:hover { background: rgba(0,0,0,.5); transform: scale(1.06); }
+}
+
+/* Optional: hide overlay arrows on mobile */
+@media (max-width: 991.98px) {
+    .fancybox__container .fancybox__nav .f-button { display: none; }
+}
+
+/* Move/center the counter at the bottom */
+.fancybox__counter {
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    top: auto;
+    transform: translateX(-50%);
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.5);
+    color: #fff;
+    font-size: 13px;
+}
+
+/* (Optional) put toolbar at bottom-center too */
+.fancybox__toolbar {
+    top: auto;
+    bottom: 12px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    background: transparent;
+    gap: 6px;
+}
+.fancybox__toolbar .f-button { background: rgba(0,0,0,.35); color:#fff; }
+.fancybox__toolbar .f-button:hover { background: rgba(0,0,0,.5); }
+
+.modal-content textarea,
+.modal-content input[type="text"]{
+    background-color: #fff !important;
+}
+.modal-content input.button{
+    background-color: var(--e-global-color-primary);
+}
+.modal-content .btn-close{
+    color: var(--e-global-color-secondary);
+}
+.contact-info h6{
+    font-size: 24px;
+    margin-bottom: 0;
+}
+.avatar{
+    margin-top:16px;
+}
+.small-text{
+    line-height:18px;
+    margin-top:4px;
+}
+.staff-title{
+    line-height: 22px;
+    margin-bottom: 12px;
+    margin-top: 0;
+}

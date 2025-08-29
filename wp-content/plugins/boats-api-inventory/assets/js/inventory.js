@@ -1,27 +1,30 @@
 /*!
- * Autograph Yachts – Inventory (Facet-style Make filter)
- * - Simple button summary (All / N selected)
- * - Dropdown panel with search + checkbox list
- * - Clear / Apply buttons
- * - URL sync + API calls preserved
+ * Autograph Yachts — Inventory
+ * Facet-style "Make" filter + standard selects
+ * - Instant-apply checkboxes (no Apply button needed)
+ * - Search-in-panel, Clear, click-outside to close
+ * - URL sync + REST inventory/filters
+ * - Populates Type, State, Fuel (from /filters or derived)
  */
+
+
+
 
 (function ($) {
     'use strict';
-   return;
     if (!$) throw new Error('jQuery is required');
- // return;
-    // ============================================================================
-    // Config
-    // ============================================================================
-    const REST_INVENTORY = (window.BoatsConfig && BoatsConfig.restUrl)   || '/wp-json/boats/v1/inventory';
-    const REST_FILTERS   = (window.BoatsConfig && BoatsConfig.filtersUrl) || '/wp-json/boats/v1/filters';
-    const REST_FACETS    = (window.BoatsConfig && BoatsConfig.facetsUrl)  || '/wp-json/boats/v1/facets?fields=make';
-    const BASE_URL       = (window.BoatsConfig && BoatsConfig.baseUrl)    || '/yachts-for-sale';
 
-    // ============================================================================
-    // Small helpers
-    // ============================================================================
+    /* ==========================================================================
+     * Config
+     * ======================================================================= */
+    const REST_INVENTORY = (window.BoatsConfig && BoatsConfig.restUrl)    || '/wp-json/boats/v1/inventory';
+    const REST_FILTERS   = (window.BoatsConfig && BoatsConfig.filtersUrl)  || '/wp-json/boats/v1/filters';
+    const REST_FACETS    = (window.BoatsConfig && BoatsConfig.facetsUrl)   || '/wp-json/boats/v1/facets?fields=make';
+    const BASE_URL       = '/yachts-for-sale';
+
+    /* ==========================================================================
+     * Small helpers
+     * ======================================================================= */
     const qs  = (sel, ctx = document) => ctx.querySelector(sel);
     const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
     const set = (sel, v) => { const el = qs(sel); if (el) el.value = v ?? ''; };
@@ -29,104 +32,59 @@
     const text = (sel, v) => { const el = qs(sel); if (el) el.textContent = v; };
     const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
     const cls = (el, name, add) => el && el.classList[add ? 'add' : 'remove'](name);
-
-    const debounce = (fn, ms = 250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; };
-    const num = (s) => { const n = parseFloat(String(s||'').replace(/[^\d.]/g,'')); return Number.isFinite(n) ? n : ''; };
-    const slug = (s) => String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-    const escapeHtml = (s) => String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+    const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const escapeHtml = (s) => String(s || '')
+        .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+        .replaceAll('"','&quot;').replaceAll("'",'&#039;');
+    const num = (s) => { const n = parseFloat(String(s || '').replace(/[^\d.]/g,'')); return Number.isFinite(n) ? n : ''; };
+    const debounce = (fn, ms = 250) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
     const hasSSelect = typeof $.fn.sSelect === 'function';
 
-    // ---------- facet caching (session) ----------
+    // Optional overlay loader support
+    function showLoading(on = true) {
+        const overlay = qs('#inv-loading');
+        if (overlay) overlay.classList.toggle('d-none', !on);
+        const headerSpinner = qs('.spinner'); // the small one in header
+        if (headerSpinner) headerSpinner.classList.toggle('d-none', !on);
+    }
+
+    // Cache unfiltered inventory once (for deriving facets as fallback)
     const FacetCache = {
-        inv: null,                         // unfiltered inventory cache
-        async getInventoryUnfiltered() {
-            if (FacetCache.inv) return FacetCache.inv;
-            const inv = await queryInventory(new URLSearchParams()); // hits cached WP endpoint
-            FacetCache.inv = inv;
-            return inv;
+        inv: null,
+        async getInventory() {
+            if (this.inv) return this.inv;
+            const res = await fetch(REST_INVENTORY, { credentials: 'same-origin' });
+            try {
+                const data = await res.json();
+                this.inv = Array.isArray(data) ? data : [];
+            } catch (_) { this.inv = []; }
+            return this.inv;
         }
     };
 
-// ---------- datalist utilities ----------
-    function ensureDatalist(inputSel, listId) {
-        const input = qs(inputSel);
-        if (!input) return null;
-        let list = document.getElementById(listId);
-        if (!list) {
-            list = document.createElement('datalist');
-            list.id = listId;
-            input.setAttribute('list', listId);
-            // place right after the input for clarity
-            input.parentNode.appendChild(list);
-        }
-        return $(list);
-    }
-
-    function hydrateDatalist($list, values) {
-        if (!$list || !$list.length) return;
-        const opts = (values || [])
-            .filter(Boolean)
-            .map(v => `<option value="${escapeHtml(v)}"></option>`)
-            .join('');
-        $list.html(opts);
-    }
-
-// ---------- facet derivation from inventory ----------
-    function deriveFacetsFromInventory(inv) {
-        const makes  = new Set();
-        const types  = new Set();
-        const states = new Set();
-        const fuels  = new Set();
-
-        inv.forEach(b => {
-            const mk   = (b.MakeStringExact || b.MakeString || '').trim();
-            const typ  = (b.Class || b.BoatType || b.Type || '').toString().trim();
-            const st   = (b.BoatLocation?.BoatStateCode || b.State || '').toString().trim();
-
-
-            if (mk)   makes.add(mk);
-            if (typ)  types.add(typ);
-            if (st)   states.add(st.toUpperCase());
-        });
-
-        return {
-            makes : Array.from(makes).sort(),
-            types : Array.from(types).sort(),
-            states: Array.from(states).sort(),
-            fuels : Array.from(fuels).sort()
-        };
-    }
-
-    // ============================================================================
-    // MAKE FACET (Facet-style: toggle button + dropdown panel)
-    // Supports either markup:
-    //  - NEW: #make-multiselect (with .dropdown-panel > .makes-ul)
-    //  - OLD: #mfcname-parent (with .custom-dropdown-menu > ul)
-    // ============================================================================
+    /* ==========================================================================
+     * MAKE FACET (supports NEW #make-multiselect OR legacy #mfcname-parent)
+     * ======================================================================= */
     const USE_NEW   = !!document.getElementById('make-multiselect');
     const ROOT_SEL  = USE_NEW ? '#make-multiselect' : '#mfcname-parent';
-    const MENU_SEL  = document.querySelector('#make-multiselect .makes-ul')
-        ? '#make-multiselect .makes-ul'
-        : '#mfcname-parent .custom-dropdown-menu ul';
-    const PANEL_SEL = document.querySelector('#make-multiselect .dropdown-panel')
-        ? '#make-multiselect .dropdown-panel'
-        : '#mfcname-parent .custom-dropdown-menu';
+    const MENU_SEL  = USE_NEW ? '#make-multiselect .makes-ul' : '#mfcname-parent .custom-dropdown-menu ul';
+    const PANEL_SEL = USE_NEW ? '#make-multiselect .dropdown-panel' : '#mfcname-parent .custom-dropdown-menu';
 
     const makeUI = {
         isNew:    USE_NEW,
         root:     $(ROOT_SEL),
         panel:    $(PANEL_SEL),
         menu:     $(MENU_SEL),
-        titleBtn: $('#mfcname'), // old UI visible button; in new UI we render our own
-        hidden:   null,          // #makeid CSV
-        options:  [],            // [{label, value, count?}]
-        selected: new Set(),     // committed selection
-        staging:  new Set(),     // pending changes inside panel until Apply
+        titleBtn: $('#mfcname'),          // only present in legacy UI
+        hidden:   null,                   // #makeid (CSV for API)
+        options:  [],                     // [{label, value, count?}]
+        selected: new Set(),              // committed
+        staging:  new Set(),              // used while panel is open (we do instant-apply anyway)
         built:    false
     };
 
-    // Ensure hidden CSV exists
-    (function ensureHidden() {
+    // Ensure hidden CSV input exists
+    (function ensureHiddenCSV() {
         let hidden = document.getElementById('makeid');
         if (!hidden) {
             hidden = document.createElement('input');
@@ -137,29 +95,22 @@
         makeUI.hidden = $(hidden);
     })();
 
-    // Build simple toggle button for NEW UI (old UI already has #mfcname)
+    // For NEW UI: replace .make-control with a single button showing summary
     function ensureMakeToggleButton() {
         if (!makeUI.isNew) return;
         if (makeUI.root.find('.make-toggle').length) return;
-
-        // Replace the "control" area with a single button-like control
         const ctrl = makeUI.root.find('.make-control');
-        if (ctrl.length) ctrl.replaceWith('<button type="button" class="btn btn-light w-100 text-start make-toggle">All</button>');
+        const html = '<button type="button" class="btn btn-light w-100 text-start make-toggle">All</button>';
+        if (ctrl.length) ctrl.replaceWith(html);
+        else makeUI.root.prepend(html);
     }
 
-    // Update visible summary text
-    function renderMakeSummary(targetSet = makeUI.selected) {
-        const labels = Array.from(targetSet).map(v => makeUI.options.find(o => o.value === v)?.label || v);
-        const summary =
-            labels.length === 0 ? 'All' :
-                labels.length === 1 ? labels[0] :
-                    `${labels.length} selected`;
-
-        if (makeUI.isNew) {
-            makeUI.root.find('.make-toggle').text(summary);
-        } else {
-            makeUI.titleBtn.text(summary);
-        }
+    // Update visible button/label to show "All", "N selected", or the single label
+    function renderMakeSummary(setToShow = makeUI.selected) {
+        const labels = Array.from(setToShow).map(v => makeUI.options.find(o => o.value === v)?.label || v);
+        const summary = labels.length === 0 ? 'All' : (labels.length === 1 ? labels[0] : `${labels.length} selected`);
+        if (makeUI.isNew) makeUI.root.find('.make-toggle').text(summary);
+        else makeUI.titleBtn.text(summary);
         makeUI.root.data('selected-make', labels.join(', ') || 'All');
     }
 
@@ -167,152 +118,157 @@
         makeUI.hidden.val(Array.from(makeUI.selected).join(','));
     }
 
-    // Render the dropdown panel content (search + list + actions)
+    function openPanel()  { makeUI.panel.removeClass('d-none'); }
+    function closePanel() { makeUI.panel.addClass('d-none'); }
+
+    // Build the “Make” panel (search + checkbox list + Clear)
     function buildMakePanel() {
         if (makeUI.built) return;
         makeUI.built = true;
 
-        // Ensure panel wrapper exists & is hidden
         makeUI.panel.addClass('d-none');
 
-        // Inject header (search + actions) if not present
-        const headerId = 'make-panel-header';
-        if (!document.getElementById(headerId)) {
-            const header = document.createElement('div');
-            header.id = headerId;
-            header.className = 'facet-toolbar p-2 border-bottom bg-white position-sticky top-0';
-            header.innerHTML = `
-    <input type="search" class="form-control facet-search make-search" placeholder="Search makes…">
-    <div class="d-flex align-items-center gap-2">
-      <button type="button" class="btn btn-xs make-clear">Clear</button>
-<!--      <button type="button" class="btn btn-xs make-apply text-white">Apply</button>-->
-    </div>`;
-            makeUI.panel.prepend(header);
+        // Sticky header with search + Clear
+        if (!makeUI.panel.find('.facet-toolbar').length) {
+            makeUI.panel.prepend(
+                '<div class="facet-toolbar p-2 border-bottom bg-white position-sticky top-0">'+
+                '<input type="search" class="form-control facet-search make-search" placeholder="Search makes…">'+
+                '<div class="d-flex align-items-center gap-2 mt-2">'+
+                '<button type="button" class="btn btn-sm btn-outline-secondary make-clear">Clear</button>'+
+                '</div>'+
+                '</div>'
+            );
         }
 
-        // Render list into UL
+        // Initial list render
         renderMakeList(makeUI.staging);
 
-        // Wire actions
+        // Search filter
         const search = makeUI.panel.find('.make-search')[0];
-        on(search, 'input', debounce(() => filterMakeList(search.value), 60));
+        if (search) {
+            on(search, 'input', debounce(() => filterMakeList(search.value), 80));
+            on(search, 'keydown', (e) => {
+                if (e.key === 'Escape') { e.preventDefault(); closePanel(); }
+            });
+        }
 
-        search.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') { e.preventDefault(); makeUI.panel.find('.make-apply').trigger('click'); }
-            if (e.key === 'Escape') { e.preventDefault(); makeUI.panel.addClass('d-none'); }
-        });
-
+        // Clear -> reset to "All"
         makeUI.panel.on('click', '.make-clear', () => {
             makeUI.staging.clear();
             makeUI.menu.find('input[type="checkbox"]').prop('checked', false);
-            renderMakeSummary(makeUI.staging); // live preview in button
-        });
+            makeUI.menu.find('.make-all').prop('checked', true);
 
-        makeUI.panel.on('click', '.make-apply', () => {
-            makeUI.selected = new Set(Array.from(makeUI.staging)); // commit
+            // Instant-apply
+            makeUI.selected = new Set(); // empty = All
             syncMakeHidden();
             renderMakeSummary();
-            closePanel();
             updateURLFromUI();
-            runSearch(); // trigger search on apply
+            debouncedRunSearch();
         });
     }
 
+    // Render checkbox list: “All” + all make options
     function renderMakeList(targetSet) {
         if (!makeUI.menu.length) return;
 
-        // Build items (All + each make)
         const parts = [];
-        parts.push(`
-      <li class="px-2 py-1 border-bottom">
-        <label class="d-flex align-items-center gap-2">
-          <input type="checkbox" class="form-check-input make-all" ${targetSet.size === 0 ? 'checked' : ''}>
-          <span>All</span>
-        </label>
-      </li>`);
+        parts.push(
+            '<li class="px-2 py-1 border-bottom">'+
+            '<label class="d-flex align-items-center gap-2">'+
+            `<input type="checkbox" class="form-check-input make-all" ${targetSet.size === 0 ? 'checked' : ''}>`+
+            '<span>All</span>'+
+            '</label>'+
+            '</li>'
+        );
 
         makeUI.options.forEach(opt => {
             const checked = targetSet.has(opt.value) ? 'checked' : '';
-            const count = (typeof opt.count === 'number') ? `<span class="ms-auto text-muted small">${opt.count}</span>` : '';
-            parts.push(`
-        <li class="px-2 py-1 d-flex align-items-center" data-value="${opt.value}" data-label="${escapeHtml(opt.label)}">
-          <label class="d-flex align-items-center gap-2 flex-grow-1">
-            <input type="checkbox" class="form-check-input make-cb" value="${opt.value}" ${checked}>
-            <span>${escapeHtml(opt.label)}</span>
-          </label>
-          ${count}
-        </li>`);
+            const count   = Number.isFinite(opt.count) ? `<span class="ms-auto text-muted small">${opt.count}</span>` : '';
+            parts.push(
+                '<li class="px-2 py-1 d-flex align-items-center" data-value="${opt.value}" data-label="${escapeHtml(opt.label)}">'+
+                '<label class="d-flex align-items-center gap-2 flex-grow-1">'+
+                '<input type="checkbox" class="form-check-input make-cb" value="${opt.value}" ${checked}>'+
+                '<span>${escapeHtml(opt.label)}</span>'+
+                '</label>'+
+                count+
+                '</li>'
+            );
         });
 
         makeUI.menu.html(parts.join(''));
 
-        // Change handlers
+        // (Re)bind change handlers with instant-apply behavior
         makeUI.menu.off('change');
 
-        // All toggle
+        // Toggle “All”
         makeUI.menu.on('change', '.make-all', function () {
             if (this.checked) {
                 makeUI.staging.clear();
                 makeUI.menu.find('.make-cb').prop('checked', false);
             } else {
-                this.checked = false; // "All" represents none selected; cannot be unchecked while empty
+                // "All" represents empty selection; cannot be unchecked with no other picks
+                this.checked = (makeUI.staging.size === 0);
             }
-            renderMakeSummary(makeUI.staging);
+            // Commit instantly
+            makeUI.selected = new Set(makeUI.staging);
+            syncMakeHidden();
+            renderMakeSummary();
+            updateURLFromUI();
+            debouncedRunSearch();
         });
 
-        // Individual checkbox changes
+        // Toggle a specific make
         makeUI.menu.on('change', '.make-cb', function () {
             const v = this.value;
             if (this.checked) makeUI.staging.add(v);
             else makeUI.staging.delete(v);
 
-            // update "All" checkbox
+            // Keep "All" in sync with emptiness
             makeUI.menu.find('.make-all').prop('checked', makeUI.staging.size === 0);
-            renderMakeSummary(makeUI.staging); // live preview while panel open
+
+            // Commit instantly
+            makeUI.selected = new Set(makeUI.staging);
+            syncMakeHidden();
+            renderMakeSummary();
+            updateURLFromUI();
+            debouncedRunSearch();
         });
     }
 
     function filterMakeList(query) {
         const q = String(query || '').toLowerCase().trim();
-        if (!q) {
-            makeUI.menu.find('li[data-value]').show();
-            return;
-        }
-        makeUI.menu.find('li[data-value]').each(function () {
+        const rows = makeUI.menu.find('li[data-value]');
+        if (!q) { rows.show(); return; }
+        rows.each(function () {
             const label = (this.getAttribute('data-label') || '').toLowerCase();
             $(this).toggle(label.includes(q));
         });
     }
 
-    function openPanel()  { makeUI.panel.removeClass('d-none'); }
-    function closePanel() { makeUI.panel.addClass('d-none'); }
-
+    // Initialize selected makes from URL: ?make=csv
     function initMakeFromURL(params) {
         const csv = params.get('make');
         if (csv) csv.split(',').filter(Boolean).forEach(v => makeUI.selected.add(v));
-        makeUI.staging = new Set(Array.from(makeUI.selected)); // staging mirrors committed on open
+        makeUI.staging = new Set(makeUI.selected);
         syncMakeHidden();
         renderMakeSummary();
     }
 
-    // ============================================================================
-    // Populate filters (Types + Makes) with safe fallbacks
-    // ============================================================================
-    // ============================================================================
-// Populate filters (Types + Makes + State + Fuel) with safe fallbacks
-// ============================================================================
+    /* ==========================================================================
+     * Populate filters (Make + Type + State + Fuel)
+     * ======================================================================= */
     async function populateFilters({ selectedType = '' } = {}) {
         try {
-            // 1) /filters
+            // 1) Prefer /filters for all facets
             const res  = await fetch(REST_FILTERS, { credentials: 'same-origin' });
             const data = await res.json();
 
             let makes  = (data && (data.makes  || data.make  || [])) || [];
             let types  = (data && (data.types  || [])) || [];
             let states = (data && (data.states || data.state || [])) || [];
+            let fuels  = (data && (data.fuels  || data.fuel  || [])) || [];
 
-
-            // 2) /facets for makes only (if missing)
+            // 2) If makes missing, try /facets
             if (!makes.length) {
                 try {
                     const r2 = await fetch(REST_FACETS, { credentials: 'same-origin' });
@@ -321,17 +277,12 @@
                 } catch (_) {}
             }
 
-            // 3) Derive any missing facets from unfiltered inventory (cached once)
+            // 3) Derive any missing facets from the full inventory
             if (!makes.length || !types.length || !states.length || !fuels.length) {
                 try {
-                    const inv = await (async () => {
-                        if (FacetCache?.inv) return FacetCache.inv;
-                        const list = await queryInventory(new URLSearchParams());
-                        FacetCache.inv = list;
-                        return list;
-                    })();
+                    const inv = await FacetCache.getInventory();
+                    const uniq = (arr) => Array.from(new Set(arr.filter(Boolean)));
 
-                    const uniq = a => Array.from(new Set(a.filter(Boolean)));
                     if (!makes.length) {
                         makes = uniq(inv.map(b => (b.MakeStringExact || b.MakeString || '').trim())).sort();
                     }
@@ -341,24 +292,39 @@
                     if (!states.length) {
                         states = uniq(inv.map(b => (b.BoatLocation?.BoatStateCode || b.State || '').toString().trim().toUpperCase())).sort();
                     }
-
+                    if (!fuels.length) {
+                        fuels = uniq(
+                            inv.flatMap(b => {
+                                // Try engine fuels then top-level fuel
+                                const engs = Array.isArray(b.Engines) ? b.Engines : [];
+                                const efs  = engs.map(e => (e.Fuel || '').toString().trim());
+                                const top  = (b.Fuel || b.FuelType || '').toString().trim();
+                                return [...efs, top];
+                            })
+                        ).sort();
+                    }
                 } catch (_) {}
             }
 
-            // --------- MAKES (normalize to [{label,value,count?}]) ---------
+            /* ---- Normalize & build Make facet options ---- */
             makeUI.options = makes
                 .filter(Boolean)
-                .map(m => (typeof m === 'string'
-                    ? { label: m, value: slug(m) }
-                    : { label: m.label || m.name || String(m), value: m.value || slug(m.label || m.name || String(m)), count: m.count }))
+                .map(m => {
+                    if (typeof m === 'string') return { label: m, value: slug(m) };
+                    const label = m.label || m.name || String(m);
+                    return { label, value: m.value || slug(label), count: m.count };
+                })
                 .filter(o => o.label && o.value)
-                .sort((a,b) => (b.count||0)-(a.count||0) || a.label.localeCompare(b.label));
+                .sort((a, b) => (b.count || 0) - (a.count || 0) || a.label.localeCompare(b.label));
 
-            // --------- TYPE <select> ----------
+            ensureMakeToggleButton();
+            buildMakePanel();
+
+            /* ---- Populate Type select ---- */
             const $type = $('#typeid');
             if ($type.length) {
                 $type.empty().append('<option value="">All</option>');
-                types.filter(Boolean).forEach(t => $type.append(`<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`));
+                types.forEach(t => $type.append(`<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`));
                 if (selectedType) $type.val(selectedType);
                 if (hasSSelect && $type.hasClass('my-dropdown2')) {
                     $type.sSelect({ ddMaxHeight:'300px', divtextClass:'selectedTxt2', containerClass:'newListSelected2', divwrapperClass:'SSContainerDivWrapper2' });
@@ -366,42 +332,45 @@
                 }
             }
 
-            // --------- STATE <select> ----------
+            /* ---- Populate State select ---- */
             const $state = $('#stateid');
             if ($state.length) {
-                const cur = val('#stateid'); // from URL (applied later too)
+                const cur = val('#stateid');
                 $state.empty().append('<option value="">All</option>');
-                states.filter(Boolean).forEach(s => $state.append(`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`));
+                states.forEach(s => $state.append(`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`));
                 if (cur) $state.val(cur);
-                if (hasSSelect && $state.hasClass('my-dropdown2')) $state.sSelect({ ddMaxHeight:'300px' });
             }
 
+            /* ---- Populate Fuel select (if your HTML uses a static list, this will enhance/merge) ---- */
+            const $fuel = $('#fueltypeid');
+            if ($fuel.length && fuels.length) {
+                // Keep current value if present; ensure "All" first
+                const current = val('#fueltypeid');
+                $fuel.empty().append('<option value="">All</option>');
+                fuels.forEach(f => $fuel.append(`<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`));
+                if (current) $fuel.val(current);
+            }
 
-
-            // Build Make facet UI now that options exist
-            ensureMakeToggleButton();
-            buildMakePanel();
         } catch (_) {
-            // noop — page remains usable
+            // Non-fatal; page remains usable
         }
-
     }
 
-
-    // ============================================================================
-    // Query building / URL sync / API
-    // ============================================================================
+    /* ==========================================================================
+     * Build inventory query / URL sync / API
+     * ======================================================================= */
     function buildQueryFromUI() {
         const p = new URLSearchParams();
 
-        const makeCsv = (val('#makeid') || '').trim();
-        if (makeCsv) p.set('make', makeCsv);
+        const makeCsv  = (val('#makeid') || '').trim();    if (makeCsv)  p.set('make', makeCsv);
+        const type     = val('#typeid');                   if (type)     p.set('type', type);
+        const state    = val('#stateid');                  if (state)    p.set('state', state);
+        const condition= val('#conditionid');              if (condition)p.set('condition', condition);
 
-        const type      = val('#typeid');       if (type)      p.set('type', type);
-        const state     = val('#stateid');      if (state)     p.set('state', state);
-        const condition = val('#conditionid');  if (condition) p.set('condition', condition);
-        const fuel      = val('#fueltypeid');   if (fuel)      p.set('fuel', String(fuel).toLowerCase());
+        // Fuel: keep server-side lowercase if needed
+        const fuel     = val('#fueltypeid');               if (fuel)     p.set('fuel', String(fuel).toLowerCase());
 
+        // Ranges (colon format)
         const yrmin = num(val('#yrmin')), yrmax = num(val('#yrmax'));
         if (yrmin || yrmax) p.set('year', `${yrmin || ''}:${yrmax || ''}`);
 
@@ -417,9 +386,7 @@
     function updateURLFromUI() {
         const p = new URLSearchParams();
 
-        const makeCsv = (val('#makeid') || '').trim();
-        if (makeCsv) p.set('make', makeCsv);
-
+        const makeCsv = (val('#makeid') || '').trim(); if (makeCsv) p.set('make', makeCsv);
         const type  = val('#typeid');       if (type)  p.set('type', type);
         const fuel  = val('#fueltypeid');   if (fuel)  p.set('fuel', fuel);
         const state = val('#stateid');      if (state) p.set('state', state);
@@ -444,14 +411,15 @@
     async function queryInventory(params) {
         const url = `${REST_INVENTORY}?${params.toString()}`;
         const res = await fetch(url, { credentials: 'same-origin' });
-        let data = [];
-        try { data = await res.json(); } catch (_) {}
-        return Array.isArray(data) ? data : [];
+        try {
+            const data = await res.json();
+            return Array.isArray(data) ? data : [];
+        } catch (_) { return []; }
     }
 
-    // ============================================================================
-    // Rendering results
-    // ============================================================================
+    /* ==========================================================================
+     * Rendering
+     * ======================================================================= */
     function renderList(boats) {
         const holder = qs('#listingholder');
         if (!holder) return;
@@ -459,103 +427,111 @@
 
         if (!boats.length) {
             text('.reccounterupdate', '0');
-            cls(qs('.spinner'), 'd-none', true);
             holder.innerHTML = "<h1 class='text-center w-100'>No Results</h1>";
             return;
         }
 
         text('.reccounterupdate', String(boats.length));
-        holder.insertAdjacentHTML('beforeend', boats.map(renderCardHTML).join(''));
 
+        const items = boats.map(b => {
+            const title = [b.ModelYear, b.MakeStringExact || b.MakeString, b.Model].filter(Boolean).join(' ');
+            const slugStr = (b.slug || [
+                (b.MakeStringExact || b.MakeString || '').toString(),
+                (b.Model || '').toString(),
+                (b.DocumentID || '').toString()
+            ].join('-').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')) || '';
+            const href  = `${BASE_URL.replace(/\/$/, '')}/${slugStr}`;
+            const img   = (b.Image || '').replace('_XLARGE','_LARGE') || '/wp-content/uploads/default-boat.jpg';
+            const price = b.Price ? `$${Number(String(b.Price).replace(/[^\d.]/g,'')).toLocaleString()}` : 'Call';
+            const loc   = b.BoatLocation ? [b.BoatLocation.BoatCityName, b.BoatLocation.BoatStateCode].filter(Boolean).join(', ') : '';
+
+            return (
+                '<li class="col-sm-6 col-md-4 col-lg-3 hidden-listing">'+
+                '<div class="product card h-100">'+
+                '<div class="thumb position-relative">'+
+                `<a href="${href}">`+
+                `<img class="card-img-top" src="${img}" alt="${escapeHtml(title)}">`+
+                '</a>'+
+                '</div>'+
+                '<div class="meta card-body text-left d-flex flex-column">'+
+                `<dl class="card-title"><span title="${escapeHtml(title)}">${escapeHtml(title)}</span></dl>`+
+                `<dl class="card-text">${escapeHtml(price)}</dl>`+
+                `<dl>${escapeHtml(loc)}</dl>`+
+                `<dl><a href="${href}" class="w-100 btn btn-outline-secondary btn-sm">View Details</a></dl>`+
+                '<div class="clear"></div>'+
+                '</div>'+
+                '</div>'+
+                '</li>'
+            );
+        }).join('');
+
+        holder.insertAdjacentHTML('beforeend', items);
+
+        // Reveal with a small delay for a nicer fade-in (if your CSS uses it)
         setTimeout(() => {
-            cls(qs('.spinner'), 'd-none', true);
-            qsa('#listingholdermain ul.product-list li').forEach(li => cls(li, 'hidden-listing', false));
+            qsa('#listingholdermain ul.product-list li').forEach(li => li.classList.remove('hidden-listing'));
         }, 150);
     }
 
-    function renderCardHTML(b) {
-        const title = [b.ModelYear, b.MakeStringExact || b.MakeString, b.Model].filter(Boolean).join(' ');
-        const slugStr  = b.slug || [
-            (b.MakeStringExact || b.MakeString || '').toString(),
-            (b.Model || '').toString(),
-            (b.DocumentID || '').toString()
-        ].join('-').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-
-        const href  = `/yachts-for-sale/${slugStr}`;
-        const img   = (b.Image || '').replace('_XLARGE','_LARGE') || '/wp-content/uploads/default-boat.jpg';
-        const price = b.Price ? `$${Number(String(b.Price).replace(/[^\d.]/g,'')).toLocaleString()}` : 'Call';
-        const loc   = b.BoatLocation ? [b.BoatLocation.BoatCityName, b.BoatLocation.BoatStateCode].filter(Boolean).join(', ') : '';
-
-        return `
-      <li class="col-sm-6 col-md-4 col-lg-3 hidden-listing">
-        <div class="product card h-100">
-          <div class="thumb position-relative">
-            <a href="${href}">
-              <img class="card-img-top" src="${img}" alt="${escapeHtml(title)}">
-            </a>
-          </div>
-          <div class="meta card-body text-left d-flex flex-column">
-            <dl class="card-title"><span title="${escapeHtml(title)}">${escapeHtml(title)}</span></dl>
-            <dl class="card-text">${escapeHtml(price)}</dl>
-            <dl>${escapeHtml(loc)}</dl>
-            <dl><a href="${href}" class="w-100 btn btn-outline-secondary btn-sm">View Details</a></dl>
-            <div class="clear"></div>
-          </div>
-        </div>
-      </li>`;
-    }
-
-    // ============================================================================
-    // Search flow
-    // ============================================================================
+    /* ==========================================================================
+     * Search flow
+     * ======================================================================= */
     async function runSearch() {
-        qsa('#listingholdermain ul.product-list li').forEach(li => cls(li, 'hidden-listing', true));
-        cls(qs('.spinner'), 'd-none', false);
+        // Pre-state
+        qsa('#listingholdermain ul.product-list li').forEach(li => li.classList.add('hidden-listing'));
+        showLoading(true);
 
+        // Fetch & render
         const params = buildQueryFromUI();
         const data = await queryInventory(params);
         renderList(data);
 
-        if (window.innerWidth <= 768) window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+        showLoading(false);
 
-    // ============================================================================
-    // Init
-    // ============================================================================
+        // Mobile UX
+        if (window.innerWidth <= 768) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+    const debouncedRunSearch = debounce(runSearch, 150);
+
+    /* ==========================================================================
+     * Init
+     * ======================================================================= */
     $(async function () {
+        // Remove stray .fade class from older templates
         $('.inventory.fade').removeClass('fade');
         $('h3.ad-search').on('click', () => $('.ad-search-con').slideToggle());
 
-        // Start with panel closed
+        // Panel starts hidden
         makeUI.panel.addClass('d-none');
 
+        // Seed from URL
         const url = new URL(window.location.href);
         const urlParams = url.searchParams;
-
-        // Init makes from URL
         initMakeFromURL(urlParams);
 
-        // Populate filters (includes building Make panel & toggle)
+        // Populate facets & selects
         const selectedType = urlParams.get('type') || '';
         await populateFilters({ selectedType });
-        // Ensure list reflects current staging (clone of selected at load)
-        renderMakeList(makeUI.staging);
-        renderMakeSummary(); // button text
 
-        // Toggle open/close
+        // Ensure checkbox list mirrors current selection
+        renderMakeList(makeUI.staging);
+        renderMakeSummary();
+
+        // Toggle panel open/close
         if (makeUI.isNew) {
             makeUI.root.on('click', '.make-toggle', function () {
-                makeUI.staging = new Set(Array.from(makeUI.selected)); // reset staging on open
+                makeUI.staging = new Set(makeUI.selected);     // clone committed
                 renderMakeList(makeUI.staging);
                 renderMakeSummary(makeUI.staging);
                 makeUI.panel.toggleClass('d-none');
-                // focus search
                 const s = makeUI.panel.find('.make-search')[0];
                 if (s && !makeUI.panel.hasClass('d-none')) setTimeout(() => s.focus(), 0);
             });
         } else {
             $('#mfcname').on('click', function () {
-                makeUI.staging = new Set(Array.from(makeUI.selected));
+                makeUI.staging = new Set(makeUI.selected);
                 renderMakeList(makeUI.staging);
                 renderMakeSummary(makeUI.staging);
                 makeUI.panel.toggleClass('d-none');
@@ -566,40 +542,40 @@
 
         // Click-outside to close
         $(document).on('mousedown', function (e) {
-            if (makeUI.panel.length && !makeUI.root[0].contains(e.target)) {
-                closePanel();
-            }
+            if (makeUI.panel.length && !makeUI.root[0].contains(e.target)) closePanel();
         });
 
-        // Apply remaining URL params to inputs
+        // Apply remaining URL params to fields
         const setIf = (name, sel) => { const v = urlParams.get(name); if (v) set(sel, v); };
-        setIf('minYear','#yrmin');  setIf('maxYear','#yrmax');
-        setIf('minPrice','#prmin'); setIf('maxPrice','#prmax');
-        setIf('minLength','#lnmin');setIf('maxLength','#lnmax');
+        setIf('minYear',  '#yrmin');  setIf('maxYear',  '#yrmax');
+        setIf('minPrice', '#prmin');  setIf('maxPrice', '#prmax');
+        setIf('minLength','#lnmin');  setIf('maxLength','#lnmax');
 
         const year   = urlParams.get('year');   if (year)   { const [a,b]=year.split(':');  set('#yrmin',a||''); set('#yrmax',b||''); }
         const price  = urlParams.get('price');  if (price)  { const [a,b]=price.split(':'); set('#prmin',a||''); set('#prmax',b||''); }
         const length = urlParams.get('length'); if (length) { const [a,b]=length.split(':');set('#lnmin',a||''); set('#lnmax',b||''); }
 
-        setIf('fuel','#fueltypeid'); setIf('state','#stateid'); setIf('condition','#conditionid');
+        setIf('fuel',      '#fueltypeid');
+        setIf('state',     '#stateid');
+        setIf('condition', '#conditionid');
 
         // Initial search
         await runSearch();
 
-        // Search button
+        // Manual Search button
         on(qs('#searchbutton'), 'click', runSearch);
 
-        // Debounced URL sync
+        // Debounced URL sync when inputs change
         const syncURL = debounce(updateURLFromUI, 200);
         qsa('#typeid, #lnmin, #lnmax, #stateid, #fueltypeid, #prmin, #prmax, #yrmin, #yrmax, #conditionid')
-            .forEach(el => on(el, 'change', syncURL));
+            .forEach(el => on(el, 'change', () => { syncURL(); debouncedRunSearch(); }));
 
-        // Reset
+        // Reset filters
         $(document).on('click', '#reset-filters', function (e) {
             e.preventDefault();
             history.replaceState({}, '', window.location.pathname);
 
-            // Clear makes
+            // Reset makes
             makeUI.selected.clear();
             makeUI.staging.clear();
             syncMakeHidden();
@@ -611,19 +587,20 @@
                 filterMakeList('');
             }
 
-            // Clear others
+            // Reset other fields
             $('#typeid').val('');
             $('#fueltypeid').val('');
+            $('#stateid').val('');
             $('#lnmin,#lnmax,#prmin,#prmax,#yrmin,#yrmax').val('');
             $('#conditionid').val('');
-            $('.selectedTxt2').text('All');
+            $('.selectedTxt2').text('All'); // if stylish-select is active
 
             if (window.updateFilterBadge) { requestAnimationFrame(window.updateFilterBadge); setTimeout(window.updateFilterBadge, 120); }
 
             runSearch();
         });
 
-        // (Optional) sort placeholder
+        // (Optional) sort UI placeholder
         $('.sortrecord').on('click', function () {
             $('.sortrecord').removeClass('active asc desc');
             const $t = $(this).addClass('active');

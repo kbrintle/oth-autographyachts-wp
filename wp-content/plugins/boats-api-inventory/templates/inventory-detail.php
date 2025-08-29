@@ -7,7 +7,8 @@ get_header();
 --------------------------------------------------------------------------- */
 $slug = sanitize_title( get_query_var('inventory_boat') );
 $boat = $slug ? boats_get_by_slug($slug) : null;
-
+$staff_post = ayg_get_staff_for_boat( $boat ?: [] );
+$staff_meta = $staff_post ? ayg_get_staff_meta( $staff_post->ID ) : [];
 //echo "<pre>";
 //print_r($boat); die;
 if (!$boat): ?>
@@ -63,7 +64,7 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
             <!-- Top: gallery + sidebar -->
             <div class="row">
                 <!-- Gallery -->
-                <div class="col-lg-8 col-sm-12 col-xs-12">
+                <div class="col-xl-8 col-lg-8 col-sm-12">
                     <div class="product-slider-wrap">
                         <?php if (!empty($boat['SalesStatus']) && $boat['SalesStatus'] === 'Sold'): ?>
                             <div class="custom_label_div"><div class="sold"><div>Sold</div></div></div>
@@ -118,7 +119,7 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
                 </div>
 
                 <!-- Sidebar -->
-                <div class="col-lg-4 col-sm-12 col-xs-12 listing-meta mt-3 mt-lg-0">
+                <div class="col-xl-4 col-lg-4 col-sm-12 listing-meta mt-3 mt-lg-0">
                     <div class="inner-table">
                         <ul>
                             <li><span>Year</span><strong><?php echo esc_html($year ?? ''); ?></strong></li>
@@ -136,40 +137,58 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
                         </ul>
                     </div>
 
-                    <?php if (!empty($staff_member)): ?>
+                    <?php if ($staff_post): ?>
                         <div class="contact-box" style="margin-top:10px;">
                             <div class="row justify-content-sm-center">
-                                <div class="col-md-5 avatar">
+                                <div class="col-md-4 avatar">
                                     <div class="text-center">
-                                        <img class="rounded-circle" src="<?php echo esc_url($staff_member_meta['portrait'] ?? ''); ?>" alt="<?php echo esc_attr($staff_member->post_title ?? ''); ?>">
+                                        <?php if ($staff_meta['portrait_url']): ?>
+                                            <img class="rounded-circle" src="<?php echo esc_url($staff_meta['portrait_url']); ?>"
+                                                 alt="<?php echo esc_attr(get_the_title($staff_post)); ?>">
+                                        <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="col-md-7 contact-info">
-                                    <h6><strong><?php echo esc_html($staff_member->post_title ?? ''); ?></strong></h6>
-                                    <?php if (!empty($staff_member_meta['office_phone'])): ?>
+                                <div class="col-md-8 contact-info">
+                                    <h6><strong><?php echo esc_html(get_the_title($staff_post)); ?></strong></h6>
+                                    <?php if (!empty($staff_meta['job_title'])): ?>
+                                        <div class="staff-title" style="color:#666;"><?php echo esc_html($staff_meta['job_title']); ?></div>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($staff_meta['office_phone'])): ?>
                                         <div>
                                             <span>Office</span>
-                                            <a class="tel" href="tel:<?php echo esc_attr(preg_replace('/[^0-9]+/','', $staff_member_meta['office_phone'])); ?>">
-                                                <span><?php echo esc_html($staff_member_meta['office_phone']); ?></span>
+                                            <a class="tel" href="tel:<?php echo esc_attr(preg_replace('/[^0-9\+]+/','', $staff_meta['office_phone'])); ?>">
+                                                <span><?php echo esc_html($staff_meta['office_phone']); ?></span>
                                             </a>
                                         </div>
                                     <?php endif; ?>
-                                    <?php if (!empty($staff_member_meta['mobile_phone'])): ?>
-                                        <div>
-                                            <span>Mobile</span>
-                                            <a class="tel" href="tel:<?php echo esc_attr(preg_replace('/[^0-9]+/','', $staff_member_meta['mobile_phone'])); ?>">
-                                                <span><?php echo esc_html($staff_member_meta['mobile_phone']); ?></span>
+
+                                    <?php if (!empty($staff_meta['mobile_phone'])): ?>
+                                        <div class="small-text">
+<!--                                            <span>M</span>-->
+                                            <a class="tel" href="tel:<?php echo esc_attr(preg_replace('/[^0-9\+]+/','', $staff_meta['mobile_phone'])); ?>">
+                                                <span><?php echo esc_html($staff_meta['mobile_phone']); ?></span>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($staff_meta['email'])): ?>
+                                        <div class="small-text">
+<!--                                            <span>E</span>-->
+                                            <a style="font-size: 14px;" href="mailto:<?php echo esc_attr($staff_meta['email']); ?>">
+                                                <?php echo esc_html($staff_meta['email']); ?>
                                             </a>
                                         </div>
                                     <?php endif; ?>
                                 </div>
                             </div>
+
+<!--                            <div class="mt-2">-->
+<!--                                <a class="button blue-solid-btn" href="--><?php //echo esc_url($staff_meta['permalink']); ?><!--">View Profile</a>-->
+<!--                            </div>-->
                         </div>
                     <?php endif; ?>
 
-                    <?php if (!empty($staff_member->post_name)): ?>
-                        <a class="button blue-solid-btn" href="/profile/<?php echo esc_attr($staff_member->post_name); ?>/">View Profile</a>
-                    <?php endif; ?>
 
                     <a href="https://gateway.appone.net/onlineapp/Autograph%20Yacht%20Group" target="_blank" class="button blue">
                         <span>Apply For Financing</span>
@@ -232,6 +251,12 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
             <div class="row">
                 <div class="col-12">
                     <div class="product-description-wrap">
+                        <?php if (!empty($boat['Description'])): ?>
+                            <div class="product-description">
+                                <h3 class="title">Description</h3>
+                                <p><?php echo esc_html($boat['Description'] ?? ''); ?></p>
+                            </div>
+                        <?php endif; ?>
                         <div class="product-specifications">
                             <h3 class="title">Specifications</h3>
                             <div class="con specifications">
@@ -348,7 +373,7 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
             </div>
             <div class="modal-body"><h4>Your email has been sent!</h4></div>
             <div class="modal-footer">
-                <a href="/inventory" class="button blue" style="padding:10px 14px;">Back To Inventory</a>
+                <a href="/inventory" class="gold-btn" style="padding:10px 14px;">Back To Inventory</a>
                 <button type="button" class="button blue-solid-btn" style="padding:10px 14px;" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
@@ -366,6 +391,60 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
             var el = document.getElementById('emailBrokerSuccess');
             if (el) new bootstrap.Modal(el).show();
         }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var form   = document.getElementById('long-offer');
+        var btn    = form?.querySelector('input[type="submit"]');
+        var modal1 = document.getElementById('emailBrokerModal');
+        var modal2 = document.getElementById('emailBrokerSuccess');
+
+        if (!form) return;
+
+        const ajaxUrl = "<?php echo esc_js( admin_url('admin-ajax.php') ); ?>";
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Disable button + small progress hint
+            if (btn) { btn.disabled = true; btn.dataset._txt = btn.value; btn.value = 'Sending…'; }
+
+            // Build payload
+            var fd = new FormData(form);
+            // Ensure action & nonce exist (in case editor removed the hidden fields)
+            if (!fd.get('action'))   fd.set('action', 'email_broker_post_complete');
+            if (!fd.get('security')) fd.set('security', '<?php echo esc_js( wp_create_nonce('email_broker') ); ?>');
+
+            fetch(ajaxUrl, {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: fd
+            })
+                .then(function (res) { return res.json().catch(function(){ return { success:false, data:{message:'Bad JSON'} }; }); })
+                .then(function (json) {
+                    if (json && json.success) {
+                        // Hide entry modal, show success
+                        if (window.bootstrap && modal1 && modal2) {
+                            bootstrap.Modal.getOrCreateInstance(modal1).hide();
+                            bootstrap.Modal.getOrCreateInstance(modal2).show();
+                        } else {
+                            // Fallback if Bootstrap JS not present
+                            alert('Your message was sent successfully.');
+                        }
+                        form.reset();
+                    } else {
+                        var msg = (json && json.data && json.data.message) ? json.data.message : 'Something went wrong';
+                        alert('Sorry, we could not send your request. ' + msg);
+                    }
+                })
+                .catch(function (err) {
+                    alert('Network error: ' + (err && err.message ? err.message : err));
+                })
+                .finally(function () {
+                    if (btn) { btn.disabled = false; btn.value = btn.dataset._txt || 'Send Email'; }
+                });
+        });
     });
 </script>
 

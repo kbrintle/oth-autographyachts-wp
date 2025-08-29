@@ -95,7 +95,7 @@
             </div>
 
             <div class="mt-3">
-                <button id="reset-filters" class="btn btn-outline-secondary btn-sm">Reset filters</button>
+                <button id="reset-filters" class="btn btn-secondary btn-sm">Reset filters</button>
 
                 <button id="searchbutton" class="btn btn-primary">Search</button>
             </div>
@@ -103,7 +103,12 @@
     </div>
 
     <!-- Results -->
-    <div id="listingholdermain">
+    <div id="listingholdermain" class="position-relative">
+        <!-- Inventory loader -->
+        <div id="inv-loading" class="inv-loading d-none" aria-hidden="true">
+            <div class="inv-spinner" role="status" aria-label="Loading"></div>
+        </div>
+
         <ul class="product-list list-unstyled row g-4" id="listingholder"></ul>
     </div>
 </main>

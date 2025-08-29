@@ -194,6 +194,8 @@ function cache_boat_inventory() {
     $url = "https://api.boats.com/inventory/search?key={$key}&rows=500&status=Active";
 
     $response = @file_get_contents($url);
+
+    //print_r($response); die;
     if ($response === false) { error_log("[Boats Inventory] fetch failed"); return; }
 
     $data = json_decode($response, true);
@@ -531,3 +533,4 @@ function render_inventory_sync_page() {
     </script>
     <?php
 }
+require_once __DIR__ . '/includes/staff-integration.php';

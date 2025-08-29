@@ -1,36 +1,40 @@
 /*!
- * boat.js — product-detail gallery (classic script)
- * - Fancyapps if available; manual fallback otherwise
- * - Desktop: nav arrows only
- * - Mobile: thumb swipe on main carousel
+ * boat.js — product-detail gallery
+ * - Fancyapps if available (v5 or v3); manual fallback otherwise
+ * - Desktop: nav arrows only (CSS controls visibility/size/hover)
+ * - Mobile: swipe on main area
+ * - Main image click ⇒ lightbox (navigate, fullscreen, close)
  */
 (function () {
-    'use strict';
 
+    'use strict';
+    // ---------- bootstrap ----------
     function init(root) {
         root = root || document;
 
-        var hasFancy =
-            typeof window !== 'undefined' &&
-            typeof window.Carousel !== 'undefined' &&
-            typeof window.Fancybox !== 'undefined';
+        var hasCarousel = typeof window !== 'undefined' && typeof window.Carousel !== 'undefined';
+        var hasFancybox = typeof window !== 'undefined' && (typeof window.Fancybox !== 'undefined' || (window.jQuery && window.jQuery.fancybox));
 
-        if (hasFancy) initFancy(root);
+        if (hasCarousel && hasFancybox) initFancy(root);
         else initManual(root);
     }
 
-    /* ---------- Fancyapps ---------- */
+    // ============================================================
+    // Fancyapps path (Carousel + Fancybox v5 or v3)
+    // ============================================================
     function initFancy(root) {
         var mainEl  = root.querySelector('#mainCarousel');
         var thumbEl = root.querySelector('#thumbCarousel');
         if (!mainEl) return;
 
+        // Main carousel
         var main = new window.Carousel(mainEl, {
             Dots: false,
             infinite: false,
-            Navigation: true // CSS hides this on mobile
+            Navigation: true // visibility handled by CSS
         });
 
+        // Thumbs + sync
         if (thumbEl) {
             new window.Carousel(thumbEl, {
                 Dots: false,
@@ -41,7 +45,6 @@
                 Sync: { target: main, friction: 0.2 }
             });
 
-            // click thumb → jump main
             thumbEl.addEventListener('click', function (e) {
                 var slide = e.target.closest('.f-carousel__slide');
                 if (!slide) return;
@@ -51,16 +54,72 @@
             });
         }
 
-        window.Fancybox.bind('#mainCarousel .f-carousel__slide[data-fancybox="gallery"]', {
-            groupAll: true,
-            Images: { zoom: false },
-            Toolbar: { display: ['counter','zoom','slideshow','fullscreen','download','close'] }
+        // Build slides (with captions)
+        var slides = Array.prototype.map.call(
+            mainEl.querySelectorAll('.f-carousel__slide img'),
+            function (img) { return { src: img.currentSrc || img.src, type: 'image', caption: img.alt || '' }; }
+        );
+
+        // Guard against drag/click on nav
+        var dragged = false;
+        mainEl.addEventListener('pointerdown', function () { dragged = false; }, { passive: true });
+        mainEl.addEventListener('pointermove', function () { dragged = true; },  { passive: true });
+
+        // Open lightbox on main image click
+        mainEl.addEventListener('click', function (e) {
+            if (dragged) return;
+            if (e.target.closest('.f-carousel__nav')) return;
+
+            var slide = e.target.closest('.f-carousel__slide');
+            if (!slide) return;
+
+            var nodes = Array.prototype.slice.call(mainEl.querySelectorAll('.f-carousel__slide'));
+            var idx = nodes.indexOf(slide);
+            if (idx < 0) return;
+
+            openAtIndex(slides, idx); // v5/v3 aware
+        });
+
+        // Cursor hint + no drag ghost
+        Array.prototype.forEach.call(mainEl.querySelectorAll('img'), function (img) {
+            img.style.cursor = 'zoom-in';
+            img.draggable = false;
         });
 
         ensureActiveThumbStyles();
     }
 
-    /* ---------- Manual fallback ---------- */
+    // Use Fancybox v5 if present; else try v3; else noop (manual fallback handles)
+    function openAtIndex(slides, index) {
+        if (window.Fancybox && typeof window.Fancybox.show === 'function') {
+            window.Fancybox.show(slides, {
+                Toolbar: { display: ['counter', 'slideshow', 'zoom', 'fullscreen', 'close'] },
+                Thumbs: false,
+                infinite: false,
+                dragToClose: false,
+                startIndex: index
+            });
+            return;
+        }
+        if (window.jQuery && window.jQuery.fancybox && typeof window.jQuery.fancybox.open === 'function') {
+            window.jQuery.fancybox.open(
+                slides.map(function (s) { return { src: s.src, type: 'image', caption: s.caption || '' }; }),
+                {
+                    infobar: true,
+                    buttons: ['zoom', 'fullScreen', 'close'],
+                    loop: false,
+                    animationEffect: 'zoom-in-out',
+                    transitionEffect: 'fade',
+                    index: index
+                }
+            );
+            return;
+        }
+    }
+
+    // ============================================================
+    // Manual fallback path
+    // ============================================================
     function initManual(root) {
         var mainEl    = root.querySelector('#mainCarousel');
         var thumbEl   = root.querySelector('#thumbCarousel');
@@ -90,11 +149,11 @@
             });
 
             if (thumbTrack && thumbViewport && thumbSlides[index]) {
-                var thumbW   = thumbSlides[0].offsetWidth;
-                var gap      = 10;
-                var vpW      = thumbViewport.offsetWidth;
-                var perView  = Math.max(1, Math.floor(vpW / (thumbW + gap)));
-                var target   = 0;
+                var thumbW  = thumbSlides[0].offsetWidth;
+                var gap     = 10;
+                var vpW     = thumbViewport.offsetWidth;
+                var perView = Math.max(1, Math.floor(vpW / (thumbW + gap)));
+                var target  = 0;
 
                 if (index > perView / 2) {
                     var center = index - Math.floor(perView / 2);
@@ -108,38 +167,62 @@
             }
         }
 
-        // Click thumbs
+        // Thumbs click
         Array.prototype.forEach.call(thumbSlides, function (thumb, i) {
             thumb.addEventListener('click', function () { showSlide(i); });
         });
 
-        // Init
         showSlide(0);
 
-        // --- NAV BUTTONS (desktop-only via CSS) ---
-        addDesktopNavButtons(mainEl, function prev() {
-            showSlide((currentIndex - 1 + mainSlides.length) % mainSlides.length);
-        }, function next() {
-            showSlide((currentIndex + 1) % mainSlides.length);
-        });
+        // Desktop nav buttons (visibility via CSS)
+        addDesktopNavButtons(
+            mainEl,
+            function () { showSlide((currentIndex - 1 + mainSlides.length) % mainSlides.length); },
+            function () { showSlide((currentIndex + 1) % mainSlides.length); }
+        );
 
-        // --- SWIPE ON MOBILE (thumb swipe on main area) ---
+        // Swipe on mobile
         enableSwipe(mainEl, {
-            onLeft: function () { showSlide((currentIndex + 1) % mainSlides.length); },
+            onLeft:  function () { showSlide((currentIndex + 1) % mainSlides.length); },
             onRight: function () { showSlide((currentIndex - 1 + mainSlides.length) % mainSlides.length); }
         });
 
-        // Better touch behavior
+        // Manual lightbox on click
+        var images = Array.prototype.map.call(
+            mainEl.querySelectorAll('.f-carousel__slide img'),
+            function (img) { return img.currentSrc || img.src; }
+        );
+
+        var dragged = false;
+        mainEl.addEventListener('pointerdown', function () { dragged = false; }, { passive: true });
+        mainEl.addEventListener('pointermove', function () { dragged = true; },  { passive: true });
+
+        mainEl.addEventListener('click', function (e) {
+            if (dragged) return;
+            if (e.target.closest('.f-carousel__nav')) return;
+
+            var slide = e.target.closest('.f-carousel__slide');
+            if (!slide) return;
+
+            var nodes = Array.prototype.slice.call(mainEl.querySelectorAll('.f-carousel__slide'));
+            var idx = nodes.indexOf(slide);
+            if (idx < 0) return;
+
+            openFallbackLightbox(images, idx);
+        });
+
         Array.prototype.forEach.call(mainEl.querySelectorAll('img'), function (img) {
+            img.style.cursor = 'zoom-in';
             img.draggable = false;
         });
 
         ensureActiveThumbStyles();
     }
 
-    /* ---------- helpers ---------- */
+    // ============================================================
+    // Helpers
+    // ============================================================
     function addDesktopNavButtons(container, onPrev, onNext) {
-        // If markup already includes nav buttons, wire them up
         var prevBtn = container.querySelector('.f-carousel__nav--prev');
         var nextBtn = container.querySelector('.f-carousel__nav--next');
 
@@ -161,18 +244,12 @@
     }
 
     function enableSwipe(el, handlers) {
-        var startX = 0;
-        var dx = 0;
-        var active = false;
-        var threshold = 40; // px to trigger a slide
-        var locked = false;
+        var startX = 0, dx = 0, active = false, locked = false;
+        var threshold = 40;
 
         el.addEventListener('pointerdown', function (e) {
-            if (e.pointerType !== 'touch' && !('ontouchstart' in window)) return; // prefer touch
-            active = true;
-            locked = false;
-            startX = e.clientX;
-            dx = 0;
+            if (e.pointerType !== 'touch' && !('ontouchstart' in window)) return;
+            active = true; locked = false; startX = e.clientX; dx = 0;
             try { el.setPointerCapture(e.pointerId); } catch (_) {}
         });
 
@@ -201,6 +278,76 @@
             '  border:2px solid rgba(53,149,209,1);opacity:1;' +
             '}';
         document.head.appendChild(style);
+    }
+
+    // ---------- Fallback lightbox ----------
+    function openFallbackLightbox(srcList, startIndex) {
+        var idx = startIndex || 0;
+
+        var overlay = document.createElement('div');
+        overlay.className = 'boat-lightbox';
+        overlay.innerHTML = [
+            '<div class="lightbox-container">',
+            '<button class="lightbox-close" aria-label="Close">&times;</button>',
+            '<button class="lightbox-prev" aria-label="Previous">&#8249;</button>',
+            '<button class="lightbox-next" aria-label="Next">&#8250;</button>',
+            '<button class="lightbox-full" aria-label="Fullscreen" title="Fullscreen">⤢</button>',
+            '<div class="lightbox-track"></div>',
+            '<div class="lightbox-counter"></div>',
+            '</div>'
+        ].join('');
+
+        var track   = overlay.querySelector('.lightbox-track');
+        var counter = overlay.querySelector('.lightbox-counter');
+
+        function render() {
+            track.innerHTML = '';
+            var img = document.createElement('img');
+            img.src = srcList[idx];
+            img.alt = '';
+            img.style.maxWidth  = '90vw';
+            img.style.maxHeight = '90vh';
+            img.style.objectFit = 'contain';
+            track.appendChild(img);
+            counter.textContent = (idx + 1) + ' / ' + srcList.length;
+        }
+
+        function close() {
+            document.removeEventListener('keydown', onKeys);
+            overlay.remove();
+            document.body.style.overflow = '';
+        }
+
+        function onKeys(e) {
+            if (e.key === 'Escape') close();
+            else if (e.key === 'ArrowRight') { idx = (idx + 1) % srcList.length; render(); }
+            else if (e.key === 'ArrowLeft')  { idx = (idx - 1 + srcList.length) % srcList.length; render(); }
+        }
+
+        overlay.querySelector('.lightbox-close').addEventListener('click', close);
+        overlay.querySelector('.lightbox-prev').addEventListener('click', function () {
+            idx = (idx - 1 + srcList.length) % srcList.length; render();
+        });
+        overlay.querySelector('.lightbox-next').addEventListener('click', function () {
+            idx = (idx + 1) % srcList.length; render();
+        });
+        overlay.querySelector('.lightbox-full').addEventListener('click', function () {
+            var el = overlay;
+            if (document.fullscreenElement) { document.exitFullscreen && document.exitFullscreen(); }
+            else {
+                (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen || function(){})
+                    .call(el);
+            }
+        });
+
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) close(); // click outside image closes
+        });
+
+        document.addEventListener('keydown', onKeys);
+        document.body.appendChild(overlay);
+        document.body.style.overflow = 'hidden';
+        render();
     }
 
     // Auto-run
