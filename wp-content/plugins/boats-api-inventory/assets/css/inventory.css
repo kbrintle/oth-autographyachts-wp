@@ -1,273 +1,227 @@
-/* Uniform card images */
-.btn-primary{
-    background-color: var(--e-global-color-primary);
+/* =========================================================
+   Theme variables (fallbacks if Elementor vars not set)
+   ====================================================== */
+:root{
+    --ay-primary: var(--e-global-color-primary, #0d2a45);
+    --ay-secondary: var(--e-global-color-secondary, #c8a76a);
+    --ay-text: #212529;
+    --ay-muted: #6c757d;
+    --ay-gray-50: #f8fafc;
+    --ay-gray-100:#f3f4f6;
+    --ay-gray-300:#d1d5db;
+    --ay-ring: rgba(13,110,253,.25);
 }
-.btn-secondary{
-    background-color: var(--e-global-color-secondary) !important;
-    border-color: var(--e-global-color-secondary) !important;
-}
+
+/* =========================================================
+   Buttons
+   ====================================================== */
+.btn-primary{ background-color: var(--ay-primary); border-color: var(--ay-primary); }
+.btn-primary:hover{ filter: brightness(1.04); }
+.btn-secondary{ background-color: var(--ay-secondary) !important; border-color: var(--ay-secondary) !important; }
 .btn-secondary:hover{
-    background-color: var(--e-global-color-primary) !important;
-    border-color: var(--e-global-color-primary) !important;
+    background-color: var(--ay-primary) !important;
+    border-color: var(--ay-primary) !important;
     color:#fff !important;
 }
-.product-list li{
-    margin-bottom: 1.5rem;
-}
+
+/* =========================================================
+   Cards (inventory list)
+   ====================================================== */
+.product-list li{ margin-bottom: 1.5rem; }
+
+.product-list .card,
+#listingholder .card{ height:100%; display:flex; flex-direction:column; }
+
 .product-list .card-img-top,
-#listingholder .card-img-top {
-    height: 260px !important;   /* try 240–300px if you prefer */
-    width: 100%;
-    object-fit: cover;
-    display: block;
+#listingholder .card-img-top{
+    width:100%;
+    height:260px;               /* adjust 240–300px to taste */
+    object-fit:cover;
+    display:block;
 }
 
-/* Equal height cards + button pinned to bottom */
-.product-list .card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.product-list .card-body{ flex:1 1 auto; display:flex; flex-direction:column; }
+.product-list .card-body .btn{ margin-top:auto; width:100%; }
+.product-list .card-body .card-title{ font-size:1.25rem; font-weight:500; }
 
-}
-.product-list .card-body {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-}
-.product-list .card-body .btn {
-    margin-top: auto;
-    width: 100%;
-}
-.product-list .card-body .card-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-}
+/* Subtle reveal animation for JS .hidden-listing */
+.hidden-listing{ opacity:0; transform:translateY(6px); transition:opacity .18s ease, transform .18s ease; }
+.product-list li:not(.hidden-listing){ opacity:1; transform:none; }
 
-/* Light inputs, scoped to inventory page */
+/* =========================================================
+   Filters (form look)
+   ====================================================== */
 #boats-inventory .form-control,
 #boats-inventory .form-select,
 #boats-inventory input,
 #boats-inventory select,
-#boats-inventory textarea {
-    background-color: #fff !important;
-    color: #212529 !important;
-    border-color: #d1d5db !important; /* gray-300 */
-    border-radius: .75rem;             /* rounded-xl vibe */
+#boats-inventory textarea{
+    background:#fff;
+    color:var(--ay-text);
+    border:1px solid var(--ay-gray-300);
+    border-radius:.75rem;
 }
+#boats-inventory ::placeholder{ color:var(--ay-muted); }
 
-#boats-inventory ::placeholder { color: #6c757d !important; }
-
-/* Make multi-select */
-#boats-inventory .make-control { cursor: text; }
-#boats-inventory .selected-chips .chip {
-    background:#f3f4f6; /* gray-100 */
-    border-radius:.5rem;
-    padding:.25rem .5rem;
-    font-size:.775rem;
-    display:inline-flex;
-    align-items:center;
-    gap:.35rem;
-}
-#boats-inventory .selected-chips .chip button {
-    border:0; background:transparent; line-height:1; padding:0; cursor:pointer;
-}
-#boats-inventory .dropdown-panel .item-btn {
-    width:100%; text-align:left; padding:.5rem .75rem; border:0; background:#fff;
-    display:flex; gap:.6rem; align-items:center; cursor:pointer;
-}
-#boats-inventory .dropdown-panel .item-btn:hover,
-#boats-inventory .dropdown-panel .item-btn.active { background:#f8fafc; } /* gray-50 */
-
-#boats-inventory input[type="search"] {
-    background:#fff !important;
-    color:#212529 !important;
-    caret-color:#212529 !important;
-}
-#boats-inventory ::placeholder { color:#6c757d !important; }
-
-/* INPUT LOOK for the Make control */
+/* ===== Make facet: input-look trigger ===== */
 #boats-inventory .make-toggle,
-#boats-inventory #mfcname.btn {
-    background:#fff !important;
-    color:#212529 !important;
-    border:1px solid #d1d5db !important;        /* gray-300 */
-    border-radius:.5rem !important;              /* match rounded inputs */
-    padding:.375rem .75rem !important;           /* match form-control */
-    line-height:1.5 !important;
-    height:auto !important;
-    box-shadow:none !important;
-    display:flex;                                /* left text + caret */
-    align-items:center;
-    justify-content:space-between;
-    width:100%;
-    text-align:left;
-    font-weight:400 !important;
+#boats-inventory #mfcname.btn{
+    background:#fff;
+    color:var(--ay-text);
+    border:1px solid var(--ay-gray-300);
+    border-radius:.5rem;
+    padding:.375rem .75rem;
+    line-height:1.5;
+    height:auto;
+    box-shadow:none;
+    display:flex; align-items:center; justify-content:space-between;
+    width:100%; text-align:left; font-weight:400;
 }
-#boats-inventory #mfcname.btn:hover,
-#boats-inventory .make-toggle:hover {
-    background:#fff !important;
-}
+#boats-inventory .make-toggle:hover,
+#boats-inventory #mfcname.btn:hover{ background:#fff; }
 
-/* Add a small caret to the right so it reads like a select */
 #boats-inventory .make-toggle::after,
-#boats-inventory #mfcname.btn::after {
+#boats-inventory #mfcname.btn::after{
     content:"";
     width:0; height:0;
     border-left:4px solid transparent;
     border-right:4px solid transparent;
-    border-top:6px solid #6c757d;               /* gray-600 */
+    border-top:6px solid var(--ay-muted);
     margin-left:.5rem;
 }
 
-/* Focus ring to match Bootstrap inputs */
 #boats-inventory .make-toggle:focus,
-#boats-inventory #mfcname.btn:focus {
-    outline:0 !important;
-    border-color:#86b7fe !important;
-    box-shadow:0 0 0 .25rem rgba(13,110,253,.25) !important;
+#boats-inventory #mfcname.btn:focus{
+    outline:0;
+    border-color:#86b7fe;
+    box-shadow:0 0 0 .25rem var(--ay-ring);
 }
 
-/* Dropdown panel to match form controls */
+/* ===== Make facet: dropdown ===== */
 #boats-inventory .dropdown-panel,
-#boats-inventory .custom-dropdown-menu {
+#boats-inventory .custom-dropdown-menu{
     background:#fff;
-    border:1px solid #d1d5db;
+    border:1px solid var(--ay-gray-300);
     border-radius:.5rem;
     margin-top:.25rem;
     box-shadow:0 6px 24px rgba(0,0,0,.07);
 }
 
-/* Make the search inside the dropdown look like the other inputs */
-#boats-inventory .dropdown-panel .make-search {
-    background:#fff; color:#212529; border-color:#d1d5db;
+#boats-inventory .facet-toolbar{ display:flex; align-items:center; gap:.5rem; }
+#boats-inventory .facet-toolbar .facet-search{
+    flex:1; height:32px; padding:.25rem .5rem; font-size:.875rem;
+    background:#fff; color:var(--ay-text);
+    border:1px solid var(--ay-gray-300); border-radius:.5rem;
 }
 
-/* Dropdown toolbar layout */
-#boats-inventory .facet-toolbar {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
+#boats-inventory .dropdown-panel .make-clear{
+    background:#fff; color:#1f2937; border:1px solid var(--ay-gray-300);
 }
-#boats-inventory .facet-toolbar .facet-search {
-    flex: 1;
-    height: 32px;                    /* compact */
-    padding: .25rem .5rem;
-    font-size: .875rem;
-    background: #fff;
-    color: #212529;
-    border: 1px solid #d1d5db;
-    border-radius: .5rem;
-}
+#boats-inventory .dropdown-panel .make-clear:hover{ background:var(--ay-gray-50); }
 
-/* Compact buttons (xs) */
-#boats-inventory .btn-xs {
-    padding: .2rem .5rem;
-    font-size: .75rem;
-    line-height: 1.2;
-    border-radius: .375rem;
-}
-
-/* Button styles for Clear/Apply */
-#boats-inventory .dropdown-panel .make-clear {
-    background: #fff;
-    color: #1f2937;
-    border: 1px solid #d1d5db;
-}
-#boats-inventory .dropdown-panel .make-clear:hover {
-    background: #f8fafc;
-}
-
-#boats-inventory .dropdown-panel .make-apply {
-    background: #0d2a45;             /* navy to match your theme */
-    border: 1px solid #0d2a45;
-}
-#boats-inventory .dropdown-panel .make-apply:hover {
-    filter: brightness(1.08);
-}
-
-/* Tighter list items */
 #boats-inventory .dropdown-panel li[data-value],
-#boats-inventory .dropdown-panel li .d-flex.align-items-center {
-    padding-top: .35rem !important;
-    padding-bottom: .35rem !important;
+#boats-inventory .dropdown-panel li .d-flex.align-items-center{
+    padding-top:.35rem !important; padding-bottom:.35rem !important;
 }
 
-.product-detail .vessel-meta .title{
-    color: #333;
-    font-family: "Poppins", Sans-serif;
-    font-size: 30px;
-    font-weight: 700;
-    text-transform: none;
-    font-style: normal;
-    text-decoration: none;
-    line-height: 1.4em;
-    letter-spacing: 1px;
+/* Chips (if used) */
+#boats-inventory .selected-chips .chip{
+    background:var(--ay-gray-100);
+    border-radius:.5rem; padding:.25rem .5rem;
+    font-size:.775rem; display:inline-flex; align-items:center; gap:.35rem;
 }
-.product .meta dl{
-    color: #151515;
-    font-family: "Poppins", Sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    text-transform: none;
-    font-style: normal;
-    text-decoration: none;
-    line-height: 1.4em;
-    letter-spacing: 1px;
-}
-.product .meta a.btn {
-    background-color: var(--e-global-color-primary);
-    font-family: "Poppins", Sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    text-transform: capitalize;
-    font-style: normal;
-    text-decoration: none;
-    line-height: 1em;
-    letter-spacing: 1px;
-    color: #FFFFFF;
-    border-style: solid;
-    border-width: 1px 1px 1px 1px;
-    border-color: var(--e-global-color-primary);
-    border-radius: 0px 0px 0px 0px;
-    padding: 16px 36px 16px 36px;
-}
-/* Scope the loader to the results area */
-#listingholdermain { margin-top:30px; position: relative; min-height: 20vh;}
-
-.inv-loading {
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.75);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 20;
-    top: 30%;
+#boats-inventory .selected-chips .chip button{
+    border:0; background:transparent; line-height:1; padding:0; cursor:pointer;
 }
 
-/* Spinner */
-.inv-spinner {
-    width: 46px;
-    height: 46px;
-    border: 4px solid rgba(0,0,0,0.18);
-    border-top-color: var(--e-global-color-primary); /* tweak to your brand color */
-    border-radius: 50%;
+/* =========================================================
+   Mobile-only Filters toggle + counter
+   - Markup assumed:
+     <button id="filtersToggle"><span>Filters</span><span id="filtersCount" class="badge"></span></button>
+     <div id="filtersPanel" class="is-collapsed"> ...filters... </div>
+   ====================================================== */
+#filtersToggle{ display:none; }
+
+@media (max-width: 767.98px){
+    #filtersToggle{
+        display:flex;
+        align-items:center; justify-content:center; gap:.5rem;
+        width:100%;
+        border:1px solid var(--ay-gray-300);
+        background:#fff; color:var(--ay-text);
+        padding:.55rem .9rem; border-radius:.6rem;
+        margin-bottom: .75rem;
+    }
+    #filtersToggle .badge{
+        display:inline-block;
+        min-width:1.5rem; padding:.15rem .45rem; border-radius:999px;
+        background:var(--ay-primary); color:#fff; font-weight:600;
+        text-align:center;
+    }
+    #filtersPanel.is-collapsed{ display:none; }
+}
+
+/* =========================================================
+   Loader overlay
+   ====================================================== */
+#listingholdermain{ margin-top:30px; position:relative; min-height:20vh; }
+
+.inv-loading{
+    position:absolute; inset:0;
+    background:rgba(255,255,255,0.75);
+    display:flex; align-items:center; justify-content:center;
+    z-index:20;
+}
+
+.inv-spinner{
+    width:46px; height:46px;
+    border:4px solid rgba(0,0,0,0.18);
+    border-top-color: var(--ay-primary);
+    border-radius:50%;
     animation: inv-spin .8s linear infinite;
 }
+@keyframes inv-spin{ to{ transform:rotate(360deg); } }
 
-@keyframes inv-spin { to { transform: rotate(360deg); } }
+.d-none{ display:none !important; }
 
-/* If your stack doesn't have Bootstrap's d-none */
-.d-none { display: none !important; }
-
-#boat-detail,
-.container.text_area {
-    background: #fff !important;
-    opacity: 1 !important;
-    filter: none !important;
+/* =========================================================
+   Detail page typography + broker card
+   ====================================================== */
+.product-detail .vessel-meta .title{
+    color:#333;
+    font-family:"Poppins", Sans-serif;
+    font-size:30px; font-weight:700; line-height:1.4; letter-spacing:1px;
 }
 
-.boat-detail-page .site-content .ast-container { display:block !important; }
-.boat-detail-page #primary.content-area        { width:100% !important; margin:0 !important; }
+.product .meta dl{
+    color:#151515;
+    font-family:"Poppins", Sans-serif;
+    font-size:15px; line-height:1.4; letter-spacing:1px;
+}
+
+.product .meta a.btn{
+    background-color: var(--ay-primary);
+    border:1px solid var(--ay-primary);
+    color:#fff;
+    font-family:"Poppins", Sans-serif;
+    font-size:15px; letter-spacing:1px;
+    text-transform:capitalize;
+    padding:16px 36px;
+    border-radius:0;
+    line-height:1;
+}
+
+/* Center broker box on phones only */
+@media (max-width: 767.98px){
+    .listing-meta .contact-box,
+    .listing-meta{ text-align:center; }
+    .listing-meta .avatar img{ margin:0 auto; }
+}
+
+/* =========================================================
+   Astra layout helpers (detail page full width)
+   ====================================================== */
+.boat-detail-page .site-content .ast-container{ display:block !important; }
+.boat-detail-page #primary.content-area{ width:100% !important; margin:0 !important; }
 .boat-detail-page #secondary,
-.boat-detail-page .ast-sidebar
+.boat-detail-page .ast-sidebar{ display:none !important; }

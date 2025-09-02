@@ -188,6 +188,30 @@ body .main > .container { padding-top: 40px; }
     color: var(--e-global-color-primary); font-size: 14px; font-weight: 600;
 }
 
+/* Boat detail – center broker card on small screens */
+@media (max-width: 767.98px) {
+    .listing-meta .contact-box .row {
+        justify-content: center;
+        text-align: center;
+    }
+    .listing-meta .contact-box .avatar {
+        text-align: center;
+    }
+    .listing-meta .contact-box img.rounded-circle {
+        display: block;
+        margin: 0 auto;
+    }
+    .listing-meta .contact-box .contact-info {
+        text-align: center;
+    }
+    .listing-meta .contact-box .contact-info .tel,
+    .listing-meta .contact-box .contact-info div {
+        display: inline-flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
 /* “Sold” label */
 #boat-detail .product .custom_label_div .sold {
     background: #0879dc; position: absolute; left: 0; top: 0; color: #fff; padding: 6px;
