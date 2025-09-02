@@ -195,7 +195,6 @@ function cache_boat_inventory() {
 
     $response = @file_get_contents($url);
 
-    //print_r($response); die;
     if ($response === false) { error_log("[Boats Inventory] fetch failed"); return; }
 
     $data = json_decode($response, true);
@@ -473,63 +472,85 @@ function render_inventory_sync_page() {
     </div>
 
     <script>
-        function fetchFilteredInventory() {
-            const params = new URLSearchParams();
+        (function () {
+            const RESULTS = document.getElementById('inventory-results');
+            const API_BASE = "<?php echo esc_js( get_rest_url( null, 'boats/v1/inventory' ) ); ?>";
+            const DETAIL_BASE = "<?php echo esc_js( home_url( '/yachts-for-sale/' ) ); ?>";
+            const WP_NONCE = "<?php echo wp_create_nonce('wp_rest'); ?>";
 
-            ['exactMake', 'state', 'condition', 'class', 'fuel'].forEach(id => {
-                const val = document.getElementById(id).value;
-                if (val) params.append(id, val);
-            });
+            function val(id){ return (document.getElementById(id)?.value || '').trim(); }
+            function setRange(minId, maxId, param, p){
+                const min = val(minId), max = val(maxId);
+                if (min || max) p.set(param, (min || 0) + ':' + (max || 999999));
+            }
 
-            const yrMin = document.getElementById('year_min').value;
-            const yrMax = document.getElementById('year_max').value;
-            if (yrMin || yrMax) params.append('year', `${yrMin || 0}:${yrMax || 9999}`);
+            window.fetchFilteredInventory = async function () {
+                try {
+                    RESULTS.innerHTML = '<p>Loading…</p>';
 
-            const prMin = document.getElementById('price_min').value;
-            const prMax = document.getElementById('price_max').value;
-            if (prMin || prMax) params.append('price', `${prMin || 0}:${prMax || 99999999}`);
+                    const p = new URLSearchParams();
+                    // Map UI → API param names
+                    if (val('exactMake')) p.set('make', val('exactMake'));
+                    if (val('state'))     p.set('state', val('state'));
+                    if (val('condition')) p.set('condition', val('condition'));
+                    if (val('class'))     p.set('type', val('class'));   // API accepts type/boat_type
+                    if (val('fuel'))      p.set('fuel', val('fuel'));
+                    setRange('year_min',   'year_max',   'year',   p);
+                    setRange('price_min',  'price_max',  'price',  p);
+                    setRange('length_min', 'length_max', 'length', p);
 
-            const lnMin = document.getElementById('length_min').value;
-            const lnMax = document.getElementById('length_max').value;
-            if (lnMin || lnMax) params.append('length', `${lnMin || 0}:${lnMax || 9999}`);
+                    const url = API_BASE + (p.toString() ? ('?' + p.toString()) : '');
+                    const res = await fetch(url, {
+                        credentials: 'same-origin',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-WP-Nonce': WP_NONCE
+                        }
+                    });
 
-            const url = `/wp-json/boats/v1/inventory?${params.toString()}`;
-            const resultsDiv = document.getElementById('inventory-results');
-            resultsDiv.innerHTML = '<p>Loading...</p>';
-
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    if (!Array.isArray(data) || data.length === 0) {
-                        resultsDiv.innerHTML = '<p>No results found.</p>';
+                    const text = await res.text();
+                    if (!res.ok) {
+                        RESULTS.innerHTML = `<div style="color:#b00"><strong>HTTP ${res.status}</strong><br>${text.slice(0,300)}</div>`;
                         return;
                     }
 
-                    let html = '<table class="widefat striped"><thead><tr><th>Year</th><th>Make</th><th>Model</th><th>Price</th><th>Link</th></tr></thead><tbody>';
+                    let data;
+                    try { data = JSON.parse(text); }
+                    catch(e){
+                        RESULTS.innerHTML = `<div style="color:#b00"><strong>Bad JSON</strong><br><pre>${text.slice(0,400)}</pre></div>`;
+                        return;
+                    }
 
-                    html += data.map(boat => {
-                        const year = boat.ModelYear || 'N/A';
-                        const make = boat.MakeStringExact || 'N/A';
-                        const model = boat.ModelExact || 'N/A';
-                        const price = boat.Price ? boat.Price.replace(' USD', '') : 'N/A';
-                        const id = boat.DocumentID || '';
+                    if (!Array.isArray(data) || !data.length) {
+                        RESULTS.innerHTML = '<p>No results found.</p>';
+                        return;
+                    }
 
+                    let rows = data.map(b => {
+                        const year  = b.ModelYear ?? '—';
+                        const make  = b.MakeStringExact || b.MakeString || '—';
+                        const model = b.Model || '—';
+                        const price = b.Price ? ('$' + String(b.Price).replace(/[^\d.]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : 'Call';
+                        const slug  = b.slug || '';
+                        const link  = slug ? (DETAIL_BASE + encodeURIComponent(slug)) : '#';
                         return `<tr>
-                            <td>${year}</td>
-                            <td>${make}</td>
-                            <td>${model}</td>
-                            <td>$${price}</td>
-                            <td><a class="button button-primary" target="_blank" href=/yachts-for-sale/$${id}>Link</a></td>
-                        </tr>`;
+          <td>${year}</td><td>${make}</td><td>${model}</td><td>${price}</td>
+          <td>${ slug ? `<a class="button button-primary" target="_blank" href="${link}">Open</a>` : '—' }</td>
+        </tr>`;
                     }).join('');
 
-                    html += '</tbody></table>';
-                    resultsDiv.innerHTML = html;
-                })
-                .catch(() => {
-                    resultsDiv.innerHTML = '<p>Error fetching data.</p>';
-                });
-        }
+                    RESULTS.innerHTML =
+                        `<table class="widefat striped">
+           <thead><tr><th>Year</th><th>Make</th><th>Model</th><th>Price</th><th>Link</th></tr></thead>
+           <tbody>${rows}</tbody>
+         </table>`;
+
+                } catch (err) {
+                    RESULTS.innerHTML = `<div style="color:#b00">Error fetching data.<br><small>${String(err)}</small></div>`;
+                    console.error('Inventory fetch failed:', err);
+                }
+            };
+        })();
     </script>
     <?php
 }
