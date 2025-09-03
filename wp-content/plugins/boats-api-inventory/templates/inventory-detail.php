@@ -254,7 +254,7 @@ add_action('wp_head', function () use ($listingTitle, $location, $description, $
                         <?php if (!empty($boat['Description'])): ?>
                             <div class="product-description">
                                 <h3 class="title">Description</h3>
-                                <p><?php echo esc_html($boat['Description'] ?? ''); ?></p>
+                                <p><?php echo $boat['Description'][0] ?? ''; ?></p>
                             </div>
                         <?php endif; ?>
                         <div class="product-specifications">

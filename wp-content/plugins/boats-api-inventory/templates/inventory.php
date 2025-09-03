@@ -1,9 +1,6 @@
 <?php /* Inventory listing page */ get_header(); ?>
 <main class="boats-wrap container-fluid py-5" id="boats-inventory">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <div><strong><span class="reccounterupdate">0</span></strong> boats found</div>
-        <div class="spinner-border spinner d-none" role="status" aria-hidden="true"></div>
-    </div>
+
 
     <!-- Mobile-only Filters toggle -->
     <button id="filtersToggle"
@@ -109,7 +106,17 @@
         <div id="inv-loading" class="inv-loading d-none" aria-hidden="true">
             <div class="inv-spinner" role="status" aria-label="Loading"></div>
         </div>
+
         <ul class="product-list list-unstyled row g-4" id="listingholder"></ul>
+
+        <!-- No-results message -->
+        <div id="no-results" class="no-results text-center py-5 d-none">
+            <h4 class="mb-2">No Listings Found</h4>
+            <p class="mb-3">Try broadening your filters or clearing them.</p>
+            <button type="button" id="no-results-reset" class="btn btn-secondary btn-sm">
+                Reset Filters
+            </button>
+        </div>
     </div>
 </main>
 <?php get_footer(); ?>

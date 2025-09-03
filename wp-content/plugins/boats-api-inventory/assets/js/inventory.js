@@ -1,8 +1,9 @@
 /*!
- * Autograph Yachts — Inventory (rewritten)
+ * Autograph Yachts — Inventory
  * - Make facet (new/legacy), instant-apply
  * - URL sync + REST inventory/filters
- * - Mobile-only Filters toggle with live counter (#filtersToggle / #filtersCount)
+ * - Mobile-only Filters toggle + live counter
+ * - Shows #no-results block when nothing matches
  */
 
 (function ($) {
@@ -10,9 +11,9 @@
     if (!$) throw new Error('jQuery is required');
 
     /* ============================ Config ============================ */
-    const REST_INVENTORY = (window.BoatsConfig && BoatsConfig.restUrl)   || '/wp-json/boats/v1/inventory';
-    const REST_FILTERS   = (window.BoatsConfig && BoatsConfig.filtersUrl) || '/wp-json/boats/v1/filters';
-    const REST_FACETS    = (window.BoatsConfig && BoatsConfig.facetsUrl)  || '/wp-json/boats/v1/facets?fields=make';
+    const REST_INVENTORY = (window.BoatsConfig && BoatsConfig.restUrl)    || '/wp-json/boats/v1/inventory';
+    const REST_FILTERS   = (window.BoatsConfig && BoatsConfig.filtersUrl)  || '/wp-json/boats/v1/filters';
+    const REST_FACETS    = (window.BoatsConfig && BoatsConfig.facetsUrl)   || '/wp-json/boats/v1/facets?fields=make';
     const BASE_URL       = '/yachts-for-sale';
 
     /* ============================ Helpers ============================ */
@@ -22,23 +23,21 @@
     const val = (s) => (qs(s) ? qs(s).value : '');
     const txt = (s, v) => { const el = qs(s); if (el) el.textContent = v; };
     const on  = (el, ev, fn) => el && el.addEventListener(ev, fn);
-    const num = (s) => { const n = parseFloat(String(s||'').replace(/[^\d.]/g,'')); return Number.isFinite(n) ? n : ''; };
-    const debounce = (fn, ms=250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; };
-    const esc = (s) => String(s||'')
+    const num = (s) => { const n = parseFloat(String(s || '').replace(/[^\d.]/g, '')); return Number.isFinite(n) ? n : ''; };
+    const debounce = (fn, ms = 250) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+    const esc = (s) => String(s || '')
         .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
         .replaceAll('"','&quot;').replaceAll("'",'&#039;');
-    const slug = (s) => String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+    const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
     const hasSSelect = typeof $.fn.sSelect === 'function';
 
     function showLoading(on = true) {
-        const overlay = qs('#inv-loading');
-        if (overlay) overlay.classList.toggle('d-none', !on);
-        const headSpin = qs('.spinner');
-        if (headSpin) headSpin.classList.toggle('d-none', !on);
+        qs('#inv-loading')?.classList.toggle('d-none', !on);
+        qs('.spinner')?.classList.toggle('d-none', !on); // small header spinner if present
     }
 
-    // Facet derivation fallback
+    // Fallback facet derivation
     const FacetCache = {
         inv: null,
         async get() {
@@ -69,7 +68,7 @@
         built: false
     };
 
-    // ensure hidden CSV
+    // Ensure hidden CSV input exists
     (function ensureHidden() {
         let hidden = document.getElementById('makeid');
         if (!hidden) {
@@ -90,7 +89,7 @@
     }
 
     function renderMakeSummary(setToShow = makeUI.selected) {
-        const labels = Array.from(setToShow).map(v => makeUI.options.find(o => o.value === v)?.label || v);
+        const labels  = Array.from(setToShow).map(v => makeUI.options.find(o => o.value === v)?.label || v);
         const summary = labels.length === 0 ? 'All' : (labels.length === 1 ? labels[0] : `${labels.length} selected`);
         if (makeUI.isNew) makeUI.root.find('.make-toggle').text(summary);
         else makeUI.titleBtn.text(summary);
@@ -106,14 +105,15 @@
         makeUI.built = true;
         makeUI.panel.addClass('d-none');
 
+        // Toolbar
         if (!makeUI.panel.find('.facet-toolbar').length) {
             makeUI.panel.prepend(
-                '<div class="facet-toolbar p-2 border-bottom bg-white position-sticky top-0">'+
-                '<input type="search" class="form-control facet-search make-search" placeholder="Search makes…">'+
-                '<div class="d-flex align-items-center gap-2 mt-2">'+
-                '<button type="button" class="btn btn-sm btn-outline-secondary make-clear">Clear</button>'+
-                '</div>'+
-                '</div>'
+                `<div class="facet-toolbar p-2 border-bottom bg-white position-sticky top-0">
+          <input type="search" class="form-control facet-search make-search" placeholder="Search makes…">
+          <div class="d-flex align-items-center gap-2 mt-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary make-clear">Clear</button>
+          </div>
+        </div>`
             );
         }
 
@@ -121,11 +121,11 @@
 
         const search = makeUI.panel.find('.make-search')[0];
         if (search) {
-            on(search,'input',debounce(()=>filterMakeList(search.value),90));
-            on(search,'keydown',(e)=>{ if (e.key==='Escape'){ e.preventDefault(); closePanel(); }});
+            on(search, 'input', debounce(() => filterMakeList(search.value), 90));
+            on(search, 'keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); closePanel(); } });
         }
 
-        makeUI.panel.on('click','.make-clear',()=>{
+        makeUI.panel.on('click', '.make-clear', () => {
             makeUI.staging.clear();
             makeUI.menu.find('input[type="checkbox"]').prop('checked', false);
             makeUI.menu.find('.make-all').prop('checked', true);
@@ -138,18 +138,17 @@
         });
     }
 
-    // FIXED: use template literals (the old code had ${} inside single-quoted strings)
     function renderMakeList(targetSet) {
         if (!makeUI.menu.length) return;
 
         const parts = [];
         parts.push(
             `<li class="px-2 py-1 border-bottom">
-         <label class="d-flex align-items-center gap-2">
-           <input type="checkbox" class="form-check-input make-all" ${targetSet.size===0?'checked':''}>
-           <span>All</span>
-         </label>
-       </li>`
+        <label class="d-flex align-items-center gap-2">
+          <input type="checkbox" class="form-check-input make-all" ${targetSet.size === 0 ? 'checked' : ''}>
+          <span>All</span>
+        </label>
+      </li>`
         );
 
         makeUI.options.forEach(opt => {
@@ -157,19 +156,20 @@
             const count   = Number.isFinite(opt.count) ? `<span class="ms-auto text-muted small">${opt.count}</span>` : '';
             parts.push(
                 `<li class="px-2 py-1 d-flex align-items-center" data-value="${esc(opt.value)}" data-label="${esc(opt.label)}">
-           <label class="d-flex align-items-center gap-2 flex-grow-1">
-             <input type="checkbox" class="form-check-input make-cb" value="${esc(opt.value)}" ${checked}>
-             <span>${esc(opt.label)}</span>
-           </label>
-           ${count}
-         </li>`
+          <label class="d-flex align-items-center gap-2 flex-grow-1">
+            <input type="checkbox" class="form-check-input make-cb" value="${esc(opt.value)}" ${checked}>
+            <span>${esc(opt.label)}</span>
+          </label>
+          ${count}
+        </li>`
             );
         });
 
         makeUI.menu.html(parts.join(''));
         makeUI.menu.off('change');
 
-        makeUI.menu.on('change','.make-all',function(){
+        // "All" checkbox
+        makeUI.menu.on('change', '.make-all', function () {
             if (this.checked) {
                 makeUI.staging.clear();
                 makeUI.menu.find('.make-cb').prop('checked', false);
@@ -184,7 +184,8 @@
             debouncedRunSearch();
         });
 
-        makeUI.menu.on('change','.make-cb',function(){
+        // Individual makes
+        makeUI.menu.on('change', '.make-cb', function () {
             const v = this.value;
             if (this.checked) makeUI.staging.add(v); else makeUI.staging.delete(v);
             makeUI.menu.find('.make-all').prop('checked', makeUI.staging.size === 0);
@@ -198,11 +199,11 @@
     }
 
     function filterMakeList(q) {
-        const needle = String(q||'').toLowerCase().trim();
+        const needle = String(q || '').toLowerCase().trim();
         const rows = makeUI.menu.find('li[data-value]');
         if (!needle) { rows.show(); return; }
-        rows.each(function(){
-            const label = (this.getAttribute('data-label')||'').toLowerCase();
+        rows.each(function () {
+            const label = (this.getAttribute('data-label') || '').toLowerCase();
             $(this).toggle(label.includes(needle));
         });
     }
@@ -218,7 +219,7 @@
     /* ===================== Populate filters ===================== */
     async function populateFilters({ selectedType = '' } = {}) {
         try {
-            const res  = await fetch(REST_FILTERS, { credentials:'same-origin' });
+            const res  = await fetch(REST_FILTERS, { credentials: 'same-origin' });
             const data = await res.json();
 
             let makes  = (data?.makes || data?.make || []);
@@ -228,7 +229,7 @@
 
             if (!makes.length) {
                 try {
-                    const r2 = await fetch(REST_FACETS, { credentials:'same-origin' });
+                    const r2 = await fetch(REST_FACETS, { credentials: 'same-origin' });
                     const d2 = await r2.json();
                     makes = (d2?.make || d2?.makes || []);
                 } catch {}
@@ -237,30 +238,32 @@
             if (!makes.length || !types.length || !states.length || !fuels.length) {
                 const inv = await FacetCache.get();
                 const uniq = (arr) => Array.from(new Set(arr.filter(Boolean)));
-                if (!makes.length)  makes  = uniq(inv.map(b => (b.MakeStringExact||b.MakeString||'').trim())).sort();
-                if (!types.length)  types  = uniq(inv.map(b => (b.Class||b.BoatType||b.Type||'').toString().trim())).sort();
-                if (!states.length) states = uniq(inv.map(b => (b.BoatLocation?.BoatStateCode||b.State||'').toString().trim().toUpperCase())).sort();
+                if (!makes.length)  makes  = uniq(inv.map(b => (b.MakeStringExact || b.MakeString || '').trim())).sort();
+                if (!types.length)  types  = uniq(inv.map(b => (b.Class || b.BoatType || b.Type || '').toString().trim())).sort();
+                if (!states.length) states = uniq(inv.map(b => (b.BoatLocation?.BoatStateCode || b.State || '').toString().trim().toUpperCase())).sort();
                 if (!fuels.length)  fuels  = uniq(inv.flatMap(b => {
                     const engs = Array.isArray(b.Engines) ? b.Engines : [];
-                    const ef   = engs.map(e => (e.Fuel||'').toString().trim());
-                    const top  = (b.Fuel||b.FuelType||'').toString().trim();
+                    const ef   = engs.map(e => (e.Fuel || '').toString().trim());
+                    const top  = (b.Fuel || b.FuelType || '').toString().trim();
                     return [...ef, top];
                 })).sort();
             }
 
+            // Normalize Make options
             makeUI.options = makes
                 .filter(Boolean)
                 .map(m => {
-                    if (typeof m === 'string') return { label:m, value:slug(m) };
+                    if (typeof m === 'string') return { label: m, value: slug(m) };
                     const label = m.label || m.name || String(m);
-                    return { label, value:(m.value||slug(label)), count:m.count };
+                    return { label, value: (m.value || slug(label)), count: m.count };
                 })
                 .filter(o => o.label && o.value)
-                .sort((a,b)=> (b.count||0)-(a.count||0) || a.label.localeCompare(b.label));
+                .sort((a, b) => (b.count || 0) - (a.count || 0) || a.label.localeCompare(b.label));
 
             ensureMakeToggleButton();
             buildMakePanel();
 
+            // Type
             const $type = $('#typeid');
             if ($type.length) {
                 $type.empty().append('<option value="">All</option>');
@@ -272,6 +275,7 @@
                 }
             }
 
+            // State
             const $state = $('#stateid');
             if ($state.length) {
                 const cur = val('#stateid');
@@ -280,6 +284,7 @@
                 if (cur) $state.val(cur);
             }
 
+            // Fuel
             const $fuel = $('#fueltypeid');
             if ($fuel.length && fuels.length) {
                 const cur = val('#fueltypeid');
@@ -294,20 +299,20 @@
     /* ===================== Build query / URL sync ===================== */
     function buildQueryFromUI() {
         const p = new URLSearchParams();
-        const makeCsv  = (val('#makeid')||'').trim(); if (makeCsv) p.set('make', makeCsv);
-        const type     = val('#typeid');              if (type)     p.set('type', type);
-        const state    = val('#stateid');             if (state)    p.set('state', state);
-        const condition= val('#conditionid');         if (condition)p.set('condition', condition);
-        const fuel     = val('#fueltypeid');          if (fuel)     p.set('fuel', String(fuel).toLowerCase());
+        const makeCsv  = (val('#makeid') || '').trim(); if (makeCsv) p.set('make', makeCsv);
+        const type     = val('#typeid');                if (type)     p.set('type', type);
+        const state    = val('#stateid');               if (state)    p.set('state', state);
+        const condition= val('#conditionid');           if (condition)p.set('condition', condition);
+        const fuel     = val('#fueltypeid');            if (fuel)     p.set('fuel', String(fuel).toLowerCase());
 
         const yrmin = num(val('#yrmin')), yrmax = num(val('#yrmax'));
-        if (yrmin || yrmax) p.set('year', `${yrmin||''}:${yrmax||''}`);
+        if (yrmin || yrmax) p.set('year', `${yrmin || ''}:${yrmax || ''}`);
 
         const prmin = num(val('#prmin')), prmax = num(val('#prmax'));
-        if (prmin || prmax) p.set('price', `${prmin||''}:${prmax||''}`);
+        if (prmin || prmax) p.set('price', `${prmin || ''}:${prmax || ''}`);
 
         const lnmin = num(val('#lnmin')), lnmax = num(val('#lnmax'));
-        if (lnmin || lnmax) p.set('length', `${lnmin||''}:${lnmax||''}`);
+        if (lnmin || lnmax) p.set('length', `${lnmin || ''}:${lnmax || ''}`);
 
         return p;
     }
@@ -316,7 +321,7 @@
     function updateURLFromUI() {
         const p = new URLSearchParams();
 
-        const makeCsv = (val('#makeid')||'').trim(); if (makeCsv) p.set('make', makeCsv);
+        const makeCsv = (val('#makeid') || '').trim(); if (makeCsv) p.set('make', makeCsv);
         const type  = val('#typeid');   if (type)  p.set('type', type);
         const fuel  = val('#fueltypeid'); if (fuel) p.set('fuel', fuel);
         const state = val('#stateid');  if (state) p.set('state', state);
@@ -326,11 +331,12 @@
         const yrmin = val('#yrmin'), yrmax = val('#yrmax'); if (yrmin) p.set('minYear', yrmin);   if (yrmax) p.set('maxYear', yrmax);
 
         const condition = val('#conditionid'); if (condition) p.set('condition', condition);
+
         history.replaceState(null, '', `${window.location.pathname}?${p.toString()}`);
     }
 
     async function queryInventory(params) {
-        const res = await fetch(`${REST_INVENTORY}?${params.toString()}`, { credentials:'same-origin' });
+        const res = await fetch(`${REST_INVENTORY}?${params.toString()}`, { credentials: 'same-origin' });
         try { const data = await res.json(); return Array.isArray(data) ? data : []; }
         catch { return []; }
     }
@@ -338,26 +344,29 @@
     /* ===================== Render ===================== */
     function renderList(boats) {
         const holder = qs('#listingholder');
+        const empty  = qs('#no-results');
         if (!holder) return;
+
         holder.innerHTML = '';
 
-        if (!boats.length) {
-            txt('.reccounterupdate','0');
-            holder.innerHTML = "<h1 class='text-center w-100'>No Results</h1>";
+        if (!Array.isArray(boats) || boats.length === 0) {
+            txt('.reccounterupdate', '0');
+            empty?.classList.remove('d-none');
             return;
         }
 
+        empty?.classList.add('d-none');
         txt('.reccounterupdate', String(boats.length));
 
         const html = boats.map(b => {
-            const title = [b.ModelYear, b.MakeStringExact||b.MakeString, b.Model].filter(Boolean).join(' ');
+            const title = [b.ModelYear, b.MakeStringExact || b.MakeString, b.Model].filter(Boolean).join(' ');
             const slugStr = (b.slug || [
-                (b.MakeStringExact||b.MakeString||''),
-                (b.Model||''),
-                (b.DocumentID||'')
-            ].join('-').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')) || '';
+                (b.MakeStringExact || b.MakeString || ''),
+                (b.Model || ''),
+                (b.DocumentID || '')
+            ].join('-').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')) || '';
             const href  = `${BASE_URL.replace(/\/$/, '')}/${slugStr}`;
-            const img   = (b.Image||'').replace('_XLARGE','_LARGE') || '/wp-content/uploads/default-boat.jpg';
+            const img   = (b.Image || '').replace('_XLARGE','_LARGE') || '/wp-content/uploads/default-boat.jpg';
             const price = b.Price ? `$${Number(String(b.Price).replace(/[^\d.]/g,'')).toLocaleString()}` : 'Call';
             const loc   = b.BoatLocation ? [b.BoatLocation.BoatCityName, b.BoatLocation.BoatStateCode].filter(Boolean).join(', ') : '';
 
@@ -381,25 +390,29 @@
         }).join('');
 
         holder.insertAdjacentHTML('beforeend', html);
-        setTimeout(()=>{ qsa('#listingholdermain ul.product-list li').forEach(li=>li.classList.remove('hidden-listing')); }, 120);
+
+        // Nice reveal
+        setTimeout(() => {
+            qsa('#listingholdermain ul.product-list li').forEach(li => li.classList.remove('hidden-listing'));
+        }, 120);
     }
 
     /* ===================== Search flow ===================== */
     async function runSearch() {
-        qsa('#listingholdermain ul.product-list li').forEach(li=>li.classList.add('hidden-listing'));
+        qsa('#listingholdermain ul.product-list li').forEach(li => li.classList.add('hidden-listing'));
         showLoading(true);
         const data = await queryInventory(buildQueryFromUI());
         renderList(data);
         showLoading(false);
-        if (window.innerWidth <= 768) window.scrollTo({ top:0, behavior:'smooth' });
+        if (window.innerWidth <= 768) window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     const debouncedRunSearch = debounce(runSearch, 150);
 
     /* ===================== Filter counter (mobile) ===================== */
-    function countSet(minSel, maxSel){ return !!(val(minSel) || val(maxSel)); }
+    function countSet(aSel, bSel){ return !!(val(aSel) || val(bSel)); }
     function computeFilterCount(){
         let n = 0;
-        if ((val('#makeid')||'').trim()) n++;
+        if ((val('#makeid') || '').trim()) n++;
         ['#typeid','#stateid','#fueltypeid','#conditionid'].forEach(s=>{ if (val(s)) n++; });
         if (countSet('#yrmin','#yrmax')) n++;
         if (countSet('#prmin','#prmax')) n++;
@@ -433,7 +446,7 @@
         // Populate facets
         await populateFilters({ selectedType: urlParams.get('type') || '' });
 
-        // Sync checkboxes and summary
+        // Sync make panel UI
         renderMakeList(makeUI.staging);
         renderMakeSummary();
 
@@ -458,7 +471,7 @@
             });
         }
 
-        // click-outside close
+        // Close on click-outside
         $(document).on('mousedown', (e)=>{ if (makeUI.panel.length && !makeUI.root[0].contains(e.target)) closePanel(); });
 
         // Apply remaining URL params
@@ -466,9 +479,11 @@
         setIf('minYear','#yrmin');   setIf('maxYear','#yrmax');
         setIf('minPrice','#prmin');  setIf('maxPrice','#prmax');
         setIf('minLength','#lnmin'); setIf('maxLength','#lnmax');
-        const year=urlParams.get('year');     if (year){ const [a,b]=year.split(':');  set('#yrmin',a||''); set('#yrmax',b||''); }
-        const price=urlParams.get('price');   if (price){ const [a,b]=price.split(':');set('#prmin',a||''); set('#prmax',b||''); }
-        const length=urlParams.get('length'); if (length){const [a,b]=length.split(':');set('#lnmin',a||''); set('#lnmax',b||''); }
+
+        const year   = urlParams.get('year');   if (year)   { const [a,b]=year.split(':');  set('#yrmin',a||''); set('#yrmax',b||''); }
+        const price  = urlParams.get('price');  if (price)  { const [a,b]=price.split(':'); set('#prmin',a||''); set('#prmax',b||''); }
+        const length = urlParams.get('length'); if (length) { const [a,b]=length.split(':');set('#lnmin',a||''); set('#lnmax',b||''); }
+
         setIf('fuel','#fueltypeid'); setIf('state','#stateid'); setIf('condition','#conditionid');
 
         // Initial fetch + badge
@@ -498,17 +513,20 @@
 
             $('#typeid,#fueltypeid,#stateid,#conditionid').val('');
             $('#yrmin,#yrmax,#prmin,#prmax,#lnmin,#lnmax').val('');
-            $('.selectedTxt2').text('All');
+            $('.selectedTxt2').text('All'); // if stylish-select is active
 
             updateFilterBadge();
             runSearch();
         });
 
-        // (optional) sort UI placeholder
+        // (optional) sort placeholders
         $('.sortrecord').on('click',function(){
             $('.sortrecord').removeClass('active asc desc');
             const $t = $(this).addClass('active');
             $t.toggleClass('desc').toggleClass('asc');
         });
+
+        // "No results" reset button
+        on(qs('#no-results-reset'), 'click', () => qs('#reset-filters')?.click());
     });
 })(window.jQuery);

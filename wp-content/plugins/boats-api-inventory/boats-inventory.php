@@ -189,74 +189,137 @@ add_action('rest_api_init', function () {
 /** =========================
  * Cache Sync
  * ========================= */
+// --- In your Boats Inventory Cache plugin ---
+
+// 1) Replace your cache function with this:
 function cache_boat_inventory() {
     $key = "T7lQ9dZmElyotsARW4hmv8fqnLoVY2";
-    $url = "https://api.boats.com/inventory/search?key={$key}&rows=500&status=Active";
+    $base = "https://api.boats.com/inventory/search?key={$key}&rows=500";
 
-    $response = @file_get_contents($url);
+    $statuses = ['Active','Sold']; // grab both
+    $all = [];
 
-    if ($response === false) { error_log("[Boats Inventory] fetch failed"); return; }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) { error_log("[Boats Inventory] JSON error: " . json_last_error_msg()); return; }
-
-    $boats = $data['results'] ?? [];
-
-    $trimmed = array_map(function ($boat) {
-        $images = [];
-        if (!empty($boat['Images']) && is_array($boat['Images'])) {
-            foreach ($boat['Images'] as $img) {
-                if (!empty($img['Uri'])) $images[] = $img['Uri'];
-            }
+    foreach ($statuses as $status) {
+        $url = $base . '&status=' . rawurlencode($status);
+        $response = @file_get_contents($url);
+        if ($response === false) {
+            error_log("[Boats Inventory] fetch failed ($status)");
+            continue;
         }
+        $data = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log("[Boats Inventory] JSON error ($status): " . json_last_error_msg());
+            continue;
+        }
+        $boats = $data['results'] ?? [];
+        foreach ($boats as $boat) {
+            // Try several likely keys for the seller/agent party id
+            $party = $boat['PartyID']            ?? $boat['PartyId']
+                    ?? $boat['SalesRepPartyId']    ?? $boat['SalespersonPartyId']
+                    ?? $boat['BrokerPartyId']      ?? $boat['ListingAgentPartyId']
+                    ?? '';
 
-        $base_slug = trim(
-            ($boat['MakeStringExact'] ?? $boat['MakeString'] ?? '') . '-' .
-            ($boat['Model'] ?? '') . '-' .
-            ($boat['DocumentID'] ?? ''), '-'
-        );
-        $slug = sanitize_title($base_slug);
+            // Images, safely flattened
+            $images = [];
+            if (!empty($boat['Images']) && is_array($boat['Images'])) {
+                foreach ($boat['Images'] as $img) {
+                    if (!empty($img['Uri'])) $images[] = $img['Uri'];
+                }
+            }
 
-        return [
-            'DocumentID'      => $boat['DocumentID'] ?? null,
-            'slug'            => $slug,
-            'ModelYear'       => $boat['ModelYear'] ?? null,
-            'MakeString'      => $boat['MakeString'] ?? null,
-            'MakeStringExact' => $boat['MakeStringExact'] ?? null,
-            'Model'           => $boat['Model'] ?? null,
-            'BoatName'        => $boat['BoatName'] ?? null,
-            'Image'           => $images[0] ?? null,
-            'Images'          => $images,
-            'BoatCategoryCode'=> $boat['BoatCategoryCode'] ?? null,
-            'SaleClassCode'   => $boat['SaleClassCode'] ?? null,
-            'BoatClassCode'   => $boat['BoatClassCode'] ?? null,
-            'LengthOverall'   => $boat['LengthOverall'] ?? null,
-            'NominalLength'   => $boat['NominalLength'] ?? null,
-            'DryWeightMeasure'=> $boat['DryWeightMeasure'] ?? null,
-            'BoatHullMaterialCode' => $boat['BoatHullMaterialCode'] ?? null,
-            'BoatHullID'      => $boat['BoatHullID'] ?? null,
-            'BeamMeasure'     => $boat['BeamMeasure'] ?? null,
-            'Price'           => $boat['NormPrice'] ?? null,
-            'Engines'         => $boat['Engines'] ?? null,
-            'BoatLocation'    => [
-                'BoatStateCode' => $boat['BoatLocation']['BoatStateCode'] ?? null,
-                'BoatCityName'  => $boat['BoatLocation']['BoatCityName'] ?? null,
-            ],
-            'Description'     => $boat['Description'] ?? null,
-        ];
-    }, $boats);
+            $base_slug = trim(
+                    ($boat['MakeStringExact'] ?? $boat['MakeString'] ?? '') . '-' .
+                    ($boat['Model'] ?? '') . '-' .
+                    ($boat['DocumentID'] ?? ''), '-'
+            );
+            $slug = sanitize_title($base_slug);
 
-    // Build slug map for O(1) detail lookup
-    $by_slug = [];
-    foreach ($trimmed as $b) {
-        if (!empty($b['slug'])) $by_slug[$b['slug']] = $b;
+            $all[] = [
+                    'DocumentID'       => $boat['DocumentID'] ?? null,
+                    'slug'             => $slug,
+                    'ModelYear'        => $boat['ModelYear'] ?? null,
+                    'MakeString'       => $boat['MakeString'] ?? null,
+                    'MakeStringExact'  => $boat['MakeStringExact'] ?? null,
+                    'Model'            => $boat['Model'] ?? null,
+                    'BoatName'         => $boat['BoatName'] ?? null,
+                    'Image'            => $images[0] ?? null,
+                    'Images'           => $images,
+                    'BoatCategoryCode' => $boat['BoatCategoryCode'] ?? null,
+                    'SaleClassCode'    => $boat['SaleClassCode'] ?? null,
+                    'BoatClassCode'    => $boat['BoatClassCode'] ?? null,
+                    'LengthOverall'    => $boat['LengthOverall'] ?? null,
+                    'NominalLength'    => $boat['NominalLength'] ?? null,
+                    'DryWeightMeasure' => $boat['DryWeightMeasure'] ?? null,
+                    'BoatHullMaterialCode' => $boat['BoatHullMaterialCode'] ?? null,
+                    'BoatHullID'       => $boat['BoatHullID'] ?? null,
+                    'BeamMeasure'      => $boat['BeamMeasure'] ?? null,
+                    'Price'            => $boat['NormPrice'] ?? null,
+                    'Engines'          => $boat['Engines'] ?? null,
+                    'BoatLocation'     => [
+                            'BoatStateCode' => $boat['BoatLocation']['BoatStateCode'] ?? null,
+                            'BoatCityName'  => $boat['BoatLocation']['BoatCityName'] ?? null,
+                    ],
+                    'Description'      => $boat['GeneralBoatDescription'] ?? null,
+                    'SalesStatus'      => $boat['SalesStatus'] ?? $status, // ensure present
+                    'party_id'         => $boat['Owner']['PartyId'] ?? null,
+            ];
+        }
     }
 
-    set_transient('boats_inventory_cache', json_encode(['results' => $trimmed]), 3600);
+    // Build slug map for fast detail lookup
+    $by_slug = [];
+    foreach ($all as $b) { if (!empty($b['slug'])) $by_slug[$b['slug']] = $b; }
+
+    set_transient('boats_inventory_cache', json_encode(['results' => $all]), 3600);
     set_transient('boats_inventory_by_slug', $by_slug, 3600);
 
-    error_log("[Boats Inventory] Cached " . count($trimmed) . " boats.");
+    error_log("[Boats Inventory] Cached " . count($all) . " boats (active + sold).");
 }
+
+// 2) Helper to get boats by party id + optional status
+function boats_get_by_party($party_id, $status = null) {
+    $party_id = trim((string)$party_id);
+    if ($party_id === '') return [];
+
+    $cached = get_transient('boats_inventory_cache');
+
+    $data   = is_array($cached) ? $cached : json_decode((string)$cached, true);
+    if (!is_array($data)) return [];
+
+    $boats  = $data['results'] ?? [];
+    $want   = $status ? strtolower($status) : null;
+
+    $out = array_filter($boats, function ($b) use ($party_id, $want) {
+        // Accept multiple possible cache shapes
+        $ids = [];
+        $ids = [(string)$b['party_id']];                             // alt key
+
+
+        // Must match the Party ID
+        if (!in_array($party_id, $ids, true)) return false;
+
+        // Optional status filter ("Active" / "Sold")
+        if ($want) {
+            $have = strtolower((string)($b['SalesStatus'] ?? $b['Status'] ?? $b['SaleStatus'] ?? ''));
+            if ($have !== $want) return false;
+        }
+
+        return true;
+    });
+
+    // Sort newest year desc, then length desc
+    usort($out, function ($a, $b) {
+        $ay = intval($a['ModelYear'] ?? 0); $by = intval($b['ModelYear'] ?? 0);
+        if ($ay !== $by) return $by <=> $ay;
+        $al = floatval(preg_replace('/[^\d.]/', '', $a['LengthOverall'] ?? '0'));
+        $bl = floatval(preg_replace('/[^\d.]/', '', $b['LengthOverall'] ?? '0'));
+        return $bl <=> $al;
+    });
+
+    return array_values($out);
+}
+
+
 
 /** =========================
  * REST Handlers
