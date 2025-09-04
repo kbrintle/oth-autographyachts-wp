@@ -11,9 +11,9 @@
     if (!$) throw new Error('jQuery is required');
 
     /* ============================ Config ============================ */
-    const REST_INVENTORY = (window.BoatsConfig && BoatsConfig.restUrl)    || '/wp-json/boats/v1/inventory';
-    const REST_FILTERS   = (window.BoatsConfig && BoatsConfig.filtersUrl)  || '/wp-json/boats/v1/filters';
-    const REST_FACETS    = (window.BoatsConfig && BoatsConfig.facetsUrl)   || '/wp-json/boats/v1/facets?fields=make';
+    const REST_INVENTORY = (window.BoatsConfig && BoatsConfig.restUrl)   || '/wp-json/boats/v1/inventory';
+    const REST_FILTERS   = (window.BoatsConfig && BoatsConfig.filtersUrl) || '/wp-json/boats/v1/filters';
+    const REST_FACETS    = (window.BoatsConfig && BoatsConfig.facetsUrl)  || '/wp-json/boats/v1/facets?fields=make';
     const BASE_URL       = '/yachts-for-sale';
 
     /* ============================ Helpers ============================ */
@@ -34,7 +34,25 @@
 
     function showLoading(on = true) {
         qs('#inv-loading')?.classList.toggle('d-none', !on);
-        qs('.spinner')?.classList.toggle('d-none', !on); // small header spinner if present
+        qs('.spinner')?.classList.toggle('d-none', !on);
+    }
+
+    // Put a value into a <select> even if it isn't in the options (for deep links)
+    function ensureSelectValue(sel, value, label = null) {
+        if (!value) return;
+        const $el = $(sel);
+        if (!$el.length) return;
+
+        const exists = Array.from($el[0].options).some(o => o.value === value);
+        if (!exists) {
+            const opt = new Option(label || value, value, true, true);
+            $el.append(opt);
+        }
+        $el.val(value);
+
+        if (hasSSelect && $el.hasClass('my-dropdown2')) {
+            $('.selectedTxt2').text(label || value);
+        }
     }
 
     // Fallback facet derivation
@@ -60,8 +78,8 @@
         root:   $(ROOT_SEL),
         panel:  $(PANEL_SEL),
         menu:   $(MENU_SEL),
-        titleBtn: $('#mfcname'), // legacy button text
-        hidden: null,            // #makeid (CSV)
+        titleBtn: $('#mfcname'),
+        hidden: null,  // #makeid (CSV)
         options: [],
         selected: new Set(),
         staging:  new Set(),
@@ -96,7 +114,6 @@
     }
 
     function syncMakeHidden() { makeUI.hidden.val(Array.from(makeUI.selected).join(',')); }
-
     function openPanel()  { makeUI.panel.removeClass('d-none'); }
     function closePanel() { makeUI.panel.addClass('d-none'); }
 
@@ -105,15 +122,14 @@
         makeUI.built = true;
         makeUI.panel.addClass('d-none');
 
-        // Toolbar
         if (!makeUI.panel.find('.facet-toolbar').length) {
             makeUI.panel.prepend(
                 `<div class="facet-toolbar p-2 border-bottom bg-white position-sticky top-0">
-          <input type="search" class="form-control facet-search make-search" placeholder="Search makes…">
-          <div class="d-flex align-items-center gap-2 mt-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary make-clear">Clear</button>
-          </div>
-        </div>`
+           <input type="search" class="form-control facet-search make-search" placeholder="Search makes…">
+           <div class="d-flex align-items-center gap-2 mt-2">
+             <button type="button" class="btn btn-sm btn-outline-secondary make-clear">Clear</button>
+           </div>
+         </div>`
             );
         }
 
@@ -144,11 +160,11 @@
         const parts = [];
         parts.push(
             `<li class="px-2 py-1 border-bottom">
-        <label class="d-flex align-items-center gap-2">
-          <input type="checkbox" class="form-check-input make-all" ${targetSet.size === 0 ? 'checked' : ''}>
-          <span>All</span>
-        </label>
-      </li>`
+         <label class="d-flex align-items-center gap-2">
+           <input type="checkbox" class="form-check-input make-all" ${targetSet.size === 0 ? 'checked' : ''}>
+           <span>All</span>
+         </label>
+       </li>`
         );
 
         makeUI.options.forEach(opt => {
@@ -156,19 +172,18 @@
             const count   = Number.isFinite(opt.count) ? `<span class="ms-auto text-muted small">${opt.count}</span>` : '';
             parts.push(
                 `<li class="px-2 py-1 d-flex align-items-center" data-value="${esc(opt.value)}" data-label="${esc(opt.label)}">
-          <label class="d-flex align-items-center gap-2 flex-grow-1">
-            <input type="checkbox" class="form-check-input make-cb" value="${esc(opt.value)}" ${checked}>
-            <span>${esc(opt.label)}</span>
-          </label>
-          ${count}
-        </li>`
+           <label class="d-flex align-items-center gap-2 flex-grow-1">
+             <input type="checkbox" class="form-check-input make-cb" value="${esc(opt.value)}" ${checked}>
+             <span>${esc(opt.label)}</span>
+           </label>
+           ${count}
+         </li>`
             );
         });
 
         makeUI.menu.html(parts.join(''));
         makeUI.menu.off('change');
 
-        // "All" checkbox
         makeUI.menu.on('change', '.make-all', function () {
             if (this.checked) {
                 makeUI.staging.clear();
@@ -184,7 +199,6 @@
             debouncedRunSearch();
         });
 
-        // Individual makes
         makeUI.menu.on('change', '.make-cb', function () {
             const v = this.value;
             if (this.checked) makeUI.staging.add(v); else makeUI.staging.delete(v);
@@ -218,15 +232,32 @@
 
     /* ===================== Populate filters ===================== */
     async function populateFilters({ selectedType = '' } = {}) {
+        // Accept links like ?type=Center+Consoles
+        selectedType = (selectedType || '').replace(/\+/g, ' ').trim();
+
+        // tiny helper: ensure a value exists in a <select> and select it
+        const ensureSelected = (selector, value) => {
+            if (!value) return;
+            const $el = $(selector);
+            if (!$el.length) return;
+            const exists =
+                $el.find(`option`).toArray().some(o => String(o.value).toLowerCase() === value.toLowerCase());
+            if (!exists) $el.append(`<option value="${esc(value)}">${esc(value)}</option>`);
+            $el.val(value);
+        };
+
         try {
+            const MUST_HAVE_TYPES = ['Center Consoles'];
+
             const res  = await fetch(REST_FILTERS, { credentials: 'same-origin' });
             const data = await res.json();
 
-            let makes  = (data?.makes || data?.make || []);
-            let types  = (data?.types || []);
+            let makes  = (data?.makes  || data?.make  || []);
+            let types  = (data?.types  || []);
             let states = (data?.states || data?.state || []);
-            let fuels  = (data?.fuels || data?.fuel || []);
+            let fuels  = (data?.fuels  || data?.fuel  || []);
 
+            // If makes missing, ask facets endpoint
             if (!makes.length) {
                 try {
                     const r2 = await fetch(REST_FACETS, { credentials: 'same-origin' });
@@ -235,21 +266,51 @@
                 } catch {}
             }
 
+            // Derive from full inventory if anything is missing
             if (!makes.length || !types.length || !states.length || !fuels.length) {
                 const inv = await FacetCache.get();
-                const uniq = (arr) => Array.from(new Set(arr.filter(Boolean)));
-                if (!makes.length)  makes  = uniq(inv.map(b => (b.MakeStringExact || b.MakeString || '').trim())).sort();
-                if (!types.length)  types  = uniq(inv.map(b => (b.Class || b.BoatType || b.Type || '').toString().trim())).sort();
-                if (!states.length) states = uniq(inv.map(b => (b.BoatLocation?.BoatStateCode || b.State || '').toString().trim().toUpperCase())).sort();
-                if (!fuels.length)  fuels  = uniq(inv.flatMap(b => {
-                    const engs = Array.isArray(b.Engines) ? b.Engines : [];
-                    const ef   = engs.map(e => (e.Fuel || '').toString().trim());
-                    const top  = (b.Fuel || b.FuelType || '').toString().trim();
-                    return [...ef, top];
-                })).sort();
+                const uniq = arr => Array.from(new Set(arr.filter(Boolean)));
+
+                if (!makes.length) {
+                    makes = uniq(inv.map(b => (b.MakeStringExact || b.MakeString || '').trim())).sort();
+                }
+
+                // Include BoatClass when deriving Types so “Center Consoles” deep links work
+                if (!types.length) {
+                    types = uniq(
+                        inv.map(b => (b.BoatClass || b.Class || b.BoatType || b.Type || '').toString().trim())
+                    );
+                }
+
+                if (!states.length) {
+                    states = uniq(
+                        inv.map(b => (b.BoatLocation?.BoatStateCode || b.State || '').toString().trim().toUpperCase())
+                    );
+                }
+
+                if (!fuels.length) {
+                    fuels = uniq(
+                        inv.flatMap(b => {
+                            const engs = Array.isArray(b.Engines) ? b.Engines : [];
+                            const ef   = engs.map(e => (e.Fuel || '').toString().trim());
+                            const top  = (b.Fuel || b.FuelType || '').toString().trim();
+                            return [...ef, top];
+                        })
+                    );
+                }
             }
 
-            // Normalize Make options
+            // ---- Always ensure required Types exist (and any deep-linked selectedType) ----
+            const lower = new Set(types.map(t => String(t).toLowerCase()));
+            MUST_HAVE_TYPES.forEach(req => { if (!lower.has(req.toLowerCase())) types.push(req); });
+            if (selectedType && !lower.has(selectedType.toLowerCase())) types.push(selectedType);
+
+            // Sort alpha (case-insensitive) and de-dup one last time
+            types = Array.from(new Set(types))
+                .filter(Boolean)
+                .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+            // ---- Build Make facet options ----
             makeUI.options = makes
                 .filter(Boolean)
                 .map(m => {
@@ -263,19 +324,25 @@
             ensureMakeToggleButton();
             buildMakePanel();
 
-            // Type
+            // ---- Populate Type ----
             const $type = $('#typeid');
             if ($type.length) {
                 $type.empty().append('<option value="">All</option>');
                 types.forEach(t => $type.append(`<option value="${esc(t)}">${esc(t)}</option>`));
-                if (selectedType) $type.val(selectedType);
+                ensureSelected('#typeid', selectedType);
+
                 if (hasSSelect && $type.hasClass('my-dropdown2')) {
-                    $type.sSelect({ ddMaxHeight:'300px', divtextClass:'selectedTxt2', containerClass:'newListSelected2', divwrapperClass:'SSContainerDivWrapper2' });
+                    $type.sSelect({
+                        ddMaxHeight: '300px',
+                        divtextClass: 'selectedTxt2',
+                        containerClass: 'newListSelected2',
+                        divwrapperClass: 'SSContainerDivWrapper2'
+                    });
                     if (selectedType) $('.selectedTxt2').text(selectedType);
                 }
             }
 
-            // State
+            // ---- Populate State ----
             const $state = $('#stateid');
             if ($state.length) {
                 const cur = val('#stateid');
@@ -284,7 +351,7 @@
                 if (cur) $state.val(cur);
             }
 
-            // Fuel
+            // ---- Populate Fuel ----
             const $fuel = $('#fueltypeid');
             if ($fuel.length && fuels.length) {
                 const cur = val('#fueltypeid');
@@ -292,9 +359,11 @@
                 fuels.forEach(f => $fuel.append(`<option value="${esc(f)}">${esc(f)}</option>`));
                 if (cur) $fuel.val(cur);
             }
-
-        } catch { /* non-fatal */ }
+        } catch {
+            // non-fatal
+        }
     }
+
 
     /* ===================== Build query / URL sync ===================== */
     function buildQueryFromUI() {
@@ -322,9 +391,9 @@
         const p = new URLSearchParams();
 
         const makeCsv = (val('#makeid') || '').trim(); if (makeCsv) p.set('make', makeCsv);
-        const type  = val('#typeid');   if (type)  p.set('type', type);
-        const fuel  = val('#fueltypeid'); if (fuel) p.set('fuel', fuel);
-        const state = val('#stateid');  if (state) p.set('state', state);
+        const type  = val('#typeid');    if (type)  p.set('type', type);
+        const fuel  = val('#fueltypeid');if (fuel)  p.set('fuel', fuel);
+        const state = val('#stateid');   if (state) p.set('state', state);
 
         const lnmin = val('#lnmin'), lnmax = val('#lnmax'); if (lnmin) p.set('minLength', lnmin); if (lnmax) p.set('maxLength', lnmax);
         const prmin = val('#prmin'), prmax = val('#prmax'); if (prmin) p.set('minPrice', prmin);  if (prmax) p.set('maxPrice', prmax);
@@ -391,7 +460,6 @@
 
         holder.insertAdjacentHTML('beforeend', html);
 
-        // Nice reveal
         setTimeout(() => {
             qsa('#listingholdermain ul.product-list li').forEach(li => li.classList.remove('hidden-listing'));
         }, 120);
@@ -471,10 +539,10 @@
             });
         }
 
-        // Close on click-outside
+        // Click-outside closes panel
         $(document).on('mousedown', (e)=>{ if (makeUI.panel.length && !makeUI.root[0].contains(e.target)) closePanel(); });
 
-        // Apply remaining URL params
+        // Apply URL params to fields
         const setIf = (name, sel)=>{ const v=urlParams.get(name); if (v) set(sel,v); };
         setIf('minYear','#yrmin');   setIf('maxYear','#yrmax');
         setIf('minPrice','#prmin');  setIf('maxPrice','#prmax');
@@ -513,7 +581,7 @@
 
             $('#typeid,#fueltypeid,#stateid,#conditionid').val('');
             $('#yrmin,#yrmax,#prmin,#prmax,#lnmin,#lnmax').val('');
-            $('.selectedTxt2').text('All'); // if stylish-select is active
+            $('.selectedTxt2').text('All');
 
             updateFilterBadge();
             runSearch();
