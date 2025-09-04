@@ -1,5 +1,4 @@
 <?php
-return;
 /**
  * Plugin Name: Staff Profiles
  * Description: CPT “Staff” + meta (role/title, email, phones, Boats.com party_id, social links) and a simple listing shortcode.

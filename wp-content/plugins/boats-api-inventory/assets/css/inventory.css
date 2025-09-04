@@ -1,227 +1,74 @@
-/* =========================================================
-   Theme variables (fallbacks if Elementor vars not set)
-   ====================================================== */
-:root{
-    --ay-primary: var(--e-global-color-primary, #0d2a45);
-    --ay-secondary: var(--e-global-color-secondary, #c8a76a);
-    --ay-text: #212529;
-    --ay-muted: #6c757d;
-    --ay-gray-50: #f8fafc;
-    --ay-gray-100:#f3f4f6;
-    --ay-gray-300:#d1d5db;
-    --ay-ring: rgba(13,110,253,.25);
+/* =========================
+   Staff Detail (scoped)
+   ========================= */
+.single-staff {
+    --staff-primary: var(--e-global-color-primary, #0d2a45);
+    --staff-secondary: var(--e-global-color-secondary, #4b5563);
 }
 
-/* =========================================================
-   Buttons
-   ====================================================== */
-.btn-primary{ background-color: var(--ay-primary); border-color: var(--ay-primary); }
-.btn-primary:hover{ filter: brightness(1.04); }
-.btn-secondary{ background-color: var(--ay-secondary) !important; border-color: var(--ay-secondary) !important; }
-.btn-secondary:hover{
-    background-color: var(--ay-primary) !important;
-    border-color: var(--ay-primary) !important;
-    color:#fff !important;
+/* Headings — beat Elementor */
+.single-staff h1,
+.single-staff .entry-title {
+    margin: 6px 0 !important;
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+    color: var(--staff-primary) !important;
+}
+.single-staff h2 {
+    margin: 6px 0 !important;
+    font-size: 1rem !important;
+    line-height: 1.2 !important;
+    color: var(--staff-secondary) !important;
 }
 
-/* =========================================================
-   Cards (inventory list)
-   ====================================================== */
-.product-list li{ margin-bottom: 1.5rem; }
-
-.product-list .card,
-#listingholder .card{ height:100%; display:flex; flex-direction:column; }
-
-.product-list .card-img-top,
-#listingholder .card-img-top{
-    width:100%;
-    height:260px;               /* adjust 240–300px to taste */
-    object-fit:cover;
-    display:block;
+/* Contact block */
+.single-staff .info-block {
+    margin: 0 0 14px 0;
+    font-size: .85rem;
+    line-height: 1.2;
+    color: var(--staff-secondary);
 }
 
-.product-list .card-body{ flex:1 1 auto; display:flex; flex-direction:column; }
-.product-list .card-body .btn{ margin-top:auto; width:100%; }
-.product-list .card-body .card-title{ font-size:1.25rem; font-weight:500; }
-
-/* Subtle reveal animation for JS .hidden-listing */
-.hidden-listing{ opacity:0; transform:translateY(6px); transition:opacity .18s ease, transform .18s ease; }
-.product-list li:not(.hidden-listing){ opacity:1; transform:none; }
-
-/* =========================================================
-   Filters (form look)
-   ====================================================== */
-#boats-inventory .form-control,
-#boats-inventory .form-select,
-#boats-inventory input,
-#boats-inventory select,
-#boats-inventory textarea{
-    background:#fff;
-    color:var(--ay-text);
-    border:1px solid var(--ay-gray-300);
-    border-radius:.75rem;
-}
-#boats-inventory ::placeholder{ color:var(--ay-muted); }
-
-/* ===== Make facet: input-look trigger ===== */
-#boats-inventory .make-toggle,
-#boats-inventory #mfcname.btn{
-    background:#fff;
-    color:var(--ay-text);
-    border:1px solid var(--ay-gray-300);
-    border-radius:.5rem;
-    padding:.375rem .75rem;
-    line-height:1.5;
-    height:auto;
-    box-shadow:none;
-    display:flex; align-items:center; justify-content:space-between;
-    width:100%; text-align:left; font-weight:400;
-}
-#boats-inventory .make-toggle:hover,
-#boats-inventory #mfcname.btn:hover{ background:#fff; }
-
-#boats-inventory .make-toggle::after,
-#boats-inventory #mfcname.btn::after{
-    content:"";
-    width:0; height:0;
-    border-left:4px solid transparent;
-    border-right:4px solid transparent;
-    border-top:6px solid var(--ay-muted);
-    margin-left:.5rem;
+/* Boat cards */
+.single-staff .card-img-top {
+    height: 240px;
+    object-fit: cover;
+    display: block;
+    width: 100%;
 }
 
-#boats-inventory .make-toggle:focus,
-#boats-inventory #mfcname.btn:focus{
-    outline:0;
-    border-color:#86b7fe;
-    box-shadow:0 0 0 .25rem var(--ay-ring);
+/* Tabs */
+.single-staff .nav-tabs { margin: 0; border: 0; }
+.single-staff .nav-tabs .nav-link {
+    padding: .5rem 1rem;
+    border: 0;
 }
 
-/* ===== Make facet: dropdown ===== */
-#boats-inventory .dropdown-panel,
-#boats-inventory .custom-dropdown-menu{
-    background:#fff;
-    border:1px solid var(--ay-gray-300);
-    border-radius:.5rem;
-    margin-top:.25rem;
-    box-shadow:0 6px 24px rgba(0,0,0,.07);
+/* Buttons (use Elementor globals, with fallbacks) */
+.single-staff .btn-primary {
+    background-color: var(--staff-primary) !important;
+    border-color: var(--staff-primary) !important;
+    color: #fff !important;
+}
+.single-staff .btn-primary:hover { filter: brightness(1.04) !important; }
+
+.single-staff .btn-secondary {
+    background-color: var(--staff-secondary) !important;
+    border-color: var(--staff-secondary) !important;
+    color: #fff !important;
+}
+.single-staff .btn-secondary:hover {
+    background-color: var(--staff-primary) !important;
+    border-color: var(--staff-primary) !important;
+    color: #fff !important;
 }
 
-#boats-inventory .facet-toolbar{ display:flex; align-items:center; gap:.5rem; }
-#boats-inventory .facet-toolbar .facet-search{
-    flex:1; height:32px; padding:.25rem .5rem; font-size:.875rem;
-    background:#fff; color:var(--ay-text);
-    border:1px solid var(--ay-gray-300); border-radius:.5rem;
-}
+/* Listings section spacing */
+.single-staff .single-staff-listings { margin-top: 100px; }
+.single-staff #staffBoatsContent { padding: 40px 0; }
 
-#boats-inventory .dropdown-panel .make-clear{
-    background:#fff; color:#1f2937; border:1px solid var(--ay-gray-300);
-}
-#boats-inventory .dropdown-panel .make-clear:hover{ background:var(--ay-gray-50); }
-
-#boats-inventory .dropdown-panel li[data-value],
-#boats-inventory .dropdown-panel li .d-flex.align-items-center{
-    padding-top:.35rem !important; padding-bottom:.35rem !important;
-}
-
-/* Chips (if used) */
-#boats-inventory .selected-chips .chip{
-    background:var(--ay-gray-100);
-    border-radius:.5rem; padding:.25rem .5rem;
-    font-size:.775rem; display:inline-flex; align-items:center; gap:.35rem;
-}
-#boats-inventory .selected-chips .chip button{
-    border:0; background:transparent; line-height:1; padding:0; cursor:pointer;
-}
-
-/* =========================================================
-   Mobile-only Filters toggle + counter
-   - Markup assumed:
-     <button id="filtersToggle"><span>Filters</span><span id="filtersCount" class="badge"></span></button>
-     <div id="filtersPanel" class="is-collapsed"> ...filters... </div>
-   ====================================================== */
-#filtersToggle{ display:none; }
-
+/* Mobile tweaks */
 @media (max-width: 767.98px){
-    #filtersToggle{
-        display:flex;
-        align-items:center; justify-content:center; gap:.5rem;
-        width:100%;
-        border:1px solid var(--ay-gray-300);
-        background:#fff; color:var(--ay-text);
-        padding:.55rem .9rem; border-radius:.6rem;
-        margin-bottom: .75rem;
-    }
-    #filtersToggle .badge{
-        display:inline-block;
-        min-width:1.5rem; padding:.15rem .45rem; border-radius:999px;
-        background:var(--ay-primary); color:#fff; font-weight:600;
-        text-align:center;
-    }
-    #filtersPanel.is-collapsed{ display:none; }
+    .single-staff .biography { margin-top: 20px; }
+    .single-staff .card-img-top { height: 200px; }
 }
-
-/* =========================================================
-   Loader overlay
-   ====================================================== */
-#listingholdermain{ margin-top:30px; position:relative; min-height:20vh; }
-
-.inv-loading{
-    position:absolute; inset:0;
-    background:rgba(255,255,255,0.75);
-    display:flex; align-items:center; justify-content:center;
-    z-index:20;
-}
-
-.inv-spinner{
-    width:46px; height:46px;
-    border:4px solid rgba(0,0,0,0.18);
-    border-top-color: var(--ay-primary);
-    border-radius:50%;
-    animation: inv-spin .8s linear infinite;
-}
-@keyframes inv-spin{ to{ transform:rotate(360deg); } }
-
-.d-none{ display:none !important; }
-
-/* =========================================================
-   Detail page typography + broker card
-   ====================================================== */
-.product-detail .vessel-meta .title{
-    color:#333;
-    font-family:"Poppins", Sans-serif;
-    font-size:30px; font-weight:700; line-height:1.4; letter-spacing:1px;
-}
-
-.product .meta dl{
-    color:#151515;
-    font-family:"Poppins", Sans-serif;
-    font-size:15px; line-height:1.4; letter-spacing:1px;
-}
-
-.product .meta a.btn{
-    background-color: var(--ay-primary);
-    border:1px solid var(--ay-primary);
-    color:#fff;
-    font-family:"Poppins", Sans-serif;
-    font-size:15px; letter-spacing:1px;
-    text-transform:capitalize;
-    padding:16px 36px;
-    border-radius:0;
-    line-height:1;
-}
-
-/* Center broker box on phones only */
-@media (max-width: 767.98px){
-    .listing-meta .contact-box,
-    .listing-meta{ text-align:center; }
-    .listing-meta .avatar img{ margin:0 auto; }
-}
-
-/* =========================================================
-   Astra layout helpers (detail page full width)
-   ====================================================== */
-.boat-detail-page .site-content .ast-container{ display:block !important; }
-.boat-detail-page #primary.content-area{ width:100% !important; margin:0 !important; }
-.boat-detail-page #secondary,
-.boat-detail-page .ast-sidebar{ display:none !important; }

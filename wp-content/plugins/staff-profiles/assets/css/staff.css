@@ -1,47 +1,95 @@
+/* =========================
+   Staff Detail (scoped)
+   ========================= */
 
-.single-staff h1 {
-    margin: 6px 0;
-    font-size: 1.5rem;
-    color: var(--e-global-color-primary);
+
+.single-staff {
+    margin: auto;
+    --staff-primary: var(--e-global-color-primary, #0d2a45);
+    --staff-secondary: var(--e-global-color-secondary, #4b5563);
+}
+
+/* Headings — beat Elementor */
+.single-staff h1,
+.single-staff .entry-title {
+    margin: 6px 0 !important;
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+    color: var(--staff-primary) !important;
 }
 .single-staff h2 {
-    margin: 6px 0 ;
-    font-size: 1rem;
-    color: var(--e-global-color-secondary);
-    line-height: 1.2;
+    margin: 6px 0 !important;
+    font-size: 1rem !important;
+    line-height: 1.2 !important;
+    color: var(--staff-secondary) !important;
 }
+
+/* Contact block */
 .single-staff .info-block {
     margin: 0 0 14px 0;
     font-size: .85rem;
-    color: var(--e-global-color-secondary);
     line-height: 1.2;
-}
-    /* Staff boats grid images */
-.single-staff .card-img-top { height: 240px; object-fit: cover; }
-/* Tabs spacing */
-.single-staff ul { margin:0;}
-.single-staff .nav-tabs .nav-link { padding: .5rem 1rem; }
-.btn-primary{ background-color: var(--e-global-color-primary)  !important;  border-color: var(--e-global-color-primary) !important;  }
-.btn-primary:hover{ filter: brightness(1.04)  !important;  }
-.btn-secondary{ background-color: var(--e-global-color-secondary) !important; border-color: var(--e-global-color-secondary) !important; }
-.btn-secondary:hover{
-    background-color: var(--ay-primary) !important;
-    border-color: var(--ay-primary) !important;
-    color:#fff !important;
+    color: var(--staff-secondary);
 }
 
-
-.single-staff-listings{
-    margin-top: 100px;
-
-}
-#staffBoatsContent{
-
-    padding: 40px 0;
+/* Boat cards */
+.single-staff .card-img-top {
+    height: 240px;
+    object-fit: cover;
+    display: block;
+    width: 100%;
 }
 
+/* Tabs */
+.single-staff .nav-tabs { margin: 0; border: 0; }
+.single-staff .nav-tabs .nav-link {
+    padding: .5rem 1rem;
+    border: 0;
+}
+
+/* Buttons (use Elementor globals, with fallbacks) */
+.single-staff .btn-primary {
+    background-color: var(--staff-primary) !important;
+    border-color: var(--staff-primary) !important;
+    color: #fff !important;
+}
+.single-staff .btn-primary:hover { filter: brightness(1.04) !important; }
+
+.single-staff .btn-secondary {
+    background-color: var(--staff-secondary) !important;
+    border-color: var(--staff-secondary) !important;
+    color: #fff !important;
+}
+.single-staff .btn-secondary:hover {
+    background-color: var(--staff-primary) !important;
+    border-color: var(--staff-primary) !important;
+    color: #fff !important;
+}
+
+/* Listings section spacing */
+.single-staff .single-staff-listings { margin-top: 60px; }
+.single-staff .staff-listings-bleed h3{
+    font-size: 2rem !important;
+}
+.single-staff #staffBoatsContent { padding: 40px 0; }
+
+/* Mobile tweaks */
 @media (max-width: 767.98px){
-    .biography{
-        margin-top: 20px;
-    }
+    .single-staff .biography { margin-top: 20px; }
+    .single-staff .card-img-top { height: 200px; }
 }
+
+.single-staff .card-img-top { height: 240px; object-fit: cover; }
+.single-staff .badge { pointer-events: none; }
+
+/* Full-bleed background for listings block */
+.staff-listings-bleed { position: relative; padding: 10px 0; z-index: 0; }
+.staff-listings-bleed::before {
+    content: "";
+    position: absolute; inset: 0 auto 0 auto; top: 0; bottom: 0;
+    left: 50%; right: 50%;
+    margin-left: -50vw; margin-right: -50vw;   /* stretch to viewport edges */
+    background: #f6f8fb;                       /* <-- wall-to-wall color */
+    z-index: -1;
+}
+@media (max-width: 767px){ .staff-listings-bleed{ padding: 32px 0; } }
